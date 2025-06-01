@@ -3,181 +3,306 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مساعد ريدان الذكي - مطعم ريدان</title>
+    <title>الدردشة مع مطعم ريدان</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #c52d2f;
-            --secondary-color: #e74c3c;
-            --dark-color: #2c3e50;
-            --light-color: #ecf0f1;
-            --accent-color: #f39c12;
+            --primary: #e74c3c;
+            --primary-dark: #c0392b;
+            --secondary: #f39c12;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --success: #2ecc71;
+            --whatsapp: #25D366;
         }
-        
-        body {
-            font-family: 'Tahoma', Arial, sans-serif;
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
             background-color: #f5f5f5;
             color: #333;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        
+
         .container {
             max-width: 100%;
             margin: 0 auto;
-            padding: 0;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             background-color: white;
-            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        
-        header {
-            background-color: var(--primary-color);
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             padding: 15px 20px;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 15px;
             position: relative;
+            z-index: 10;
         }
-        
+
         .logo {
-            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: bold;
-            margin-bottom: 5px;
+            color: var(--primary);
+            font-size: 20px;
         }
-        
-        .tagline {
-            font-size: 14px;
-            opacity: 0.9;
+
+        .header-info {
+            flex: 1;
         }
-        
+
+        .restaurant-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .status {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Chat area */
         .chat-container {
-            padding: 15px;
-            height: calc(100vh - 200px);
+            flex: 1;
+            padding: 20px;
             overflow-y: auto;
             background-color: #f9f9f9;
-            border-bottom: 1px solid #ddd;
+            background-image: url('https://transparenttextures.com/patterns/food.png');
+            background-blend-mode: overlay;
         }
-        
+
         .message {
             margin-bottom: 15px;
             max-width: 80%;
-            padding: 10px 15px;
+            padding: 12px 16px;
             border-radius: 18px;
             line-height: 1.5;
             position: relative;
-            animation: fadeIn 0.3s ease-in-out;
+            animation: fadeIn 0.3s ease-out;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            font-size: 14px;
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .user-message {
-            background-color: var(--light-color);
-            color: var(--dark-color);
+            background-color: white;
+            color: var(--dark);
             margin-left: auto;
             border-bottom-right-radius: 5px;
+            border: 1px solid #eee;
         }
-        
+
         .bot-message {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             margin-right: auto;
             border-bottom-left-radius: 5px;
         }
-        
-        .input-container {
-            display: flex;
+
+        .message-time {
+            font-size: 10px;
+            opacity: 0.7;
+            text-align: left;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* Input area */
+        .input-area {
             padding: 15px;
             background-color: white;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
-        
+
         #user-input {
             flex: 1;
             padding: 12px 15px;
             border: 1px solid #ddd;
             border-radius: 25px;
-            font-size: 16px;
+            font-size: 14px;
             outline: none;
-            transition: border 0.3s;
+            transition: all 0.3s;
+            background-color: #f9f9f9;
         }
-        
+
         #user-input:focus {
-            border-color: var(--primary-color);
+            border-color: var(--primary);
+            background-color: white;
         }
-        
-        #send-btn {
-            background-color: var(--primary-color);
+
+        .send-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             border: none;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            margin-right: 10px;
-            cursor: pointer;
+            width: 45px;
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background-color 0.3s;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.3);
         }
-        
-        #send-btn:hover {
-            background-color: var(--secondary-color);
+
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 3px 15px rgba(231, 76, 60, 0.4);
         }
-        
+
+        .send-btn i {
+            font-size: 18px;
+        }
+
+        /* Quick replies */
         .quick-replies {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            padding: 10px 15px;
+            gap: 10px;
+            padding: 15px;
             background-color: white;
             border-top: 1px solid #eee;
         }
-        
+
         .quick-reply {
-            background-color: var(--light-color);
-            color: var(--dark-color);
+            background-color: var(--light);
+            color: var(--dark);
             border: none;
             border-radius: 20px;
             padding: 8px 15px;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
-        
+
+        .quick-reply i {
+            font-size: 12px;
+        }
+
         .quick-reply:hover {
-            background-color: var(--accent-color);
+            background-color: var(--secondary);
             color: white;
+            transform: translateY(-2px);
         }
-        
-        .menu-item {
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 8px;
-        }
-        
+
+        /* Menu items */
         .menu-category {
             font-weight: bold;
-            margin-top: 15px;
-            color: var(--accent-color);
+            margin: 20px 0 10px;
+            color: var(--secondary);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        
-        .contact-info {
-            margin: 10px 0;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.2);
+
+        .menu-category i {
+            font-size: 14px;
+        }
+
+        .menu-item {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 12px;
+            margin: 8px 0;
             border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid #eee;
+            transition: all 0.3s;
         }
-        
+
+        .menu-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-name {
+            font-weight: 500;
+        }
+
+        .item-price {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Contact info */
+        .contact-info {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .contact-item i {
+            color: var(--primary);
+            width: 20px;
+            text-align: center;
+        }
+
+        /* WhatsApp button */
         .whatsapp-btn {
-            display: block;
-            background-color: #25D366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: var(--whatsapp);
             color: white;
             text-align: center;
             padding: 12px;
@@ -185,16 +310,65 @@
             margin: 15px 0;
             text-decoration: none;
             font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(37, 211, 102, 0.3);
         }
-        
+
+        .whatsapp-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-btn i {
+            font-size: 18px;
+        }
+
+        /* Location */
         .location {
             font-size: 14px;
             margin: 5px 0;
+            display: flex;
+            gap: 8px;
         }
-        
+
+        .location i {
+            color: var(--primary);
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .typing-indicator.visible {
+            opacity: 1;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingAnimation {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             .container {
-                max-width: 100%;
+                border-radius: 0;
             }
             
             .message {
@@ -205,34 +379,64 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="logo">مساعد ريدان الذكي</div>
-            <div class="tagline">خدمة العملاء الآلية لمطعم ريدان</div>
-        </header>
-        
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">ر</div>
+            <div class="header-info">
+                <div class="restaurant-name">مطعم ريدان</div>
+                <div class="status">
+                    <span class="status-dot"></span>
+                    <span>متصل الآن</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat container -->
         <div class="chat-container" id="chat-container">
-            <!-- الرسائل ستظهر هنا -->
+            <!-- Messages will appear here -->
             <div class="message bot-message">
                 مرحباً بكم في مطعم ريدان! 🍽️<br>
                 كيف يمكنني مساعدتك اليوم؟ يمكنك اختيار أحد الخيارات التالية أو كتابة استفسارك.
+                <span class="message-time">الآن</span>
+            </div>
+
+            <div class="typing-indicator" id="typing-indicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
             </div>
         </div>
-        
+
+        <!-- Quick replies -->
         <div class="quick-replies">
-            <button class="quick-reply" onclick="sendQuickReply('قائمة الطعام')">قائمة الطعام</button>
-            <button class="quick-reply" onclick="sendQuickReply('معلومات المطعم')">معلومات المطعم</button>
-            <button class="quick-reply" onclick="sendQuickReply('طلب توصيل')">طلب توصيل</button>
-            <button class="quick-reply" onclick="sendQuickReply('أوقات العمل')">أوقات العمل</button>
+            <button class="quick-reply" onclick="sendQuickReply('قائمة الطعام')">
+                <i class="fas fa-utensils"></i> قائمة الطعام
+            </button>
+            <button class="quick-reply" onclick="sendQuickReply('معلومات المطعم')">
+                <i class="fas fa-info-circle"></i> معلومات المطعم
+            </button>
+            <button class="quick-reply" onclick="sendQuickReply('طلب توصيل')">
+                <i class="fas fa-motorcycle"></i> طلب توصيل
+            </button>
+            <button class="quick-reply" onclick="sendQuickReply('أوقات العمل')">
+                <i class="far fa-clock"></i> أوقات العمل
+            </button>
         </div>
-        
-        <div class="input-container">
+
+        <!-- Input area -->
+        <div class="input-area">
             <input type="text" id="user-input" placeholder="اكتب رسالتك هنا..." onkeypress="handleKeyPress(event)">
-            <button id="send-btn" onclick="sendMessage()">↵</button>
+            <button class="send-btn" id="send-btn" onclick="sendMessage()">
+                <i class="far fa-paper-plane"></i>
+            </button>
         </div>
     </div>
 
     <script>
-        // بيانات المطعم
+        // WhatsApp number
+        const whatsappNumber = "+971588155123";
+        
+        // Restaurant info
         const restaurantInfo = {
             name: "مطعم ريدان",
             locations: [
@@ -247,7 +451,7 @@
             deliveryHours: "يومياً من 10 صباحاً حتى 11 مساءً"
         };
 
-        // قائمة الطعام
+        // Menu items
         const menu = {
             "وجبات الدجاج": [
                 {name: "Chicken Mandi", price: "33 AED"},
@@ -274,58 +478,62 @@
             ]
         };
 
-        // إرسال رسالة سريعة
+        // Show typing indicator
+        function showTyping() {
+            const typing = document.getElementById('typing-indicator');
+            typing.classList.add('visible');
+            
+            // Scroll to bottom
+            const chatContainer = document.getElementById('chat-container');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Hide typing indicator
+        function hideTyping() {
+            const typing = document.getElementById('typing-indicator');
+            typing.classList.remove('visible');
+        }
+
+        // Send quick reply
         function sendQuickReply(text) {
             document.getElementById('user-input').value = text;
             sendMessage();
         }
 
-        // التعامل مع ضغط المفتاح
+        // Handle key press
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 sendMessage();
             }
         }
 
-        // إرسال رسالة
-        function sendMessage() {
-            const userInput = document.getElementById('user-input');
-            const message = userInput.value.trim();
-            
-            if (message === '') return;
-            
-            // عرض رسالة المستخدم
-            addMessage(message, 'user-message');
-            userInput.value = '';
-            
-            // معالجة الرسالة وإعداد الرد
-            setTimeout(() => {
-                const reply = processMessage(message);
-                addMessage(reply, 'bot-message');
-                
-                // التمرير إلى الأسفل
-                const chatContainer = document.getElementById('chat-container');
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }, 500);
-        }
-
-        // إضافة رسالة إلى الدردشة
-        function addMessage(text, className) {
+        // Add message to chat
+        function addMessage(text, className, isHtml = false) {
             const chatContainer = document.getElementById('chat-container');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${className}`;
-            messageDiv.innerHTML = text;
-            chatContainer.appendChild(messageDiv);
             
-            // التمرير إلى الأسفل
+            if (isHtml) {
+                messageDiv.innerHTML = text;
+            } else {
+                messageDiv.textContent = text;
+            }
+            
+            // Add timestamp
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+            messageDiv.innerHTML += `<span class="message-time">${timeString}</span>`;
+            
+            chatContainer.insertBefore(messageDiv, document.getElementById('typing-indicator'));
+            
+            // Scroll to bottom
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
-        // معالجة الرسالة
+        // Process message and generate reply
         function processMessage(message) {
             message = message.toLowerCase();
             
-            // التحقق من الكلمات المفتاحية
             if (message.includes('مرحبا') || message.includes('اهلا') || message.includes('السلام') || 
                 message.includes('hello') || message.includes('hi')) {
                 return "مرحباً بكم في مطعم ريدان! كيف يمكنني مساعدتك اليوم؟";
@@ -348,11 +556,7 @@
             else if (message.includes('طلب') || message.includes('اطلب') || 
                      message.includes('order') || message.includes('توصيل') || 
                      message.includes('delivery')) {
-                return `🍽️ <b>طلب التوصيل:</b><br><br>
-                        للطلب، يرجى التواصل معنا عبر:<br>
-                        📞 <a href="tel:${restaurantInfo.phone}">${restaurantInfo.phone}</a><br>
-                        أو عبر مجموعة الواتساب:<br>
-                        <a href="${restaurantInfo.whatsappGroup}" target="_blank">انقر هنا للانضمام</a>`;
+                return generateOrderText();
             }
             else if (message.includes('استلام') || message.includes('من المحل') || 
                      message.includes('pickup') || message.includes('takeaway')) {
@@ -365,13 +569,7 @@
             else if (message.includes('اتصال') || message.includes('خدمة') || 
                      message.includes('عملا') || message.includes('كلم') || 
                      message.includes('contact')) {
-                return `📞 <b>خدمة العملاء:</b><br><br>
-                        للتواصل مع خدمة العملاء:<br>
-                        الهاتف: <a href="tel:${restaurantInfo.phone}">${restaurantInfo.phone}</a><br>
-                        الأرضي: ${restaurantInfo.landline}<br><br>
-                        <a href="${restaurantInfo.whatsappGroup}" class="whatsapp-btn" target="_blank">
-                            الانضمام إلى مجموعة الواتساب
-                        </a>`;
+                return generateContactText();
             }
             else {
                 return `شكراً لاتصالك بمطعم ريدان!<br><br>
@@ -386,39 +584,136 @@
             }
         }
 
-        // إنشاء نص قائمة الطعام
+        // Generate menu text
         function generateMenuText() {
             let menuText = `<b>📋 قائمة مطعم ريدان 📋</b><br><br>`;
             
             for (const [category, items] of Object.entries(menu)) {
-                menuText += `<div class="menu-category">${category}:</div>`;
+                menuText += `<div class="menu-category"><i class="fas fa-utensils"></i> ${category}:</div>`;
                 
                 items.forEach(item => {
-                    menuText += `<div class="menu-item">- ${item.name}: ${item.price}</div>`;
+                    menuText += `
+                        <div class="menu-item">
+                            <span class="item-name">${item.name}</span>
+                            <span class="item-price">${item.price}</span>
+                        </div>`;
                 });
-                
-                menuText += `<br>`;
             }
             
-            menuText += `<small>جميع الأسعار تشمل ضريبة القيمة المضافة</small>`;
+            menuText += `<br><small>جميع الأسعار تشمل ضريبة القيمة المضافة</small>`;
             return menuText;
         }
 
-        // إنشاء نص معلومات المطعم
+        // Generate restaurant info
         function generateRestaurantInfo() {
-            return `<b>🏠 معلومات عن مطعم ريدان:</b><br><br>
-                    <b>📍 المواقع:</b><br>
-                    - ${restaurantInfo.locations[0]}<br>
-                    - ${restaurantInfo.locations[1]}<br><br>
+            return `
+                <b>🏠 معلومات عن مطعم ريدان:</b><br><br>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <b>الموقع:</b><br>
+                            ${restaurantInfo.locations[0]}<br>
+                            ${restaurantInfo.locations[1]}
+                        </div>
+                    </div>
                     
-                    <b>📞 الهاتف:</b> <a href="tel:${restaurantInfo.phone}">${restaurantInfo.phone}</a><br>
-                    <b>📞 أرضي:</b> ${restaurantInfo.landline}<br><br>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <b>الهاتف:</b><br>
+                            <a href="tel:${restaurantInfo.phone}">${restaurantInfo.phone}</a><br>
+                            أرضي: ${restaurantInfo.landline}
+                        </div>
+                    </div>
                     
-                    <b>🌐 الموقع الإلكتروني:</b> <a href="http://${restaurantInfo.website}" target="_blank">${restaurantInfo.website}</a><br><br>
+                    <div class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <div>
+                            <b>الموقع الإلكتروني:</b><br>
+                            <a href="http://${restaurantInfo.website}" target="_blank">${restaurantInfo.website}</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="${restaurantInfo.whatsappGroup}" class="whatsapp-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> الانضمام إلى مجموعة الواتساب
+                </a>
+            `;
+        }
+
+        // Generate order text
+        function generateOrderText() {
+            return `
+                <b>🍽️ طلب التوصيل:</b><br><br>
+                
+                للطلب، يرجى إرسال:<br>
+                1. اسم الوجبة<br>
+                2. الكمية<br>
+                3. العنوان<br>
+                4. رقم الهاتف<br><br>
+                
+                أو يمكنك التواصل مباشرة عبر الواتساب:<br><br>
+                
+                <a href="https://wa.me/${whatsappNumber}" class="whatsapp-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> إرسال طلب عبر الواتساب
+                </a>
+            `;
+        }
+
+        // Generate contact text
+        function generateContactText() {
+            return `
+                <b>📞 خدمة العملاء:</b><br><br>
+                
+                للتواصل مع خدمة العملاء:<br><br>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <b>الهاتف:</b><br>
+                            <a href="tel:${restaurantInfo.phone}">${restaurantInfo.phone}</a><br>
+                            أرضي: ${restaurantInfo.landline}
+                        </div>
+                    </div>
                     
-                    <a href="${restaurantInfo.whatsappGroup}" class="whatsapp-btn" target="_blank">
-                        الانضمام إلى مجموعة الواتساب
-                    </a>`;
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div>
+                            <b>الواتساب:</b><br>
+                            <a href="https://wa.me/${whatsappNumber}" target="_blank">${whatsappNumber}</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="${restaurantInfo.whatsappGroup}" class="whatsapp-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> الانضمام إلى مجموعة الواتساب
+                </a>
+            `;
+        }
+
+        // Send message
+        function sendMessage() {
+            const userInput = document.getElementById('user-input');
+            const message = userInput.value.trim();
+            
+            if (message === '') return;
+            
+            // Add user message
+            addMessage(message, 'user-message');
+            userInput.value = '';
+            
+            // Show typing indicator
+            showTyping();
+            
+            // Process and reply after a short delay
+            setTimeout(() => {
+                hideTyping();
+                const reply = processMessage(message);
+                addMessage(reply, 'bot-message', true);
+            }, 1000 + Math.random() * 1000);
         }
     </script>
 </body>
