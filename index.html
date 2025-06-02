@@ -1,107 +1,692 @@
-html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>لوحة تحكم المطعم</title>
-  <style>
-    body {
-      font-family: 'Tajawal', sans-serif;
-      background: #f7f7f7;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #d64933;
-      color: white;
-      text-align: center;
-      padding: 1em;
-    }
-    .orders {
-      padding: 1em;
-    }
-    .order {
-      background: white;
-      border: 1px solid #ddd;
-      padding: 1em;
-      margin-bottom: 1em;
-      border-radius: 8px;
-    }
-    .btn-delete {
-      background: red;
-      color: white;
-      border: none;
-      padding: 0.3em 0.6em;
-      border-radius: 5px;
-      float: left;
-      cursor: pointer;
-    }
-    audio {
-      display: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم مطعم ريدان</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #c52d2f;
+            --secondary-color: #e6a756;
+            --dark-color: #3a2e24;
+            --light-color: #f8f1e5;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark-color);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .container {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-menu li:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .sidebar-menu li.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .sidebar-menu li i {
+            margin-left: 0.5rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+        
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .card h3 {
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .card p {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .card.success {
+            border-top: 4px solid var(--success-color);
+        }
+        
+        .card.warning {
+            border-top: 4px solid var(--warning-color);
+        }
+        
+        .card.danger {
+            border-top: 4px solid var(--danger-color);
+        }
+        
+        .orders-table {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: right;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        tr:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-pending {
+            background-color: var(--warning-color);
+            color: white;
+        }
+        
+        .status-completed {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .status-canceled {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-sm {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+        }
+        
+        .order-details {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .order-details h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+        
+        .order-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-item label {
+            display: block;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .info-item p {
+            font-weight: bold;
+        }
+        
+        .order-items {
+            margin-top: 1.5rem;
+        }
+        
+        .order-items table {
+            margin-top: 1rem;
+        }
+        
+        .notification-popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .notification-sound {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+            
+            .dashboard-cards {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .order-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<header>
-  <h1>لوحة تحكم ريدان للمندي</h1>
-</header>
-
-<div class="orders" id="ordersList">
-  <p>جارٍ تحميل الطلبات...</p>
-</div>
-
-<audio id="notifSound">
-  <source src="notification.mp3" type="audio/mp3" />
-</audio>
-
-<script>
-  async function loadOrders() {
-    const res = await fetch('http://localhost:3000/orders');
-    const orders = await res.json();
-
-    const list = document.getElementById('ordersList');
-    list.innerHTML = '';
-
-    if (orders.length === 0) {
-      list.innerHTML = '<p>لا توجد طلبات حالياً</p>';
-      return;
-    }
-
-    orders.forEach((order, i) => {
-      const div = document.createElement('div');
-      div.className = 'order';
-      div.innerHTML = `
-        <strong>العميل:</strong> ${order.customer.name}<br/>
-        <strong>الهاتف:</strong> ${order.customer.phone}<br/>
-        <strong>التفاصيل:</strong><br/>
-        <ul>${order.items.map(item => `<li>${item.name} - ${item.price} د.إ</li>`).join('')}</ul>
-        <button class="btn-delete" onclick="deleteOrder(${i})">حذف</button>
-      `;
-      list.appendChild(div);
-
-      if (!localStorage.getItem(`seen_${i}`)) {
-        notify(i);
-        localStorage.setItem(`seen_${i}`, true);
-      }
-    });
-  }
-
-  function deleteOrder(index) {
-    fetch(`http://localhost:3000/orders/${index}`, {
-      method: 'DELETE'
-    }).then(loadOrders);
-  }
-
-  function notify(index) {
-    const sound = document.getElementById('notifSound');
-    sound.play();
-    alert('طلب جديد #' + index);
-  }
-
-  setInterval(loadOrders, 5000);
-  window.onload = loadOrders;
-</script>
-
+    <header>
+        <div class="logo">لوحة تحكم <span>ريدان</span></div>
+        <div class="notification-icon" id="notificationIcon">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge" id="notificationBadge">0</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="active"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</li>
+                <li><i class="fas fa-clipboard-list"></i> الطلبات</li>
+                <li><i class="fas fa-utensils"></i> القائمة</li>
+                <li><i class="fas fa-users"></i> العملاء</li>
+                <li><i class="fas fa-chart-bar"></i> التقارير</li>
+                <li><i class="fas fa-cog"></i> الإعدادات</li>
+            </ul>
+        </div>
+        
+        <div class="main-content">
+            <div class="dashboard-cards">
+                <div class="card success">
+                    <h3>طلبات اليوم</h3>
+                    <p id="todayOrders">0</p>
+                </div>
+                <div class="card warning">
+                    <h3>طلبات قيد الانتظار</h3>
+                    <p id="pendingOrders">0</p>
+                </div>
+                <div class="card">
+                    <h3>إجمالي المبيعات</h3>
+                    <p id="totalSales">0 ر.س</p>
+                </div>
+                <div class="card danger">
+                    <h3>طلبات ملغاة</h3>
+                    <p id="canceledOrders">0</p>
+                </div>
+            </div>
+            
+            <div class="orders-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>رقم الطلب</th>
+                            <th>العميل</th>
+                            <th>النوع</th>
+                            <th>التاريخ</th>
+                            <th>المجموع</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                        <!-- Orders will be added dynamically -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="order-details" id="orderDetails" style="display: none;">
+                <h2>تفاصيل الطلب <span id="orderDetailsId"></span></h2>
+                
+                <div class="order-info">
+                    <div class="info-item">
+                        <label>اسم العميل</label>
+                        <p id="customerName"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>رقم الجوال</label>
+                        <p id="customerPhone"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>نوع الطلب</label>
+                        <p id="orderType"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>تاريخ الطلب</label>
+                        <p id="orderDate"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>حالة الطلب</label>
+                        <p id="orderStatus"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>المجموع</label>
+                        <p id="orderTotal"></p>
+                    </div>
+                </div>
+                
+                <div class="additional-info" id="additionalInfo"></div>
+                
+                <div class="order-items">
+                    <h3>عناصر الطلب</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>الصورة</th>
+                                <th>الاسم</th>
+                                <th>السعر</th>
+                                <th>الكمية</th>
+                                <th>المجموع</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderItemsTable">
+                            <!-- Order items will be added dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="order-actions" style="margin-top: 1.5rem; text-align: left;">
+                    <button class="btn btn-success" id="completeOrderBtn">إكمال الطلب</button>
+                    <button class="btn btn-danger" id="cancelOrderBtn">إلغاء الطلب</button>
+                    <button class="btn" id="closeDetailsBtn" style="background-color: #ddd;">إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification-popup" id="notificationPopup">
+        <div id="notificationMessage">طلب جديد تم استلامه!</div>
+    </div>
+    
+    <audio class="notification-sound" id="notificationSound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // Sample orders data (in a real app, this would come from a server)
+        let orders = JSON.parse(localStorage.getItem('redanOrders')) || [];
+        
+        // DOM elements
+        const todayOrdersElement = document.getElementById('todayOrders');
+        const pendingOrdersElement = document.getElementById('pendingOrders');
+        const totalSalesElement = document.getElementById('totalSales');
+        const canceledOrdersElement = document.getElementById('canceledOrders');
+        const ordersTableBody = document.getElementById('ordersTableBody');
+        const orderDetails = document.getElementById('orderDetails');
+        const notificationBadge = document.getElementById('notificationBadge');
+        const notificationPopup = document.getElementById('notificationPopup');
+        const notificationSound = document.getElementById('notificationSound');
+        
+        // Initialize the dashboard
+        function initDashboard() {
+            updateStats();
+            renderOrdersTable();
+            
+            // Check for new orders every 5 seconds (simulated)
+            setInterval(checkForNewOrders, 5000);
+        }
+        
+        // Update dashboard statistics
+        function updateStats() {
+            const today = new Date().toISOString().split('T')[0];
+            
+            const todayOrders = orders.filter(order => 
+                order.timestamp.split('T')[0] === today
+            ).length;
+            
+            const pendingOrders = orders.filter(order => 
+                order.status === 'pending'
+            ).length;
+            
+            const totalSales = orders.reduce((sum, order) => 
+                sum + (order.status !== 'canceled' ? order.total : 0), 0
+            );
+            
+            const canceledOrders = orders.filter(order => 
+                order.status === 'canceled'
+            ).length;
+            
+            todayOrdersElement.textContent = todayOrders;
+            pendingOrdersElement.textContent = pendingOrders;
+            totalSalesElement.textContent = totalSales.toFixed(2) + ' ر.س';
+            canceledOrdersElement.textContent = canceledOrders;
+            
+            // Update notification badge
+            notificationBadge.textContent = pendingOrders;
+        }
+        
+        // Render orders table
+        function renderOrdersTable() {
+            ordersTableBody.innerHTML = '';
+            
+            if (orders.length === 0) {
+                ordersTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center;">لا توجد طلبات</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Sort orders by timestamp (newest first)
+            const sortedOrders = [...orders].sort((a, b) => 
+                new Date(b.timestamp) - new Date(a.timestamp)
+            );
+            
+            sortedOrders.forEach(order => {
+                const orderDate = new Date(order.timestamp);
+                const formattedDate = orderDate.toLocaleString('ar-SA');
+                
+                let statusClass = '';
+                if (order.status === 'pending') {
+                    statusClass = 'status-pending';
+                } else if (order.status === 'completed') {
+                    statusClass = 'status-completed';
+                } else if (order.status === 'canceled') {
+                    statusClass = 'status-canceled';
+                }
+                
+                const tr = document.createElement('tr');
+                tr.dataset.orderId = order.timestamp;
+                tr.innerHTML = `
+                    <td>${order.timestamp.substr(0, 10)}-${orders.indexOf(order) + 1}</td>
+                    <td>${order.customer.name}</td>
+                    <td>${getOrderTypeName(order.type)}</td>
+                    <td>${formattedDate}</td>
+                    <td>${order.total.toFixed(2)} ر.س</td>
+                    <td><span class="status ${statusClass}">${getStatusName(order.status)}</span></td>
+                    <td>
+                        <button class="btn btn-sm" onclick="showOrderDetails('${order.timestamp}')">عرض</button>
+                    </td>
+                `;
+                
+                ordersTableBody.appendChild(tr);
+            });
+        }
+        
+        // Get order type name
+        function getOrderTypeName(type) {
+            const types = {
+                'pickup': 'استلام',
+                'dinein': 'في المطعم',
+                'reservation': 'حجز'
+            };
+            return types[type] || type;
+        }
+        
+        // Get status name
+        function getStatusName(status) {
+            const statuses = {
+                'pending': 'قيد الانتظار',
+                'completed': 'مكتمل',
+                'canceled': 'ملغى'
+            };
+            return statuses[status] || status;
+        }
+        
+        // Show order details
+        function showOrderDetails(orderId) {
+            const order = orders.find(o => o.timestamp === orderId);
+            if (!order) return;
+            
+            document.getElementById('orderDetailsId').textContent = `#${orderId.substr(0, 10)}-${orders.indexOf(order) + 1}`;
+            document.getElementById('customerName').textContent = order.customer.name;
+            document.getElementById('customerPhone').textContent = order.customer.phone;
+            document.getElementById('orderType').textContent = getOrderTypeName(order.type);
+            document.getElementById('orderDate').textContent = new Date(order.timestamp).toLocaleString('ar-SA');
+            document.getElementById('orderStatus').innerHTML = `<span class="status ${order.status === 'pending' ? 'status-pending' : order.status === 'completed' ? 'status-completed' : 'status-canceled'}">${getStatusName(order.status)}</span>`;
+            document.getElementById('orderTotal').textContent = order.total.toFixed(2) + ' ر.س';
+            
+            // Additional info based on order type
+            let additionalInfo = '';
+            if (order.type === 'dinein') {
+                additionalInfo = `
+                    <div class="info-item">
+                        <label>رقم الطاولة</label>
+                        <p>${order.customer.tableNumber}</p>
+                    </div>
+                `;
+            } else if (order.type === 'reservation') {
+                additionalInfo = `
+                    <div class="info-item">
+                        <label>تاريخ الحجز</label>
+                        <p>${order.customer.date}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>وقت الحجز</label>
+                        <p>${order.customer.time}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>عدد الأشخاص</label>
+                        <p>${order.customer.persons}</p>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('additionalInfo').innerHTML = additionalInfo;
+            
+            // Render order items
+            const orderItemsTable = document.getElementById('orderItemsTable');
+            orderItemsTable.innerHTML = '';
+            
+            order.items.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><img src="${item.image}" alt="${item.title}" style="width: 50px; height: 50px; object-fit: cover;"></td>
+                    <td>${item.title}</td>
+                    <td>${item.price} ر.س</td>
+                    <td>${item.quantity}</td>
+                    <td>${(item.price * item.quantity).toFixed(2)} ر.س</td>
+                `;
+                orderItemsTable.appendChild(tr);
+            });
+            
+            // Show/hide action buttons based on order status
+            document.getElementById('completeOrderBtn').style.display = order.status === 'pending' ? 'inline-block' : 'none';
+            document.getElementById('cancelOrderBtn').style.display = order.status === 'pending' ? 'inline-block' : 'none';
+            
+            // Set up event listeners for action buttons
+            document.getElementById('completeOrderBtn').onclick = () => updateOrderStatus(orderId, 'completed');
+            document.getElementById('cancelOrderBtn').onclick = () => updateOrderStatus(orderId, 'canceled');
+            document.getElementById('closeDetailsBtn').onclick = () => orderDetails.style.display = 'none';
+            
+            orderDetails.style.display = 'block';
+        }
+        
+        // Update order status
+        function updateOrderStatus(orderId, status) {
+            const orderIndex = orders.findIndex(o => o.timestamp === orderId);
+            if (orderIndex === -1) return;
+            
+            orders[orderIndex].status = status;
+            localStorage.setItem('redanOrders', JSON.stringify(orders));
+            
+            // Update UI
+            renderOrdersTable();
+            updateStats();
+            orderDetails.style.display = 'none';
+            
+            showNotification(`تم تحديث حالة الطلب إلى "${getStatusName(status)}"`);
+        }
+        
+        // Check for new orders (simulated)
+        function checkForNewOrders() {
+            // In a real app, you would fetch new orders from the server
+            const storedOrders = JSON.parse(localStorage.getItem('redanOrders')) || [];
+            
+            if (storedOrders.length > orders.length) {
+                const newOrders = storedOrders.slice(orders.length);
+                orders = storedOrders;
+                
+                newOrders.forEach(order => {
+                    if (order.status === 'pending') {
+                        showNotification(`طلب جديد من ${order.customer.name} (${getOrderTypeName(order.type)})`);
+                        playNotificationSound();
+                    }
+                });
+                
+                updateStats();
+                renderOrdersTable();
+            }
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            document.getElementById('notificationMessage').textContent = message;
+            notificationPopup.style.display = 'block';
+            
+            setTimeout(() => {
+                notificationPopup.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Play notification sound
+        function playNotificationSound() {
+            notificationSound.currentTime = 0;
+            notificationSound.play();
+        }
+        
+        // Initialize the dashboard
+        initDashboard();
+    </script>
 </body>
 </html>
