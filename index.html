@@ -3,158 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم مطعم ريدان</title>
+    <title>تحضير موظفين - مطعم ريدان للمندي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #c52d2f;
             --secondary-color: #e6a756;
-            --dark-color: #3a2e24;
-            --light-color: #f8f1e5;
-            --success-color: #4caf50;
-            --warning-color: #ff9800;
-            --danger-color: #f44336;
+            --dark-color: #3a3a3a;
+            --light-color: #f5f5f5;
         }
         
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
         }
         
         body {
-            background-color: #f5f5f5;
+            background-color: #f9f9f9;
             color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
         }
         
         header {
             background-color: var(--primary-color);
             color: white;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
         }
         
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        
-        .logo span {
-            color: var(--secondary-color);
-        }
-        
-        .notification-icon {
-            position: relative;
-            cursor: pointer;
-        }
-        
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: var(--danger-color);
-            color: white;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px;
+            background-color: white;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
-        .container {
-            display: flex;
-            min-height: calc(100vh - 60px);
-        }
-        
-        .sidebar {
-            width: 250px;
-            background-color: white;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            padding: 1rem 0;
-        }
-        
-        .sidebar-menu {
-            list-style: none;
-        }
-        
-        .sidebar-menu li {
-            padding: 0.8rem 1.5rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .sidebar-menu li:hover {
-            background-color: #f0f0f0;
-        }
-        
-        .sidebar-menu li.active {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .sidebar-menu li i {
-            margin-left: 0.5rem;
-            width: 20px;
-            text-align: center;
-        }
-        
-        .main-content {
-            flex: 1;
-            padding: 1rem;
-            overflow-y: auto;
-        }
-        
-        .dashboard-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        
-        .card h3 {
-            color: #666;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
-        
-        .card p {
-            font-size: 1.8rem;
-            font-weight: bold;
+        .logo i {
+            font-size: 50px;
             color: var(--primary-color);
         }
         
-        .card.success {
-            border-top: 4px solid var(--success-color);
-        }
-        
-        .card.warning {
-            border-top: 4px solid var(--warning-color);
-        }
-        
-        .card.danger {
-            border-top: 4px solid var(--danger-color);
-        }
-        
-        .orders-table {
+        .attendance-section {
             background-color: white;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 22px;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-left: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+        
+        select, input, button {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(230, 167, 86, 0.3);
+        }
+        
+        .face-recognition {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .face-recognition:hover {
+            border-color: var(--secondary-color);
+            background-color: rgba(230, 167, 86, 0.05);
+        }
+        
+        .face-recognition i {
+            font-size: 50px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .face-recognition p {
+            color: #666;
+        }
+        
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn:hover {
+            background-color: #a82527;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn i {
+            margin-left: 8px;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #d49548;
+        }
+        
+        .attendance-list {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         
         table {
@@ -163,530 +188,353 @@
         }
         
         th, td {
-            padding: 1rem;
+            padding: 12px 15px;
             text-align: right;
+            border-bottom: 1px solid #eee;
         }
         
         th {
             background-color: var(--primary-color);
             color: white;
-            font-weight: bold;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
         }
         
         tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .status-present {
+            color: green;
+            font-weight: bold;
+        }
+        
+        .status-absent {
+            color: red;
+            font-weight: bold;
+        }
+        
+        .date-display {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: var(--dark-color);
             background-color: #f0f0f0;
-        }
-        
-        .status {
-            display: inline-block;
-            padding: 0.3rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-        
-        .status-pending {
-            background-color: var(--warning-color);
-            color: white;
-        }
-        
-        .status-completed {
-            background-color: var(--success-color);
-            color: white;
-        }
-        
-        .status-canceled {
-            background-color: var(--danger-color);
-            color: white;
-        }
-        
-        .btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .btn-success {
-            background-color: var(--success-color);
-            color: white;
-        }
-        
-        .btn-danger {
-            background-color: var(--danger-color);
-            color: white;
-        }
-        
-        .btn-sm {
-            padding: 0.3rem 0.6rem;
-            font-size: 0.8rem;
-        }
-        
-        .order-details {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-        }
-        
-        .order-details h2 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-            border-bottom: 2px solid #eee;
-            padding-bottom: 0.5rem;
-        }
-        
-        .order-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .info-item {
-            margin-bottom: 0.5rem;
-        }
-        
-        .info-item label {
-            display: block;
-            color: #666;
-            font-size: 0.9rem;
-        }
-        
-        .info-item p {
-            font-weight: bold;
-        }
-        
-        .order-items {
-            margin-top: 1.5rem;
-        }
-        
-        .order-items table {
-            margin-top: 1rem;
-        }
-        
-        .notification-popup {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1rem;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: none;
-            z-index: 1000;
-            max-width: 300px;
-        }
-        
-        .notification-sound {
-            display: none;
+            padding: 10px;
+            border-radius: 6px;
         }
         
         @media (max-width: 768px) {
             .container {
-                flex-direction: column;
+                padding: 10px;
             }
             
-            .sidebar {
-                width: 100%;
+            header h1 {
+                font-size: 22px;
             }
             
-            .dashboard-cards {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .dashboard-cards {
-                grid-template-columns: 1fr;
+            .attendance-section, .attendance-list {
+                padding: 20px;
             }
             
-            .order-info {
-                grid-template-columns: 1fr;
+            th, td {
+                padding: 8px 10px;
+                font-size: 14px;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">لوحة تحكم <span>ريدان</span></div>
-        <div class="notification-icon" id="notificationIcon">
-            <i class="fas fa-bell"></i>
-            <span class="notification-badge" id="notificationBadge">0</span>
-        </div>
-    </header>
-    
     <div class="container">
-        <div class="sidebar">
-            <ul class="sidebar-menu">
-                <li class="active"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</li>
-                <li><i class="fas fa-clipboard-list"></i> الطلبات</li>
-                <li><i class="fas fa-utensils"></i> القائمة</li>
-                <li><i class="fas fa-users"></i> العملاء</li>
-                <li><i class="fas fa-chart-bar"></i> التقارير</li>
-                <li><i class="fas fa-cog"></i> الإعدادات</li>
-            </ul>
+        <header>
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+            </div>
+            <h1>نظام تحضير موظفين مطعم ريدان للمندي</h1>
+            <p>نظام الحضور اليومي باستخدام بصمة الوجه</p>
+        </header>
+        
+        <div class="date-display">
+            <i class="far fa-calendar-alt"></i>
+            <span id="current-date">اليوم: الأحد 15 أكتوبر 2023</span>
         </div>
         
-        <div class="main-content">
-            <div class="dashboard-cards">
-                <div class="card success">
-                    <h3>طلبات اليوم</h3>
-                    <p id="todayOrders">0</p>
-                </div>
-                <div class="card warning">
-                    <h3>طلبات قيد الانتظار</h3>
-                    <p id="pendingOrders">0</p>
-                </div>
-                <div class="card">
-                    <h3>إجمالي المبيعات</h3>
-                    <p id="totalSales">0 ر.س</p>
-                </div>
-                <div class="card danger">
-                    <h3>طلبات ملغاة</h3>
-                    <p id="canceledOrders">0</p>
+        <div class="attendance-section">
+            <h2 class="section-title">
+                <i class="fas fa-fingerprint"></i>
+                تسجيل الحضور اليومي
+            </h2>
+            
+            <div class="form-group">
+                <label for="employee-name">اسم الموظف</label>
+                <select id="employee-name">
+                    <option value="">اختر اسم الموظف</option>
+                    <option value="أحمد محمد">أحمد محمد</option>
+                    <option value="خالد عبدالله">خالد عبدالله</option>
+                    <option value="سالم علي">سالم علي</option>
+                    <option value="محمود حسن">محمود حسن</option>
+                    <option value="يوسف إبراهيم">يوسف إبراهيم</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="employee-position">الوظيفة</label>
+                <input type="text" id="employee-position" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label>بصمة الوجه</label>
+                <div class="face-recognition" id="face-recognition">
+                    <i class="fas fa-user-circle"></i>
+                    <p>انقر هنا لمسح بصمة الوجه</p>
                 </div>
             </div>
             
-            <div class="orders-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>رقم الطلب</th>
-                            <th>العميل</th>
-                            <th>النوع</th>
-                            <th>التاريخ</th>
-                            <th>المجموع</th>
-                            <th>الحالة</th>
-                            <th>الإجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody id="ordersTableBody">
-                        <!-- Orders will be added dynamically -->
-                    </tbody>
-                </table>
+            <div class="form-group">
+                <label for="attendance-status">حالة الحضور</label>
+                <select id="attendance-status">
+                    <option value="present">حاضر</option>
+                    <option value="absent">غائب</option>
+                    <option value="late">متأخر</option>
+                    <option value="vacation">إجازة</option>
+                </select>
             </div>
             
-            <div class="order-details" id="orderDetails" style="display: none;">
-                <h2>تفاصيل الطلب <span id="orderDetailsId"></span></h2>
-                
-                <div class="order-info">
-                    <div class="info-item">
-                        <label>اسم العميل</label>
-                        <p id="customerName"></p>
-                    </div>
-                    <div class="info-item">
-                        <label>رقم الجوال</label>
-                        <p id="customerPhone"></p>
-                    </div>
-                    <div class="info-item">
-                        <label>نوع الطلب</label>
-                        <p id="orderType"></p>
-                    </div>
-                    <div class="info-item">
-                        <label>تاريخ الطلب</label>
-                        <p id="orderDate"></p>
-                    </div>
-                    <div class="info-item">
-                        <label>حالة الطلب</label>
-                        <p id="orderStatus"></p>
-                    </div>
-                    <div class="info-item">
-                        <label>المجموع</label>
-                        <p id="orderTotal"></p>
-                    </div>
-                </div>
-                
-                <div class="additional-info" id="additionalInfo"></div>
-                
-                <div class="order-items">
-                    <h3>عناصر الطلب</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>الصورة</th>
-                                <th>الاسم</th>
-                                <th>السعر</th>
-                                <th>الكمية</th>
-                                <th>المجموع</th>
-                            </tr>
-                        </thead>
-                        <tbody id="orderItemsTable">
-                            <!-- Order items will be added dynamically -->
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div class="order-actions" style="margin-top: 1.5rem; text-align: left;">
-                    <button class="btn btn-success" id="completeOrderBtn">إكمال الطلب</button>
-                    <button class="btn btn-danger" id="cancelOrderBtn">إلغاء الطلب</button>
-                    <button class="btn" id="closeDetailsBtn" style="background-color: #ddd;">إغلاق</button>
-                </div>
+            <div class="form-group">
+                <label for="notes">ملاحظات</label>
+                <input type="text" id="notes" placeholder="أي ملاحظات إضافية">
             </div>
+            
+            <button class="btn" id="submit-btn">
+                <i class="fas fa-paper-plane"></i>
+                تسجيل الحضور وإرسال البيانات
+            </button>
         </div>
-    </div>
-    
-    <div class="notification-popup" id="notificationPopup">
-        <div id="notificationMessage">طلب جديد تم استلامه!</div>
-    </div>
-    
-    <audio class="notification-sound" id="notificationSound">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3" type="audio/mpeg">
-    </audio>
-    
-    <script>
-        // Sample orders data (in a real app, this would come from a server)
-        let orders = JSON.parse(localStorage.getItem('redanOrders')) || [];
         
-        // DOM elements
-        const todayOrdersElement = document.getElementById('todayOrders');
-        const pendingOrdersElement = document.getElementById('pendingOrders');
-        const totalSalesElement = document.getElementById('totalSales');
-        const canceledOrdersElement = document.getElementById('canceledOrders');
-        const ordersTableBody = document.getElementById('ordersTableBody');
-        const orderDetails = document.getElementById('orderDetails');
-        const notificationBadge = document.getElementById('notificationBadge');
-        const notificationPopup = document.getElementById('notificationPopup');
-        const notificationSound = document.getElementById('notificationSound');
-        
-        // Initialize the dashboard
-        function initDashboard() {
-            updateStats();
-            renderOrdersTable();
+        <div class="attendance-list">
+            <h2 class="section-title">
+                <i class="fas fa-list-ol"></i>
+                قائمة الحضور اليومية
+            </h2>
             
-            // Check for new orders every 5 seconds (simulated)
-            setInterval(checkForNewOrders, 5000);
-        }
-        
-        // Update dashboard statistics
-        function updateStats() {
-            const today = new Date().toISOString().split('T')[0];
-            
-            const todayOrders = orders.filter(order => 
-                order.timestamp.split('T')[0] === today
-            ).length;
-            
-            const pendingOrders = orders.filter(order => 
-                order.status === 'pending'
-            ).length;
-            
-            const totalSales = orders.reduce((sum, order) => 
-                sum + (order.status !== 'canceled' ? order.total : 0), 0
-            );
-            
-            const canceledOrders = orders.filter(order => 
-                order.status === 'canceled'
-            ).length;
-            
-            todayOrdersElement.textContent = todayOrders;
-            pendingOrdersElement.textContent = pendingOrders;
-            totalSalesElement.textContent = totalSales.toFixed(2) + ' ر.س';
-            canceledOrdersElement.textContent = canceledOrders;
-            
-            // Update notification badge
-            notificationBadge.textContent = pendingOrders;
-        }
-        
-        // Render orders table
-        function renderOrdersTable() {
-            ordersTableBody.innerHTML = '';
-            
-            if (orders.length === 0) {
-                ordersTableBody.innerHTML = `
+            <table>
+                <thead>
                     <tr>
-                        <td colspan="7" style="text-align: center;">لا توجد طلبات</td>
+                        <th>اسم الموظف</th>
+                        <th>الوظيفة</th>
+                        <th>وقت الحضور</th>
+                        <th>الحالة</th>
                     </tr>
-                `;
+                </thead>
+                <tbody id="attendance-table-body">
+                    <!-- سيتم ملء هذا الجدول بواسطة JavaScript -->
+                </tbody>
+            </table>
+            
+            <button class="btn btn-secondary" id="send-whatsapp" style="margin-top: 20px;">
+                <i class="fab fa-whatsapp"></i>
+                إرسال القائمة عبر واتساب
+            </button>
+            
+            <button class="btn btn-secondary" id="send-google-sheet" style="margin-top: 10px;">
+                <i class="fab fa-google"></i>
+                إرسال البيانات إلى جوجل شيت
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // تحديث التاريخ الحالي
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const arabicDate = now.toLocaleDateString('ar-SA', options);
+            document.getElementById('current-date').textContent = `اليوم: ${arabicDate}`;
+        }
+        
+        // بيانات الموظفين
+        const employees = {
+            "أحمد محمد": { position: "طاهي" },
+            "خالد عبدالله": { position: "نادل" },
+            "سالم علي": { position: "نادل" },
+            "محمود حسن": { position: "مدير" },
+            "يوسف إبراهيم": { position: "حارس" }
+        };
+        
+        // بيانات الحضور (مخزنة مؤقتاً)
+        let attendanceData = [];
+        
+        // تحديث حقل الوظيفة عند اختيار الموظف
+        document.getElementById('employee-name').addEventListener('change', function() {
+            const selectedEmployee = this.value;
+            const positionField = document.getElementById('employee-position');
+            
+            if (selectedEmployee && employees[selectedEmployee]) {
+                positionField.value = employees[selectedEmployee].position;
+            } else {
+                positionField.value = '';
+            }
+        });
+        
+        // محاكاة مسح بصمة الوجه
+        document.getElementById('face-recognition').addEventListener('click', function() {
+            const employeeName = document.getElementById('employee-name').value;
+            
+            if (!employeeName) {
+                alert('الرجاء اختيار اسم الموظف أولاً');
                 return;
             }
             
-            // Sort orders by timestamp (newest first)
-            const sortedOrders = [...orders].sort((a, b) => 
-                new Date(b.timestamp) - new Date(a.timestamp)
-            );
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i><p>جاري مسح بصمة الوجه...</p>';
             
-            sortedOrders.forEach(order => {
-                const orderDate = new Date(order.timestamp);
-                const formattedDate = orderDate.toLocaleString('ar-SA');
+            // محاكاة التأخير للمسح
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-check-circle" style="color:green"></i><p>تم التحقق من بصمة الوجه بنجاح</p>';
                 
+                // عرض رسالة تأكيد
+                alert(`تم التحقق من هوية الموظف: ${employeeName}`);
+            }, 2000);
+        });
+        
+        // تسجيل الحضور
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const employeeName = document.getElementById('employee-name').value;
+            const employeePosition = document.getElementById('employee-position').value;
+            const attendanceStatus = document.getElementById('attendance-status').value;
+            const notes = document.getElementById('notes').value;
+            
+            if (!employeeName) {
+                alert('الرجاء اختيار اسم الموظف');
+                return;
+            }
+            
+            // التحقق من وجود مسح للبصمة
+            const faceRecognition = document.getElementById('face-recognition').innerHTML;
+            if (!faceRecognition.includes('تم التحقق')) {
+                alert('الرجاء التحقق من بصمة الوجه أولاً');
+                return;
+            }
+            
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ar-SA');
+            
+            // إضافة البيانات إلى المصفوفة
+            attendanceData.push({
+                name: employeeName,
+                position: employeePosition,
+                time: timeString,
+                status: attendanceStatus,
+                notes: notes
+            });
+            
+            // تحديث الجدول
+            updateAttendanceTable();
+            
+            // إعادة تعيين النموذج
+            document.getElementById('employee-name').value = '';
+            document.getElementById('employee-position').value = '';
+            document.getElementById('face-recognition').innerHTML = '<i class="fas fa-user-circle"></i><p>انقر هنا لمسح بصمة الوجه</p>';
+            document.getElementById('attendance-status').value = 'present';
+            document.getElementById('notes').value = '';
+            
+            alert('تم تسجيل الحضور بنجاح');
+        });
+        
+        // تحديث جدول الحضور
+        function updateAttendanceTable() {
+            const tableBody = document.getElementById('attendance-table-body');
+            tableBody.innerHTML = '';
+            
+            attendanceData.forEach(record => {
+                const row = document.createElement('tr');
+                
+                // تحديد فئة الحالة لتنسيق اللون
                 let statusClass = '';
-                if (order.status === 'pending') {
-                    statusClass = 'status-pending';
-                } else if (order.status === 'completed') {
-                    statusClass = 'status-completed';
-                } else if (order.status === 'canceled') {
-                    statusClass = 'status-canceled';
+                let statusText = '';
+                
+                switch(record.status) {
+                    case 'present':
+                        statusClass = 'status-present';
+                        statusText = 'حاضر';
+                        break;
+                    case 'absent':
+                        statusClass = 'status-absent';
+                        statusText = 'غائب';
+                        break;
+                    case 'late':
+                        statusClass = 'status-late';
+                        statusText = 'متأخر';
+                        break;
+                    case 'vacation':
+                        statusClass = 'status-vacation';
+                        statusText = 'إجازة';
+                        break;
                 }
                 
-                const tr = document.createElement('tr');
-                tr.dataset.orderId = order.timestamp;
-                tr.innerHTML = `
-                    <td>${order.timestamp.substr(0, 10)}-${orders.indexOf(order) + 1}</td>
-                    <td>${order.customer.name}</td>
-                    <td>${getOrderTypeName(order.type)}</td>
-                    <td>${formattedDate}</td>
-                    <td>${order.total.toFixed(2)} ر.س</td>
-                    <td><span class="status ${statusClass}">${getStatusName(order.status)}</span></td>
-                    <td>
-                        <button class="btn btn-sm" onclick="showOrderDetails('${order.timestamp}')">عرض</button>
-                    </td>
+                row.innerHTML = `
+                    <td>${record.name}</td>
+                    <td>${record.position}</td>
+                    <td>${record.time}</td>
+                    <td class="${statusClass}">${statusText}</td>
                 `;
                 
-                ordersTableBody.appendChild(tr);
+                tableBody.appendChild(row);
             });
         }
         
-        // Get order type name
-        function getOrderTypeName(type) {
-            const types = {
-                'pickup': 'استلام',
-                'dinein': 'في المطعم',
-                'reservation': 'حجز'
-            };
-            return types[type] || type;
-        }
-        
-        // Get status name
-        function getStatusName(status) {
-            const statuses = {
-                'pending': 'قيد الانتظار',
-                'completed': 'مكتمل',
-                'canceled': 'ملغى'
-            };
-            return statuses[status] || status;
-        }
-        
-        // Show order details
-        function showOrderDetails(orderId) {
-            const order = orders.find(o => o.timestamp === orderId);
-            if (!order) return;
-            
-            document.getElementById('orderDetailsId').textContent = `#${orderId.substr(0, 10)}-${orders.indexOf(order) + 1}`;
-            document.getElementById('customerName').textContent = order.customer.name;
-            document.getElementById('customerPhone').textContent = order.customer.phone;
-            document.getElementById('orderType').textContent = getOrderTypeName(order.type);
-            document.getElementById('orderDate').textContent = new Date(order.timestamp).toLocaleString('ar-SA');
-            document.getElementById('orderStatus').innerHTML = `<span class="status ${order.status === 'pending' ? 'status-pending' : order.status === 'completed' ? 'status-completed' : 'status-canceled'}">${getStatusName(order.status)}</span>`;
-            document.getElementById('orderTotal').textContent = order.total.toFixed(2) + ' ر.س';
-            
-            // Additional info based on order type
-            let additionalInfo = '';
-            if (order.type === 'dinein') {
-                additionalInfo = `
-                    <div class="info-item">
-                        <label>رقم الطاولة</label>
-                        <p>${order.customer.tableNumber}</p>
-                    </div>
-                `;
-            } else if (order.type === 'reservation') {
-                additionalInfo = `
-                    <div class="info-item">
-                        <label>تاريخ الحجز</label>
-                        <p>${order.customer.date}</p>
-                    </div>
-                    <div class="info-item">
-                        <label>وقت الحجز</label>
-                        <p>${order.customer.time}</p>
-                    </div>
-                    <div class="info-item">
-                        <label>عدد الأشخاص</label>
-                        <p>${order.customer.persons}</p>
-                    </div>
-                `;
+        // إرسال البيانات عبر واتساب
+        document.getElementById('send-whatsapp').addEventListener('click', function() {
+            if (attendanceData.length === 0) {
+                alert('لا توجد بيانات لإرسالها');
+                return;
             }
             
-            document.getElementById('additionalInfo').innerHTML = additionalInfo;
+            // تحضير رسالة الواتساب
+            let message = `*تقرير الحضور اليومي - مطعم ريدان للمندي*\n\n`;
+            message += `التاريخ: ${document.getElementById('current-date').textContent}\n\n`;
             
-            // Render order items
-            const orderItemsTable = document.getElementById('orderItemsTable');
-            orderItemsTable.innerHTML = '';
-            
-            order.items.forEach(item => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><img src="${item.image}" alt="${item.title}" style="width: 50px; height: 50px; object-fit: cover;"></td>
-                    <td>${item.title}</td>
-                    <td>${item.price} ر.س</td>
-                    <td>${item.quantity}</td>
-                    <td>${(item.price * item.quantity).toFixed(2)} ر.س</td>
-                `;
-                orderItemsTable.appendChild(tr);
+            attendanceData.forEach(record => {
+                let statusText = '';
+                switch(record.status) {
+                    case 'present': statusText = 'حاضر'; break;
+                    case 'absent': statusText = 'غائب'; break;
+                    case 'late': statusText = 'متأخر'; break;
+                    case 'vacation': statusText = 'إجازة'; break;
+                }
+                
+                message += `- ${record.name} (${record.position}): ${statusText} في ${record.time}\n`;
             });
             
-            // Show/hide action buttons based on order status
-            document.getElementById('completeOrderBtn').style.display = order.status === 'pending' ? 'inline-block' : 'none';
-            document.getElementById('cancelOrderBtn').style.display = order.status === 'pending' ? 'inline-block' : 'none';
+            // تشفير الرسالة للرابط
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappNumber = '971588155123';
             
-            // Set up event listeners for action buttons
-            document.getElementById('completeOrderBtn').onclick = () => updateOrderStatus(orderId, 'completed');
-            document.getElementById('cancelOrderBtn').onclick = () => updateOrderStatus(orderId, 'canceled');
-            document.getElementById('closeDetailsBtn').onclick = () => orderDetails.style.display = 'none';
-            
-            orderDetails.style.display = 'block';
-        }
+            // فتح الواتساب
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+        });
         
-        // Update order status
-        function updateOrderStatus(orderId, status) {
-            const orderIndex = orders.findIndex(o => o.timestamp === orderId);
-            if (orderIndex === -1) return;
-            
-            orders[orderIndex].status = status;
-            localStorage.setItem('redanOrders', JSON.stringify(orders));
-            
-            // Update UI
-            renderOrdersTable();
-            updateStats();
-            orderDetails.style.display = 'none';
-            
-            showNotification(`تم تحديث حالة الطلب إلى "${getStatusName(status)}"`);
-        }
-        
-        // Check for new orders (simulated)
-        function checkForNewOrders() {
-            // In a real app, you would fetch new orders from the server
-            const storedOrders = JSON.parse(localStorage.getItem('redanOrders')) || [];
-            
-            if (storedOrders.length > orders.length) {
-                const newOrders = storedOrders.slice(orders.length);
-                orders = storedOrders;
-                
-                newOrders.forEach(order => {
-                    if (order.status === 'pending') {
-                        showNotification(`طلب جديد من ${order.customer.name} (${getOrderTypeName(order.type)})`);
-                        playNotificationSound();
-                    }
-                });
-                
-                updateStats();
-                renderOrdersTable();
+        // إرسال البيانات إلى جوجل شيت (محاكاة)
+        document.getElementById('send-google-sheet').addEventListener('click', function() {
+            if (attendanceData.length === 0) {
+                alert('لا توجد بيانات لإرسالها');
+                return;
             }
-        }
-        
-        // Show notification
-        function showNotification(message) {
-            document.getElementById('notificationMessage').textContent = message;
-            notificationPopup.style.display = 'block';
             
-            setTimeout(() => {
-                notificationPopup.style.display = 'none';
-            }, 5000);
-        }
+            // في الواقع، هنا يجب ربطها بجوجل شيت عبر Google Apps Script أو API
+            // هذه مجرد محاكاة للوظيفة
+            alert('تم إرسال البيانات إلى جوجل شيت بنجاح (هذه محاكاة - في التطبيق الفعلي سيتم الربط مع جوجل شيت)');
+            
+            // يمكنك هنا إضافة كود لربط جوجل شيت الفعلي باستخدام:
+            // 1. Google Apps Script
+            // 2. Google Sheets API
+            // 3. أو أي خدمة وسيطة مثل Zapier
+        });
         
-        // Play notification sound
-        function playNotificationSound() {
-            notificationSound.currentTime = 0;
-            notificationSound.play();
-        }
-        
-        // Initialize the dashboard
-        initDashboard();
+        // تهيئة الصفحة عند التحميل
+        window.addEventListener('DOMContentLoaded', function() {
+            updateCurrentDate();
+            
+            // تحديث التاريخ كل دقيقة (في حال بقاء الصفحة مفتوحة)
+            setInterval(updateCurrentDate, 60000);
+        });
     </script>
 </body>
 </html>
