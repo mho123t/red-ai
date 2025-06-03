@@ -3,869 +3,275 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم مطعم ريدان</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>إدارة موظفي ريدان للمندي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #c62828;
-            --secondary-color: #e53935;
-            --accent-color: #ff8a80;
-            --dark-color: #2c3e50;
-            --light-color: #ecf0f1;
-            --success-color: #2ecc71;
-            --warning-color: #f39c12;
-            --danger-color: #e74c3c;
-        }
-        
-        * {
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f5f5f5;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Tajawal', sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
             color: #333;
         }
-        
-        .dashboard {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            min-height: 100vh;
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        
-        /* الشريط الجانبي */
-        .sidebar {
-            background-color: var(--dark-color);
+        header {
+            background-color: #8B0000;
             color: white;
-            padding: 20px 0;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .logo {
+            padding: 20px;
             text-align: center;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 30px;
+            border-radius: 5px;
+            margin-bottom: 20px;
         }
-        
-        .logo h2 {
-            color: var(--accent-color);
-            font-size: 24px;
+        h1 {
+            margin: 0;
         }
-        
-        .logo img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 10px;
-            border: 3px solid var(--accent-color);
-        }
-        
-        .nav-menu {
-            list-style: none;
-        }
-        
-        .nav-item {
-            margin-bottom: 5px;
-        }
-        
-        .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .nav-link:hover, .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-right: 3px solid var(--accent-color);
-        }
-        
-        .nav-link i {
-            margin-left: 10px;
-            font-size: 18px;
-        }
-        
-        /* المحتوى الرئيسي */
-        .main-content {
-            padding: 20px;
-        }
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .header h1 {
-            color: var(--primary-color);
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-        }
-        
-        .user-info img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-left: 10px;
-        }
-        
-        /* بطاقات الإحصائيات */
-        .stats-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .stat-card.orders {
-            border-top: 4px solid var(--primary-color);
-        }
-        
-        .stat-card.sales {
-            border-top: 4px solid var(--success-color);
-        }
-        
-        .stat-card.staff {
-            border-top: 4px solid var(--warning-color);
-        }
-        
-        .stat-card.inventory {
-            border-top: 4px solid var(--danger-color);
-        }
-        
-        .stat-card h3 {
-            font-size: 16px;
-            margin-bottom: 10px;
-            color: #555;
-        }
-        
-        .stat-card .value {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .stat-card .change {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-        }
-        
-        .change.up {
-            color: var(--success-color);
-        }
-        
-        .change.down {
-            color: var(--danger-color);
-        }
-        
-        /* الأقسام الرئيسية */
-        .main-sections {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        
-        @media (max-width: 1200px) {
-            .main-sections {
-                grid-template-columns: 1fr;
-            }
-        }
-        
         .section {
             background-color: white;
-            border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        
-        .section-header h2 {
-            font-size: 20px;
-            color: var(--dark-color);
-        }
-        
-        /* جدول الأطباق المطلوبة */
-        .dishes-table {
+        table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 15px;
         }
-        
-        .dishes-table th, .dishes-table td {
-            padding: 12px 15px;
+        th, td {
+            padding: 12px;
             text-align: right;
+            border-bottom: 1px solid #ddd;
         }
-        
-        .dishes-table th {
-            background-color: #f8f9fa;
-            font-weight: 500;
-            color: #555;
+        th {
+            background-color: #f2f2f2;
         }
-        
-        .dishes-table tr {
-            border-bottom: 1px solid #eee;
-        }
-        
-        .dishes-table tr:last-child {
-            border-bottom: none;
-        }
-        
-        .dish-info {
-            display: flex;
-            align-items: center;
-        }
-        
-        .dish-info img {
-            width: 40px;
-            height: 40px;
+        .btn {
+            background-color: #8B0000;
+            color: white;
+            border: none;
+            padding: 8px 12px;
             border-radius: 5px;
-            object-fit: cover;
-            margin-left: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 2px;
         }
-        
-        /* أداء الموظفين */
-        .staff-performance {
-            margin-top: 20px;
+        .btn:hover {
+            opacity: 0.9;
         }
-        
-        .staff-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
+        .whatsapp-btn {
+            background-color: #25D366;
         }
-        
-        .staff-item:last-child {
-            border-bottom: none;
+        .delete-btn {
+            background-color: #ff3333;
         }
-        
-        .staff-details {
-            display: flex;
-            align-items: center;
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
-        
-        .staff-details img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-left: 10px;
+        .form-group {
+            margin-bottom: 15px;
         }
-        
-        .staff-name {
-            font-weight: 500;
-        }
-        
-        .staff-position {
-            font-size: 12px;
-            color: #777;
-        }
-        
-        .progress-bar {
-            height: 8px;
-            background-color: #eee;
-            border-radius: 4px;
-            margin-top: 5px;
-            overflow: hidden;
-        }
-        
-        .progress {
-            height: 100%;
-            background-color: var(--success-color);
-            border-radius: 4px;
-        }
-        
-        /* المخزون */
-        .inventory-items {
-            margin-top: 20px;
-        }
-        
-        .inventory-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .inventory-item:last-child {
-            border-bottom: none;
-        }
-        
-        .inventory-info {
-            display: flex;
-            align-items: center;
-        }
-        
-        .inventory-info i {
-            width: 40px;
-            height: 40px;
-            background-color: #f8f9fa;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 10px;
-            color: var(--primary-color);
-        }
-        
-        .inventory-name {
-            font-weight: 500;
-        }
-        
-        .inventory-category {
-            font-size: 12px;
-            color: #777;
-        }
-        
-        .inventory-stock {
+        label {
+            display: block;
+            margin-bottom: 5px;
             font-weight: bold;
         }
-        
-        .low-stock {
-            color: var(--danger-color);
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Tajawal', sans-serif;
         }
-        
-        /* التقارير */
-        .reports-section {
+        .full-width {
             grid-column: span 2;
         }
-        
-        .report-options {
-            display: flex;
-            margin-bottom: 20px;
+        .loading {
+            text-align: center;
+            padding: 20px;
         }
-        
-        .report-btn {
-            padding: 8px 15px;
-            background-color: #f8f9fa;
-            border: none;
-            border-radius: 5px;
-            margin-left: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .report-btn:hover, .report-btn.active {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .chart-container {
-            height: 300px;
-            margin-top: 20px;
-        }
-        
-        /* إشعارات الواتساب */
-        .whatsapp-integration {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: #25D366;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-        }
-        
-        .whatsapp-info {
-            display: flex;
-            align-items: center;
-        }
-        
-        .whatsapp-info i {
-            font-size: 24px;
-            margin-left: 10px;
-        }
-        
-        .connect-btn {
-            background-color: white;
-            color: #25D366;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .connect-btn:hover {
-            background-color: #f1f1f1;
-        }
-        
-        /* تكامل جوجل شيتس */
-        .google-sheets-integration {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: #34A853;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-        
-        .google-info {
-            display: flex;
-            align-items: center;
-        }
-        
-        .google-info i {
-            font-size: 24px;
-            margin-left: 10px;
-        }
-        
-        /* زر التحميل على GitHub */
-        .github-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background-color: #333;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            z-index: 100;
-        }
-        
-        .github-btn i {
-            margin-right: 8px;
+        @media (max-width: 768px) {
+            form {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="dashboard">
-        <!-- الشريط الجانبي -->
-        <div class="sidebar">
-            <div class="logo">
-                <img src="https://via.placeholder.com/80" alt="شعار مطعم ريدان">
-                <h2>مطعم ريدان</h2>
-            </div>
-            
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#" class="nav-link active">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span>لوحة التحكم</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-utensils"></i>
-                        <span>قائمة الطعام</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>الطلبات</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-users"></i>
-                        <span>الموظفون</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-box-open"></i>
-                        <span>المخزون</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-chart-line"></i>
-                        <span>التقارير</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-cog"></i>
-                        <span>الإعدادات</span>
-                    </a>
-                </li>
-            </ul>
+    <div class="container">
+        <header>
+            <h1>نظام إدارة الموظفين - ريدان للمندي</h1>
+        </header>
+
+        <div class="section">
+            <h2>إضافة موظف جديد</h2>
+            <form id="employeeForm">
+                <div class="form-group">
+                    <label for="name">اسم الموظف</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="position">الوظيفة</label>
+                    <select id="position" required>
+                        <option value="">اختر الوظيفة</option>
+                        <option value="طباخ">طباخ</option>
+                        <option value="نادل">نادل</option>
+                        <option value="مشرف">مشرف</option>
+                        <option value="موظف استقبال">موظف استقبال</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="phone">رقم الهاتف</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="salary">الراتب</label>
+                    <input type="number" id="salary" required>
+                </div>
+                <div class="form-group full-width">
+                    <button type="submit" class="btn">حفظ الموظف</button>
+                </div>
+            </form>
         </div>
-        
-        <!-- المحتوى الرئيسي -->
-        <div class="main-content">
-            <div class="header">
-                <h1>لوحة التحكم</h1>
-                <div class="user-info">
-                    <span>مرحباً، أحمد</span>
-                    <img src="https://via.placeholder.com/40" alt="صورة المستخدم">
-                </div>
-            </div>
-            
-            <!-- بطاقات الإحصائيات -->
-            <div class="stats-cards">
-                <div class="stat-card orders">
-                    <h3>الطلبات اليومية</h3>
-                    <div class="value">47</div>
-                    <div class="change up">
-                        <i class="fas fa-arrow-up"></i>
-                        <span>12% عن الأمس</span>
-                    </div>
-                </div>
-                
-                <div class="stat-card sales">
-                    <h3>الإيرادات اليومية</h3>
-                    <div class="value">3,850 ر.س</div>
-                    <div class="change up">
-                        <i class="fas fa-arrow-up"></i>
-                        <span>8% عن الأمس</span>
-                    </div>
-                </div>
-                
-                <div class="stat-card staff">
-                    <h3>الموظفون النشطون</h3>
-                    <div class="value">5/8</div>
-                    <div class="change down">
-                        <i class="fas fa-arrow-down"></i>
-                        <span>2 في إجازة</span>
-                    </div>
-                </div>
-                
-                <div class="stat-card inventory">
-                    <h3>عناصر قليلة المخزون</h3>
-                    <div class="value">7</div>
-                    <div class="change up">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <span>تحتاج إعادة طلب</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- الأقسام الرئيسية -->
-            <div class="main-sections">
-                <!-- الأطباق الأكثر مبيعاً -->
-                <div class="section">
-                    <div class="section-header">
-                        <h2>الأطباق الأكثر مبيعاً</h2>
-                        <select style="padding: 5px; border-radius: 5px; border: 1px solid #ddd;">
-                            <option>اليوم</option>
-                            <option>هذا الأسبوع</option>
-                            <option>هذا الشهر</option>
-                        </select>
-                    </div>
-                    
-                    <table class="dishes-table">
-                        <thead>
-                            <tr>
-                                <th>عدد الطلبات</th>
-                                <th>الطبق</th>
-                                <th>الإيرادات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>23</td>
-                                <td>
-                                    <div class="dish-info">
-                                        <span>كبسة لحم</span>
-                                        <img src="https://via.placeholder.com/40" alt="كبسة لحم">
-                                    </div>
-                                </td>
-                                <td>1,265 ر.س</td>
-                            </tr>
-                            <tr>
-                                <td>18</td>
-                                <td>
-                                    <div class="dish-info">
-                                        <span>مندي دجاج</span>
-                                        <img src="https://via.placeholder.com/40" alt="مندي دجاج">
-                                    </div>
-                                </td>
-                                <td>945 ر.س</td>
-                            </tr>
-                            <tr>
-                                <td>15</td>
-                                <td>
-                                    <div class="dish-info">
-                                        <span>شوربة لحم</span>
-                                        <img src="https://via.placeholder.com/40" alt="شوربة لحم">
-                                    </div>
-                                </td>
-                                <td>675 ر.س</td>
-                            </tr>
-                            <tr>
-                                <td>12</td>
-                                <td>
-                                    <div class="dish-info">
-                                        <span>سلطة ريدان</span>
-                                        <img src="https://via.placeholder.com/40" alt="سلطة ريدان">
-                                    </div>
-                                </td>
-                                <td>420 ر.س</td>
-                            </tr>
-                            <tr>
-                                <td>9</td>
-                                <td>
-                                    <div class="dish-info">
-                                        <span>حلى القهوة</span>
-                                        <img src="https://via.placeholder.com/40" alt="حلى القهوة">
-                                    </div>
-                                </td>
-                                <td>315 ر.س</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <!-- أداء الموظفين -->
-                <div class="section">
-                    <div class="section-header">
-                        <h2>أداء الموظفين</h2>
-                        <select style="padding: 5px; border-radius: 5px; border: 1px solid #ddd;">
-                            <option>هذا الأسبوع</option>
-                            <option>هذا الشهر</option>
-                            <option>هذا العام</option>
-                        </select>
-                    </div>
-                    
-                    <div class="staff-performance">
-                        <div class="staff-item">
-                            <div class="staff-details">
-                                <img src="https://via.placeholder.com/40" alt="محمد">
-                                <div>
-                                    <div class="staff-name">محمد</div>
-                                    <div class="staff-position">نادل</div>
-                                </div>
-                            </div>
-                            <div style="width: 150px;">
-                                <div style="text-align: left; margin-bottom: 5px;">92%</div>
-                                <div class="progress-bar">
-                                    <div class="progress" style="width: 92%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="staff-item">
-                            <div class="staff-details">
-                                <img src="https://via.placeholder.com/40" alt="علي">
-                                <div>
-                                    <div class="staff-name">علي</div>
-                                    <div class="staff-position">نادل</div>
-                                </div>
-                            </div>
-                            <div style="width: 150px;">
-                                <div style="text-align: left; margin-bottom: 5px;">85%</div>
-                                <div class="progress-bar">
-                                    <div class="progress" style="width: 85%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="staff-item">
-                            <div class="staff-details">
-                                <img src="https://via.placeholder.com/40" alt="فاطمة">
-                                <div>
-                                    <div class="staff-name">فاطمة</div>
-                                    <div class="staff-position">نادلة</div>
-                                </div>
-                            </div>
-                            <div style="width: 150px;">
-                                <div style="text-align: left; margin-bottom: 5px;">78%</div>
-                                <div class="progress-bar">
-                                    <div class="progress" style="width: 78%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="staff-item">
-                            <div class="staff-details">
-                                <img src="https://via.placeholder.com/40" alt="خالد">
-                                <div>
-                                    <div class="staff-name">خالد</div>
-                                    <div class="staff-position">طاهي</div>
-                                </div>
-                            </div>
-                            <div style="width: 150px;">
-                                <div style="text-align: left; margin-bottom: 5px;">88%</div>
-                                <div class="progress-bar">
-                                    <div class="progress" style="width: 88%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- المخزون -->
-                <div class="section">
-                    <div class="section-header">
-                        <h2>مراقبة المخزون</h2>
-                        <button style="padding: 5px 10px; background-color: var(--primary-color); color: white; border: none; border-radius: 5px;">طلب مواد</button>
-                    </div>
-                    
-                    <div class="inventory-items">
-                        <div class="inventory-item">
-                            <div class="inventory-info">
-                                <i class="fas fa-drumstick-bite"></i>
-                                <div>
-                                    <div class="inventory-name">لحم بقري</div>
-                                    <div class="inventory-category">لحوم</div>
-                                </div>
-                            </div>
-                            <div class="inventory-stock low-stock">3 كجم</div>
-                        </div>
-                        
-                        <div class="inventory-item">
-                            <div class="inventory-info">
-                                <i class="fas fa-egg"></i>
-                                <div>
-                                    <div class="inventory-name">بيض</div>
-                                    <div class="inventory-category">مواد أساسية</div>
-                                </div>
-                            </div>
-                            <div class="inventory-stock low-stock">12 حبة</div>
-                        </div>
-                        
-                        <div class="inventory-item">
-                            <div class="inventory-info">
-                                <i class="fas fa-wine-bottle"></i>
-                                <div>
-                                    <div class="inventory-name">زيت زيتون</div>
-                                    <div class="inventory-category">زيوت</div>
-                                </div>
-                            </div>
-                            <div class="inventory-stock">2 لتر</div>
-                        </div>
-                        
-                        <div class="inventory-item">
-                            <div class="inventory-info">
-                                <i class="fas fa-apple-alt"></i>
-                                <div>
-                                    <div class="inventory-name">طماطم</div>
-                                    <div class="inventory-category">خضروات</div>
-                                </div>
-                            </div>
-                            <div class="inventory-stock low-stock">5 كجم</div>
-                        </div>
-                        
-                        <div class="inventory-item">
-                            <div class="inventory-info">
-                                <i class="fas fa-coffee"></i>
-                                <div>
-                                    <div class="inventory-name">قهوة</div>
-                                    <div class="inventory-category">مشروبات</div>
-                                </div>
-                            </div>
-                            <div class="inventory-stock">1.5 كجم</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- التقارير -->
-                <div class="section reports-section">
-                    <div class="section-header">
-                        <h2>التقارير المالية</h2>
-                        <div class="report-options">
-                            <button class="report-btn active">يومي</button>
-                            <button class="report-btn">أسبوعي</button>
-                            <button class="report-btn">شهري</button>
-                            <button class="report-btn">سنوي</button>
-                        </div>
-                    </div>
-                    
-                    <div class="chart-container">
-                        <img src="https://via.placeholder.com/1000x300" alt="رسم بياني للإيرادات" style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
-                    </div>
-                </div>
-            </div>
-            
-            <!-- تكامل الواتساب -->
-            <div class="whatsapp-integration">
-                <div class="whatsapp-info">
-                    <i class="fab fa-whatsapp"></i>
-                    <div>
-                        <h3>تلقي إشعارات الطلبات على الواتساب</h3>
-                        <p>قم بربط لوحة التحكم برقم الهاتف لتلقي إشعارات فورية</p>
-                    </div>
-                </div>
-                <button class="connect-btn">ربط الآن</button>
-            </div>
-            
-            <!-- تكامل جوجل شيتس -->
-            <div class="google-sheets-integration">
-                <div class="google-info">
-                    <i class="fab fa-google"></i>
-                    <div>
-                        <h3>تصدير البيانات إلى جوجل شيتس</h3>
-                        <p>احفظ تقاريرك وجداولك تلقائياً في جوجل شيتس</p>
-                    </div>
-                </div>
-                <button class="connect-btn">ربط الآن</button>
-            </div>
+
+        <div class="section">
+            <h2>قائمة الموظفين</h2>
+            <div id="loadingEmployees" class="loading">جاري تحميل بيانات الموظفين...</div>
+            <table id="employeesTable" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>الاسم</th>
+                        <th>الوظيفة</th>
+                        <th>رقم الهاتف</th>
+                        <th>الراتب</th>
+                        <th>إجراءات</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>تواصل مع الإدارة</h2>
+            <a href="https://wa.me/971588155123" class="btn whatsapp-btn">تواصل عبر واتساب</a>
         </div>
     </div>
-    
-    <!-- زر التحميل على GitHub -->
-    <a href="https://github.com/yourusername/restaurant-dashboard" class="github-btn" target="_blank">
-        <i class="fab fa-github"></i>
-        View on GitHub
-    </a>
-    
+
     <script>
-        // يمكنك إضافة كود JavaScript هنا للوظائف الديناميكية
+        // الرابط الذي قدمته
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCf6WiPjTlwiBC1cJLm79wxYSonyj_wqHTrz4IC0jj52FPlxAcfquAqgqUhoB7UUDoLA/exec";
+        
         document.addEventListener('DOMContentLoaded', function() {
-            // تغيير نوع التقرير عند النقر على الأزرار
-            const reportBtns = document.querySelectorAll('.report-btn');
-            reportBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    reportBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    // هنا يمكنك إضافة كود لتغيير الرسم البياني حسب نوع التقرير
+            // جلب بيانات الموظفين عند تحميل الصفحة
+            loadEmployees();
+            
+            // إرسال بيانات الموظف الجديد
+            document.getElementById('employeeForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const position = document.getElementById('position').value;
+                const phone = document.getElementById('phone').value;
+                const salary = document.getElementById('salary').value;
+                
+                if(!name || !position || !phone || !salary) {
+                    alert("الرجاء ملء جميع الحقول");
+                    return;
+                }
+                
+                const formData = new FormData();
+                formData.append('name', name);
+                formData.append('position', position);
+                formData.append('phone', phone);
+                formData.append('salary', salary);
+                formData.append('action', 'add_employee');
+                
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        alert("تم إضافة الموظف بنجاح");
+                        document.getElementById('employeeForm').reset();
+                        loadEmployees();
+                    } else {
+                        alert("حدث خطأ: " + (data.message || 'غير معروف'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("حدث خطأ أثناء حفظ البيانات");
                 });
             });
-            
-            // محاكاة ربط الواتساب
-            const whatsappBtn = document.querySelector('.whatsapp-integration .connect-btn');
-            whatsappBtn.addEventListener('click', function() {
-                alert('سيتم توجيهك إلى صفحة ربط الواتساب. الرجاء تسجيل الدخول إلى حساب الواتساب التجاري الخاص بك.');
-            });
-            
-            // محاكاة ربط جوجل شيتس
-            const googleBtn = document.querySelector('.google-sheets-integration .connect-btn');
-            googleBtn.addEventListener('click', function() {
-                alert('سيتم توجيهك إلى صفحة ربط جوجل. الرجاء تسجيل الدخول إلى حساب جوجل الخاص بك.');
-            });
         });
+        
+        function loadEmployees() {
+            document.getElementById('loadingEmployees').style.display = 'block';
+            document.getElementById('employeesTable').style.display = 'none';
+            
+            fetch(GOOGLE_SCRIPT_URL + '?action=get_employees')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#employeesTable tbody');
+                    tableBody.innerHTML = '';
+                    
+                    if(data && data.length > 0) {
+                        data.forEach(employee => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${employee.name || ''}</td>
+                                <td>${employee.position || ''}</td>
+                                <td>${employee.phone || ''}</td>
+                                <td>${employee.salary || ''}</td>
+                                <td>
+                                    <button class="btn delete-btn" onclick="deleteEmployee('${employee.id}')">حذف</button>
+                                </td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+                        
+                        document.getElementById('loadingEmployees').style.display = 'none';
+                        document.getElementById('employeesTable').style.display = 'table';
+                    } else {
+                        document.getElementById('loadingEmployees').innerHTML = 'لا يوجد موظفين مسجلين';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('loadingEmployees').innerHTML = 'حدث خطأ أثناء جلب البيانات';
+                });
+        }
+        
+        function deleteEmployee(employeeId) {
+            if(confirm("هل أنت متأكد من حذف هذا الموظف؟")) {
+                fetch(GOOGLE_SCRIPT_URL + '?action=delete_employee&id=' + employeeId)
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.success) {
+                            alert("تم حذف الموظف بنجاح");
+                            loadEmployees();
+                        } else {
+                            alert("حدث خطأ: " + (data.message || 'غير معروف'));
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert("حدث خطأ أثناء حذف الموظف");
+                    });
+            }
+        }
     </script>
 </body>
 </html>
