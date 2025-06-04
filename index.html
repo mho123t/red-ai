@@ -3531,6 +3531,169 @@
             document.querySelectorAll('.language-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            document.querySelector(`.language-btn[onclick="changeLanguage('${lang}')"]`).classList.add('active');
+            document.querySelector(`.language-btn[onclick="changeLanguage('${lang}')"]`).classList.add('// تحديث نصوص واجهة المستخدم
+    function updateUITexts(texts) {
+        for (const [key, value] of Object.entries(texts)) {
+            const elements = document.querySelectorAll(`[id="${key}"]`);
             
-            // إعادة تحميل الجداول
+            elements.forEach(element => {
+                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                    element.placeholder = value;
+                } else {
+                    element.textContent = value;
+                }
+            });
+        }
+    }
+
+    // الحصول على النص بناءً على اللغة الحالية
+    function getText(key) {
+        return appData.currentLanguage === 'ar' ? arabicText[key] : englishText[key];
+    }
+
+    // الحصول على نص الحالة
+    function getStatusText(status) {
+        switch (status) {
+            case 'pending': return getText('statusPending');
+            case 'on-the-way': return getText('statusOnTheWay');
+            case 'delivered': return getText('statusDelivered');
+            case 'cancelled': return getText('statusCancelled');
+            case 'active': return getText('statusActive');
+            case 'inactive': return getText('statusInactive');
+            case 'on-mission': return getText('statusOnMission');
+            default: return status;
+        }
+    }
+
+    // تنسيق التاريخ
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleString(appData.currentLanguage === 'ar' ? 'ar-SA' : 'en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
+    // تنسيق الوقت منذ الآن
+    function formatTimeAgo(dateString) {
+        const date = new Date(dateString);
+        const now = new Date();
+        const seconds = Math.floor((now - date) / 1000);
+        
+        if (seconds < 60) return appData.currentLanguage === 'ar' ? 'منذ ثوان' : 'Just now';
+        
+        const minutes = Math.floor(seconds / 60);
+        if (minutes < 60) return appData.currentLanguage === 'ar' ? `منذ ${minutes} دقيقة` : `${minutes} minute(s) ago`;
+        
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) return appData.currentLanguage === 'ar' ? `منذ ${hours} ساعة` : `${hours} hour(s) ago`;
+        
+        const days = Math.floor(hours / 24);
+        return appData.currentLanguage === 'ar' ? `منذ ${days} يوم` : `${days} day(s) ago`;
+    }
+
+    // إنشاء موقع عشوائي في دبي
+    function getRandomLocation() {
+        const locations = [
+            "دبي، مارينا",
+            "دبي، ديرة",
+            "دبي، البرشاء",
+            "دبي، مردف",
+            "دبي، القرهود",
+            "دبي، الخوانيج",
+            "دبي، ند الشبا",
+            "دبي، الممزر",
+            "دبي، الوصل",
+            "دبي، الواحة"
+        ];
+        
+        return locations[Math.floor(Math.random() * locations.length)];
+    }
+
+    // إنشاء بعض الإشعارات الافتراضية
+    function createSampleNotifications() {
+        if (appData.notifications.length > 0) return;
+        
+        const sampleNotifications = [
+            {
+                id: 1,
+                type: 'new-order',
+                message: 'طلب جديد #1254 من خالد أحمد',
+                date: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
+                read: false
+            },
+            {
+                id: 2,
+                type: 'order-status',
+                message: 'تم تغيير حالة الطلب #1253 من في الانتظار إلى قيد التوصيل',
+                date: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+                read: false
+            },
+            {
+                id: 3,
+                type: 'new-driver',
+                message: 'مندوب جديد: شهرزاد',
+                date: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+                read: true
+            }
+        ];
+        
+        appData.notifications = sampleNotifications;
+        saveDataToLocalStorage();
+    }
+
+    // عرض/إخفاء قائمة الشعارات
+    function toggleLogoMenu() {
+        const logoMenu = document.getElementById('logoMenu');
+        logoMenu.classList.toggle('open');
+    }
+
+    // إغلاق قائمة الشعارات
+    function closeLogoMenu() {
+        const logoMenu = document.getElementById('logoMenu');
+        logoMenu.classList.remove('open');
+    }
+
+    // تعديل الطلب (وظيفة مساعدة)
+    function editOrder(orderId) {
+        const order = appData.orders.find(o => o.id === orderId);
+        if (!order) return;
+        
+        // يمكنك تنفيذ الوظيفة الكاملة لتعديل الطلب هنا
+        alert(`سيتم تنفيذ تعديل الطلب #${orderId} في الإصدارات القادمة`);
+    }
+
+    // تعديل المندوب (وظيفة مساعدة)
+    function editDriver(username) {
+        const driver = appData.drivers[username];
+        if (!driver) return;
+        
+        // يمكنك تنفيذ الوظيفة الكاملة لتعديل المندوب هنا
+        alert(`سيتم تنفيذ تعديل المندوب ${driver.name} في الإصدارات القادمة`);
+    }
+
+    // تعيين وظائف للزر العالمي
+    window.changeLanguage = changeLanguage;
+    window.showSection = showSection;
+    window.showSettingsTab = showSettingsTab;
+    window.logout = logout;
+    window.toggleNotifications = toggleNotifications;
+    window.markAllAsRead = markAllAsRead;
+    window.openModal = openModal;
+    window.closeModal = closeModal;
+    window.selectOrderStatus = selectOrderStatus;
+    window.resetProfileForm = resetProfileForm;
+    window.resetRestaurantForm = resetRestaurantForm;
+    window.resetNotificationsForm = resetNotificationsForm;
+    window.resetSecurityForm = resetSecurityForm;
+    window.showOrderDetails = showOrderDetails;
+    window.changeOrderStatus = changeOrderStatus;
+    window.deleteOrder = deleteOrder;
+    window.confirmDelete = confirmDelete;
+    window.executeDelete = executeDelete;
+    window.toggleLogoMenu = toggleLogoMenu;
+    window.closeLogoMenu = closeLogoMenu;
+</script>   // إعادة تحميل الجداول
