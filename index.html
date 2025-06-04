@@ -1620,4 +1620,1916 @@
             <div class="modal-body">
                 <form id="addDriverForm">
                     <div class="driver-photo-upload">
-                        <img src="https://ui-avatars.com/api/?name=New+Driver&background=2c
+                        <img src="https://ui-avatars.com/api/?name=New+Driver&background=2c7be5&color=fff" alt="صورة المندوب" class="driver-photo-preview" id="driverPhotoPreview">
+                        <button type="button" class="btn btn-outline upload-btn">
+                            <i class="fas fa-camera"></i>
+                            <span id="uploadDriverPhotoBtn">تحميل الصورة</span>
+                            <input type="file" id="driverPhoto" accept="image/*">
+                        </button>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label id="driverNameLabel">اسم المندوب</label>
+                            <input type="text" id="driverName" required>
+                        </div>
+                        <div class="form-group">
+                            <label id="driverPhoneLabel">هاتف المندوب</label>
+                            <input type="tel" id="driverPhone" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label id="driverEmailLabel">البريد الإلكتروني</label>
+                            <input type="email" id="driverEmail">
+                        </div>
+                        <div class="form-group">
+                            <label id="driverPasswordLabel">كلمة المرور</label>
+                            <input type="password" id="driverPassword" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label id="driverAddressLabel">العنوان</label>
+                        <input type="text" id="driverAddress">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label id="driverStatusLabel">حالة المندوب</label>
+                        <select id="driverStatus" required>
+                            <option value="active">نشط</option>
+                            <option value="inactive">غير نشط</option>
+                        </select>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline" onclick="closeModal('addDriverModal')">إلغاء</button>
+                        <button type="submit" class="btn" id="saveDriverBtn">
+                            <i class="fas fa-save"></i>
+                            <span id="saveDriverBtnText">حفظ المندوب</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal تغيير حالة الطلب -->
+    <div class="modal" id="changeStatusModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="changeStatusModalTitle">تغيير حالة الطلب</h3>
+                <button class="close-btn" onclick="closeModal('changeStatusModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="changeStatusForm">
+                    <input type="hidden" id="orderIdForStatus">
+                    
+                    <div class="form-group">
+                        <label id="currentStatusLabel">الحالة الحالية:</label>
+                        <div id="currentStatusDisplay" class="status pending" style="margin: 0.5rem 0 1.5rem;">
+                            <i class="fas fa-clock"></i>
+                            <span>في الانتظار</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label id="newStatusLabel">الحالة الجديدة</label>
+                        <div class="order-status-selector">
+                            <div class="status-option pending" onclick="selectNewOrderStatus('pending')">
+                                <i class="fas fa-clock"></i>
+                                <span>في الانتظار</span>
+                            </div>
+                            <div class="status-option on-the-way" onclick="selectNewOrderStatus('on-the-way')">
+                                <i class="fas fa-truck"></i>
+                                <span>قيد التوصيل</span>
+                            </div>
+                            <div class="status-option delivered" onclick="selectNewOrderStatus('delivered')">
+                                <i class="fas fa-check-circle"></i>
+                                <span>تم التوصيل</span>
+                            </div>
+                            <div class="status-option cancelled" onclick="selectNewOrderStatus('cancelled')">
+                                <i class="fas fa-times-circle"></i>
+                                <span>ملغى</span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="newOrderStatus" value="pending">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label id="statusNotesLabel">ملاحظات (اختياري)</label>
+                        <textarea id="statusNotes" rows="2"></textarea>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline" onclick="closeModal('changeStatusModal')">إلغاء</button>
+                        <button type="submit" class="btn" id="saveStatusBtn">
+                            <i class="fas fa-save"></i>
+                            <span id="saveStatusBtnText">حفظ التغيير</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal تأكيد الحذف -->
+    <div class="modal" id="confirmDeleteModal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 id="confirmDeleteModalTitle">تأكيد الحذف</h3>
+                <button class="close-btn" onclick="closeModal('confirmDeleteModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmDeleteMessage">هل أنت متأكد من أنك تريد حذف هذا العنصر؟ لا يمكن التراجع عن هذا الإجراء.</p>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('confirmDeleteModal')">إلغاء</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                        <i class="fas fa-trash"></i>
+                        <span id="confirmDeleteBtnText">حذف</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal عرض تفاصيل الطلب -->
+    <div class="modal" id="orderDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="orderDetailsModalTitle">تفاصيل الطلب <span id="orderDetailsId"></span></h3>
+                <button class="close-btn" onclick="closeModal('orderDetailsModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>العميل:</label>
+                        <div class="info-value" id="orderDetailsCustomer"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>هاتف العميل:</label>
+                        <div class="info-value" id="orderDetailsPhone"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>عنوان التوصيل:</label>
+                    <div class="info-value" id="orderDetailsAddress"></div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>المندوب:</label>
+                        <div class="info-value" id="orderDetailsDriver"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>حالة الطلب:</label>
+                        <div class="info-value">
+                            <span class="status pending" id="orderDetailsStatus">في الانتظار</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>تاريخ الطلب:</label>
+                        <div class="info-value" id="orderDetailsDate"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>تاريخ التوصيل:</label>
+                        <div class="info-value" id="orderDetailsDeliveryDate"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>تفاصيل الطلب:</label>
+                    <div class="info-value" id="orderDetailsDetails"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>ملاحظات:</label>
+                    <div class="info-value" id="orderDetailsNotes"></div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn" onclick="closeModal('orderDetailsModal')">
+                        <i class="fas fa-times"></i>
+                        <span>إغلاق</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // بيانات التطبيق
+        const appData = {
+            currentLanguage: 'ar',
+            currentUser: null,
+            isAdmin: false,
+            map: null,
+            markers: [],
+            selectedOrderId: null,
+            selectedDriverId: null,
+            notifications: [],
+            drivers: {
+                "admin": { 
+                    password: "admin123", 
+                    name: "مدير النظام", 
+                    phone: "0551234567", 
+                    email: "admin@delivery.com", 
+                    role: "admin",
+                    photo: "https://ui-avatars.com/api/?name=Admin&background=2c7be5&color=fff"
+                },
+                "driver1": { 
+                    password: "123456", 
+                    name: "شاهد", 
+                    phone: "0501234567", 
+                    email: "shahid@delivery.com", 
+                    role: "driver",
+                    status: "active",
+                    photo: "https://ui-avatars.com/api/?name=Shahid&background=2c7be5&color=fff",
+                    orders: 32
+                },
+                "driver2": { 
+                    password: "123456", 
+                    name: "حامد", 
+                    phone: "0559876543", 
+                    email: "hamed@delivery.com", 
+                    role: "driver",
+                    status: "on-mission",
+                    photo: "https://ui-avatars.com/api/?name=Hamed&background=2c7be5&color=fff",
+                    orders: 28
+                },
+                "driver3": { 
+                    password: "123456", 
+                    name: "نعيم", 
+                    phone: "0545678901", 
+                    email: "naeem@delivery.com", 
+                    role: "driver",
+                    status: "inactive",
+                    photo: "https://ui-avatars.com/api/?name=Naeem&background=2c7be5&color=fff",
+                    orders: 25
+                },
+                "driver4": { 
+                    password: "123456", 
+                    name: "شهرزاد", 
+                    phone: "0567890123", 
+                    email: "shahrazad@delivery.com", 
+                    role: "driver",
+                    status: "active",
+                    photo: "https://ui-avatars.com/api/?name=Shahrazad&background=2c7be5&color=fff",
+                    orders: 18
+                }
+            },
+            orders: [
+                { 
+                    id: 1254, 
+                    customer: "خالد أحمد", 
+                    phone: "0501234567", 
+                    address: "دبي، مارينا", 
+                    driver: "شاهد", 
+                    status: "delivered",
+                    date: "2023-06-10T10:30:00",
+                    deliveryDate: "2023-06-10T11:45:00",
+                    details: "2 بيتزا كبيرة، 1 مشروب غازي",
+                    notes: "العميل يطلب عدم إضافة بهارات"
+                },
+                { 
+                    id: 1253, 
+                    customer: "مريم علي", 
+                    phone: "0559876543", 
+                    address: "أبوظبي، الخالدية", 
+                    driver: "حامد", 
+                    status: "on-the-way",
+                    date: "2023-06-10T09:45:00",
+                    deliveryDate: "",
+                    details: "برجر دجاج، سلطة سيزر",
+                    notes: "يوجد كلب في المنزل"
+                },
+                { 
+                    id: 1252, 
+                    customer: "سعيد راشد", 
+                    phone: "0545678901", 
+                    address: "الشارقة، النخيلة", 
+                    driver: "نعيم", 
+                    status: "pending",
+                    date: "2023-06-10T09:30:00",
+                    deliveryDate: "",
+                    details: "سوشي متنوع، شاي أخضر",
+                    notes: ""
+                },
+                { 
+                    id: 1251, 
+                    customer: "فاطمة خالد", 
+                    phone: "0523456789", 
+                    address: "دبي، البرشاء", 
+                    driver: "شهرزاد", 
+                    status: "delivered",
+                    date: "2023-06-09T20:15:00",
+                    deliveryDate: "2023-06-09T21:30:00",
+                    details: "معكرونة بولونيز، سلطة يونانية",
+                    notes: "العميل يطلب أدوات طعام إضافية"
+                },
+                { 
+                    id: 1250, 
+                    customer: "ناصر علي", 
+                    phone: "0587654321", 
+                    address: "أبوظبي، كورنيش", 
+                    driver: "حامد", 
+                    status: "on-the-way",
+                    date: "2023-06-09T19:30:00",
+                    deliveryDate: "",
+                    details: "شاورما لحم، بطاطس مقلية",
+                    notes: "يوجد بوابة أمنية في المبنى"
+                }
+            ],
+            restaurant: {
+                name: "مطعم دلفري ريدان",
+                address: "دبي، مارينا مول",
+                phone: "043456789",
+                email: "info@delivery.com",
+                description: "مطعم دلفري ريدان يقدم أفضل الوجبات السريعة في دبي بجودة عالية وخدمة توصيل سريعة."
+            },
+            settings: {
+                notifications: {
+                    newOrder: true,
+                    orderStatus: true,
+                    driver: true,
+                    sound: true
+                },
+                security: {
+                    twoFactorAuth: false
+                }
+            }
+        };
+
+        // نصوص اللغة العربية
+        const arabicText = {
+            loginTitle: "تسجيل الدخول - دلفري ريدان",
+            usernameLabel: "اسم المستخدم",
+            passwordLabel: "كلمة المرور",
+            loginBtn: "تسجيل الدخول",
+            appName: "دلفري ريدان",
+            appDesc: "نظام إدارة التوصيل",
+            menuDashboard: "لوحة التحكم",
+            menuOrders: "الطلبات",
+            menuDrivers: "المندوبين",
+            menuTracking: "تتبع الطلبات",
+            menuSettings: "الإعدادات",
+            menuLogout: "تسجيل الخروج",
+            userRoleAdmin: "مدير النظام",
+            userRoleDriver: "مندوب التوصيل",
+            lastLogin: "آخر دخول: اليوم 10:30 ص",
+            completedOrders: "الطلبات المكتملة",
+            inProgressOrders: "الطلبات قيد التوصيل",
+            cancelledOrders: "الطلبات الملغاة",
+            totalDrivers: "عدد المندوبين",
+            recentOrdersTitle: "آخر الطلبات",
+            orderIdHeader: "رقم الطلب",
+            customerHeader: "العميل",
+            driverHeader: "المندوب",
+            statusHeader: "الحالة",
+            dateHeader: "التاريخ",
+            actionsHeader: "الإجراءات",
+            ordersTitle: "إدارة الطلبات",
+            addOrderBtn: "إضافة طلب جديد",
+            phoneHeader: "الهاتف",
+            addressHeader: "العنوان",
+            driversTitle: "إدارة المندوبين",
+            addDriverBtn: "إضافة مندوب جديد",
+            photoHeader: "الصورة",
+            driverNameHeader: "اسم المندوب",
+            ordersCountHeader: "عدد الطلبات",
+            trackingTitle: "تتبع الطلبات على الخريطة",
+            trackingDesc: "عرض مواقع المندوبين والطلبات على الخريطة",
+            activeOrdersTitle: "الطلبات قيد التوصيل",
+            locationHeader: "الموقع الحالي",
+            settingsTitle: "إعدادات النظام",
+            settingsDesc: "تعديل إعدادات حسابك وإعدادات النظام",
+            profileSettingsTitle: "الملف الشخصي",
+            restaurantSettingsTitle: "بيانات المطعم",
+            notificationsSettingsTitle: "الإشعارات",
+            securitySettingsTitle: "الأمان",
+            profileTitle: "الملف الشخصي",
+            changePhotoBtn: "تغيير الصورة",
+            fullNameLabel: "الاسم الكامل",
+            emailLabel: "البريد الإلكتروني",
+            phoneLabel: "رقم الهاتف",
+            passwordLabel2: "كلمة المرور الجديدة (اختياري)",
+            addressLabel: "العنوان",
+            saveProfileBtn: "حفظ التغييرات",
+            restaurantInfoTitle: "بيانات المطعم",
+            restaurantNameLabel: "اسم المطعم",
+            restaurantAddressLabel: "عنوان المطعم",
+            restaurantPhoneLabel: "هاتف المطعم",
+            restaurantEmailLabel: "بريد المطعم",
+            restaurantDescriptionLabel: "وصف المطعم",
+            saveRestaurantBtn: "حفظ التغييرات",
+            notificationsSettingsTitle2: "إعدادات الإشعارات",
+            newOrderNotificationLabel: "إشعارات الطلبات الجديدة",
+            orderStatusNotificationLabel: "إشعارات تغيير حالة الطلب",
+            driverNotificationLabel: "إشعارات المندوبين",
+            soundNotificationLabel: "تشغيل صوت الإشعارات",
+            saveNotificationsBtn: "حفظ التغييرات",
+            securitySettingsTitle2: "إعدادات الأمان",
+            currentPasswordLabel: "كلمة المرور الحالية",
+            newPasswordLabel: "كلمة المرور الجديدة",
+            confirmPasswordLabel: "تأكيد كلمة المرور",
+            twoFactorAuthLabel: "المصادقة الثنائية (2FA)",
+            saveSecurityBtn: "حفظ التغييرات",
+            addOrderModalTitle: "إضافة طلب جديد",
+            orderCustomerNameLabel: "اسم العميل",
+            orderCustomerPhoneLabel: "هاتف العميل",
+            orderAddressLabel: "عنوان التوصيل",
+            orderDriverLabel: "المندوب",
+            orderDateLabel: "تاريخ التوصيل",
+            orderDetailsLabel: "تفاصيل الطلب",
+            orderStatusLabel: "حالة الطلب",
+            statusPendingLabel: "في الانتظار",
+            statusOnTheWayLabel: "قيد التوصيل",
+            statusDeliveredLabel: "تم التوصيل",
+            statusCancelledLabel: "ملغى",
+            saveOrderBtnText: "حفظ الطلب",
+            addDriverModalTitle: "إضافة مندوب جديد",
+            uploadDriverPhotoBtn: "تحميل الصورة",
+            driverNameLabel: "اسم المندوب",
+            driverPhoneLabel: "هاتف المندوب",
+            driverEmailLabel: "البريد الإلكتروني",
+            driverPasswordLabel: "كلمة المرور",
+            driverAddressLabel: "العنوان",
+            driverStatusLabel: "حالة المندوب",
+            saveDriverBtnText: "حفظ المندوب",
+            changeStatusModalTitle: "تغيير حالة الطلب",
+            currentStatusLabel: "الحالة الحالية:",
+            newStatusLabel: "الحالة الجديدة",
+            statusNotesLabel: "ملاحظات (اختياري)",
+            saveStatusBtnText: "حفظ التغيير",
+            confirmDeleteModalTitle: "تأكيد الحذف",
+            confirmDeleteMessage: "هل أنت متأكد من أنك تريد حذف هذا العنصر؟ لا يمكن التراجع عن هذا الإجراء.",
+            confirmDeleteBtnText: "حذف",
+            orderDetailsModalTitle: "تفاصيل الطلب",
+            statusPending: "في الانتظار",
+            statusOnTheWay: "قيد التوصيل",
+            statusDelivered: "تم التوصيل",
+            statusCancelled: "ملغى",
+            statusActive: "نشط",
+            statusInactive: "غير نشط",
+            statusOnMission: "في مهمة",
+            notificationsTitle: "الإشعارات",
+            markAllAsRead: "تعيين الكل كمقروء",
+            notificationNewOrder: "طلب جديد",
+            notificationOrderStatusChanged: "تغيير حالة الطلب",
+            notificationNewDriver: "مندوب جديد",
+            viewDetails: "عرض التفاصيل",
+            noNotifications: "لا توجد إشعارات جديدة",
+            searchOrdersPlaceholder: "ابحث عن الطلبات...",
+            searchDriversPlaceholder: "ابحث عن المندوبين...",
+            cancelBtn: "إلغاء",
+            closeBtn: "إغلاق",
+            completedOrdersChange: "12% زيادة عن الشهر الماضي",
+            inProgressOrdersChange: "5% نقصان عن الأسبوع الماضي",
+            cancelledOrdersChange: "مماثل للشهر الماضي",
+            totalDriversChange: "2 مندوب جديد هذا الشهر"
+        };
+
+        // نصوص اللغة الإنجليزية
+        const englishText = {
+            loginTitle: "Login - Delivery Raydan",
+            usernameLabel: "Username",
+            passwordLabel: "Password",
+            loginBtn: "Login",
+            appName: "Delivery Raydan",
+            appDesc: "Delivery Management System",
+            menuDashboard: "Dashboard",
+            menuOrders: "Orders",
+            menuDrivers: "Drivers",
+            menuTracking: "Order Tracking",
+            menuSettings: "Settings",
+            menuLogout: "Logout",
+            userRoleAdmin: "System Admin",
+            userRoleDriver: "Delivery Driver",
+            lastLogin: "Last login: Today 10:30 AM",
+            completedOrders: "Completed Orders",
+            inProgressOrders: "In Progress Orders",
+            cancelledOrders: "Cancelled Orders",
+            totalDrivers: "Total Drivers",
+            recentOrdersTitle: "Recent Orders",
+            orderIdHeader: "Order ID",
+            customerHeader: "Customer",
+            driverHeader: "Driver",
+            statusHeader: "Status",
+            dateHeader: "Date",
+            actionsHeader: "Actions",
+            ordersTitle: "Orders Management",
+            addOrderBtn: "Add New Order",
+            phoneHeader: "Phone",
+            addressHeader: "Address",
+            driversTitle: "Drivers Management",
+            addDriverBtn: "Add New Driver",
+            photoHeader: "Photo",
+            driverNameHeader: "Driver Name",
+            ordersCountHeader: "Orders Count",
+            trackingTitle: "Order Tracking Map",
+            trackingDesc: "View drivers and orders locations on map",
+            activeOrdersTitle: "Active Orders",
+            locationHeader: "Current Location",
+            settingsTitle: "System Settings",
+            settingsDesc: "Modify your account and system settings",
+            profileSettingsTitle: "Profile",
+            restaurantSettingsTitle: "Restaurant Info",
+            notificationsSettingsTitle: "Notifications",
+            securitySettingsTitle: "Security",
+            profileTitle: "Profile",
+            changePhotoBtn: "Change Photo",
+            fullNameLabel: "Full Name",
+            emailLabel: "Email",
+            phoneLabel: "Phone",
+            passwordLabel2: "New Password (optional)",
+            addressLabel: "Address",
+            saveProfileBtn: "Save Changes",
+            restaurantInfoTitle: "Restaurant Information",
+            restaurantNameLabel: "Restaurant Name",
+            restaurantAddressLabel: "Restaurant Address",
+            restaurantPhoneLabel: "Restaurant Phone",
+            restaurantEmailLabel: "Restaurant Email",
+            restaurantDescriptionLabel: "Restaurant Description",
+            saveRestaurantBtn: "Save Changes",
+            notificationsSettingsTitle2: "Notifications Settings",
+            newOrderNotificationLabel: "New Order Notifications",
+            orderStatusNotificationLabel: "Order Status Change Notifications",
+            driverNotificationLabel: "Drivers Notifications",
+            soundNotificationLabel: "Enable Notifications Sound",
+            saveNotificationsBtn: "Save Changes",
+            securitySettingsTitle2: "Security Settings",
+            currentPasswordLabel: "Current Password",
+            newPasswordLabel: "New Password",
+            confirmPasswordLabel: "Confirm Password",
+            twoFactorAuthLabel: "Two-Factor Authentication (2FA)",
+            saveSecurityBtn: "Save Changes",
+            addOrderModalTitle: "Add New Order",
+            orderCustomerNameLabel: "Customer Name",
+            orderCustomerPhoneLabel: "Customer Phone",
+            orderAddressLabel: "Delivery Address",
+            orderDriverLabel: "Driver",
+            orderDateLabel: "Delivery Date",
+            orderDetailsLabel: "Order Details",
+            orderStatusLabel: "Order Status",
+            statusPendingLabel: "Pending",
+            statusOnTheWayLabel: "On the Way",
+            statusDeliveredLabel: "Delivered",
+            statusCancelledLabel: "Cancelled",
+            saveOrderBtnText: "Save Order",
+            addDriverModalTitle: "Add New Driver",
+            uploadDriverPhotoBtn: "Upload Photo",
+            driverNameLabel: "Driver Name",
+            driverPhoneLabel: "Driver Phone",
+            driverEmailLabel: "Email",
+            driverPasswordLabel: "Password",
+            driverAddressLabel: "Address",
+            driverStatusLabel: "Driver Status",
+            saveDriverBtnText: "Save Driver",
+            changeStatusModalTitle: "Change Order Status",
+            currentStatusLabel: "Current Status:",
+            newStatusLabel: "New Status",
+            statusNotesLabel: "Notes (optional)",
+            saveStatusBtnText: "Save Change",
+            confirmDeleteModalTitle: "Confirm Delete",
+            confirmDeleteMessage: "Are you sure you want to delete this item? This action cannot be undone.",
+            confirmDeleteBtnText: "Delete",
+            orderDetailsModalTitle: "Order Details",
+            statusPending: "Pending",
+            statusOnTheWay: "On the Way",
+            statusDelivered: "Delivered",
+            statusCancelled: "Cancelled",
+            statusActive: "Active",
+            statusInactive: "Inactive",
+            statusOnMission: "On Mission",
+            notificationsTitle: "Notifications",
+            markAllAsRead: "Mark All as Read",
+            notificationNewOrder: "New Order",
+            notificationOrderStatusChanged: "Order Status Changed",
+            notificationNewDriver: "New Driver",
+            viewDetails: "View Details",
+            noNotifications: "No new notifications",
+            searchOrdersPlaceholder: "Search orders...",
+            searchDriversPlaceholder: "Search drivers...",
+            cancelBtn: "Cancel",
+            closeBtn: "Close",
+            completedOrdersChange: "12% increase from last month",
+            inProgressOrdersChange: "5% decrease from last week",
+            cancelledOrdersChange: "Same as last month",
+            totalDriversChange: "2 new drivers this month"
+        };
+
+        // تهيئة التطبيق عند التحميل
+        document.addEventListener('DOMContentLoaded', function() {
+            // تحميل البيانات من localStorage إذا وجدت
+            loadDataFromLocalStorage();
+            
+            // إعداد مستمعي الأحداث
+            setupEventListeners();
+            
+            // إنشاء بعض الإشعارات الافتراضية
+            createSampleNotifications();
+            
+            // تحديث واجهة المستخدم بناءً على اللغة
+            updateUITexts(arabicText);
+        });
+
+        // تحميل البيانات من localStorage
+        function loadDataFromLocalStorage() {
+            const savedData = localStorage.getItem('deliveryRaydanData');
+            if (savedData) {
+                const parsedData = JSON.parse(savedData);
+                Object.assign(appData, parsedData);
+            }
+        }
+
+        // حفظ البيانات في localStorage
+        function saveDataToLocalStorage() {
+            localStorage.setItem('deliveryRaydanData', JSON.stringify(appData));
+        }
+
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            // تسجيل الدخول
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            
+            // الطلبات
+            document.getElementById('addOrderBtn').addEventListener('click', () => openModal('addOrderModal'));
+            document.getElementById('addOrderForm').addEventListener('submit', handleAddOrder);
+            
+            // المندوبين
+            document.getElementById('addDriverBtn').addEventListener('click', () => openModal('addDriverModal'));
+            document.getElementById('addDriverForm').addEventListener('submit', handleAddDriver);
+            
+            // الإعدادات
+            document.getElementById('profileForm').addEventListener('submit', handleSaveProfile);
+            document.getElementById('restaurantForm').addEventListener('submit', handleSaveRestaurant);
+            document.getElementById('notificationsForm').addEventListener('submit', handleSaveNotifications);
+            document.getElementById('securityForm').addEventListener('submit', handleSaveSecurity);
+            
+            // تغيير حالة الطلب
+            document.getElementById('changeStatusForm').addEventListener('submit', handleChangeStatus);
+            
+            // تحميل الصور
+            document.getElementById('profilePhoto').addEventListener('change', handleProfilePhotoUpload);
+            document.getElementById('driverPhoto').addEventListener('change', handleDriverPhotoUpload);
+            
+            // البحث
+            document.getElementById('searchOrders').addEventListener('input', handleSearchOrders);
+            document.getElementById('searchAllOrders').addEventListener('input', handleSearchAllOrders);
+            document.getElementById('searchDrivers').addEventListener('input', handleSearchDrivers);
+        }
+
+        // تسجيل الدخول
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // التحقق من بيانات المستخدم
+            let user = null;
+            for (const [key, driver] of Object.entries(appData.drivers)) {
+                if ((key === username || driver.phone === username) && driver.password === password) {
+                    user = driver;
+                    user.username = key;
+                    break;
+                }
+            }
+            
+            if (user) {
+                appData.currentUser = user;
+                appData.isAdmin = user.role === 'admin';
+                
+                // عرض لوحة التحكم
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('dashboardPage').style.display = 'flex';
+                
+                // تحديث واجهة المستخدم بناءً على دور المستخدم
+                updateUIForUser();
+                
+                // تحميل البيانات الأولية
+                loadInitialData();
+                
+                // تشغيل صوت الإشعارات إذا كان مسموحًا
+                if (appData.settings.notifications.sound) {
+                    playNotificationSound();
+                }
+            } else {
+                alert(getText('invalidCredentials'));
+            }
+        }
+
+        // تسجيل الخروج
+        function logout() {
+            appData.currentUser = null;
+            appData.isAdmin = false;
+            
+            // إخفاء لوحة التحكم وعرض صفحة تسجيل الدخول
+            document.getElementById('dashboardPage').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'flex';
+            
+            // مسح حقلي اسم المستخدم وكلمة المرور
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            
+            // إغلاق جميع النماذج المفتوحة
+            closeAllModals();
+        }
+
+        // تحديث واجهة المستخدم بناءً على دور المستخدم
+        function updateUIForUser() {
+            const user = appData.currentUser;
+            
+            // تحديث معلومات المستخدم في الشريط العلوي
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('userRoleText').textContent = getText(user.role === 'admin' ? 'userRoleAdmin' : 'userRoleDriver');
+            document.getElementById('userImage').src = user.photo || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name) + '&background=2c7be5&color=fff';
+            
+            // إظهار/إخفاء عناصر لوحة التحكم بناءً على الصلاحيات
+            if (appData.isAdmin) {
+                document.getElementById('driversMenuItem').style.display = 'flex';
+                document.getElementById('settingsMenuItem').style.display = 'flex';
+            } else {
+                document.getElementById('driversMenuItem').style.display = 'none';
+                document.getElementById('settingsMenuItem').style.display = 'none';
+                
+                // إذا كان مندوبًا، نعرض له قسم الطلبات مباشرة
+                showSection('orders');
+            }
+            
+            // تحديث عدد الإشعارات غير المقروءة
+            updateNotificationsBadge();
+        }
+
+        // تحميل البيانات الأولية
+        function loadInitialData() {
+            // تحديث الإحصائيات
+            updateStatistics();
+            
+            // تحديث جدول الطلبات الأخيرة
+            updateRecentOrdersTable();
+            
+            // تحديث جدول جميع الطلبات
+            updateAllOrdersTable();
+            
+            // تحديث جدول المندوبين
+            updateDriversTable();
+            
+            // تحديث جدول الطلبات النشطة
+            updateActiveOrdersTable();
+            
+            // تحديث قائمة الإشعارات
+            updateNotificationsList();
+            
+            // تحديث إعدادات الملف الشخصي
+            updateProfileSettings();
+            
+            // تحديث إعدادات المطعم
+            updateRestaurantSettings();
+            
+            // تحديث إعدادات الإشعارات
+            updateNotificationsSettings();
+            
+            // تحديث إعدادات الأمان
+            updateSecuritySettings();
+            
+            // تحديث قائمة المندوبين في نموذج إضافة طلب
+            updateDriversDropdown();
+        }
+
+        // تحديث الإحصائيات
+        function updateStatistics() {
+            const completedOrders = appData.orders.filter(order => order.status === 'delivered').length;
+            const inProgressOrders = appData.orders.filter(order => order.status === 'on-the-way').length;
+            const cancelledOrders = appData.orders.filter(order => order.status === 'cancelled').length;
+            const totalDrivers = Object.keys(appData.drivers).filter(key => appData.drivers[key].role === 'driver').length;
+            
+            document.getElementById('completedOrdersValue').textContent = completedOrders;
+            document.getElementById('inProgressOrdersValue').textContent = inProgressOrders;
+            document.getElementById('cancelledOrdersValue').textContent = cancelledOrders;
+            document.getElementById('totalDriversValue').textContent = totalDrivers;
+        }
+
+        // تحديث جدول الطلبات الأخيرة
+        function updateRecentOrdersTable() {
+            const tbody = document.getElementById('recentOrdersTable').querySelector('tbody');
+            tbody.innerHTML = '';
+            
+            // ترتيب الطلبات حسب التاريخ (الأحدث أولاً)
+            const sortedOrders = [...appData.orders].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            // عرض آخر 5 طلبات فقط
+            const recentOrders = sortedOrders.slice(0, 5);
+            
+            recentOrders.forEach(order => {
+                const row = document.createElement('tr');
+                
+                // تحديد حالة الطلب
+                let statusClass, statusIcon, statusText;
+                switch (order.status) {
+                    case 'pending':
+                        statusClass = 'pending';
+                        statusIcon = 'fa-clock';
+                        statusText = getText('statusPending');
+                        break;
+                    case 'on-the-way':
+                        statusClass = 'on-the-way';
+                        statusIcon = 'fa-truck';
+                        statusText = getText('statusOnTheWay');
+                        break;
+                    case 'delivered':
+                        statusClass = 'delivered';
+                        statusIcon = 'fa-check-circle';
+                        statusText = getText('statusDelivered');
+                        break;
+                    case 'cancelled':
+                        statusClass = 'cancelled';
+                        statusIcon = 'fa-times-circle';
+                        statusText = getText('statusCancelled');
+                        break;
+                }
+                
+                row.innerHTML = `
+                    <td>#${order.id}</td>
+                    <td>${order.customer}</td>
+                    <td>${order.driver}</td>
+                    <td><span class="status ${statusClass}"><i class="fas ${statusIcon}"></i> ${statusText}</span></td>
+                    <td>${formatDate(order.date)}</td>
+                    <td class="actions">
+                        <button class="action-btn view" onclick="viewOrderDetails(${order.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        ${appData.isAdmin ? `
+                        <button class="action-btn delete" onclick="confirmDelete('order', ${order.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        ` : ''}
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // تحديث جدول جميع الطلبات
+        function updateAllOrdersTable() {
+            const tbody = document.getElementById('allOrdersTable').querySelector('tbody');
+            tbody.innerHTML = '';
+            
+            appData.orders.forEach(order => {
+                const row = document.createElement('tr');
+                
+                // تحديد حالة الطلب
+                let statusClass, statusIcon, statusText;
+                switch (order.status) {
+                    case 'pending':
+                        statusClass = 'pending';
+                        statusIcon = 'fa-clock';
+                        statusText = getText('statusPending');
+                        break;
+                    case 'on-the-way':
+                        statusClass = 'on-the-way';
+                        statusIcon = 'fa-truck';
+                        statusText = getText('statusOnTheWay');
+                        break;
+                    case 'delivered':
+                        statusClass = 'delivered';
+                        statusIcon = 'fa-check-circle';
+                        statusText = getText('statusDelivered');
+                        break;
+                    case 'cancelled':
+                        statusClass = 'cancelled';
+                        statusIcon = 'fa-times-circle';
+                        statusText = getText('statusCancelled');
+                        break;
+                }
+                
+                row.innerHTML = `
+                    <td>#${order.id}</td>
+                    <td>${order.customer}</td>
+                    <td>${order.phone}</td>
+                    <td>${order.address}</td>
+                    <td>${order.driver}</td>
+                    <td><span class="status ${statusClass}"><i class="fas ${statusIcon}"></i> ${statusText}</span></td>
+                    <td class="actions">
+                        <button class="action-btn change-status" onclick="openChangeStatusModal(${order.id}, '${order.status}')">
+                            <i class="fas fa-exchange-alt"></i>
+                        </button>
+                        <button class="action-btn view" onclick="viewOrderDetails(${order.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        ${appData.isAdmin ? `
+                        <button class="action-btn edit" onclick="editOrder(${order.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete" onclick="confirmDelete('order', ${order.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        ` : ''}
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // تحديث جدول المندوبين
+        function updateDriversTable() {
+            if (!appData.isAdmin) return;
+            
+            const tbody = document.getElementById('driversTable').querySelector('tbody');
+            tbody.innerHTML = '';
+            
+            for (const [username, driver] of Object.entries(appData.drivers)) {
+                if (driver.role !== 'driver') continue;
+                
+                // تحديد حالة المندوب
+                let statusClass, statusIcon, statusText;
+                switch (driver.status) {
+                    case 'active':
+                        statusClass = 'delivered';
+                        statusIcon = 'fa-check-circle';
+                        statusText = getText('statusActive');
+                        break;
+                    case 'inactive':
+                        statusClass = 'inactive';
+                        statusIcon = 'fa-ban';
+                        statusText = getText('statusInactive');
+                        break;
+                    case 'on-mission':
+                        statusClass = 'on-the-way';
+                        statusIcon = 'fa-truck';
+                        statusText = getText('statusOnMission');
+                        break;
+                }
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><img src="${driver.photo || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(driver.name) + '&background=2c7be5&color=fff'}" alt="صورة المندوب" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;"></td>
+                    <td>${driver.name}</td>
+                    <td>${driver.phone}</td>
+                    <td>${driver.orders || 0}</td>
+                    <td><span class="status ${statusClass}"><i class="fas ${statusIcon}"></i> ${statusText}</span></td>
+                    <td class="actions">
+                        <button class="action-btn edit" onclick="editDriver('${username}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete" onclick="confirmDelete('driver', '${username}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            }
+        }
+
+        // تحديث جدول الطلبات النشطة
+        function updateActiveOrdersTable() {
+            const tbody = document.getElementById('activeOrdersTable').querySelector('tbody');
+            tbody.innerHTML = '';
+            
+            const activeOrders = appData.orders.filter(order => order.status === 'on-the-way');
+            
+            activeOrders.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>#${order.id}</td>
+                    <td>${order.customer}</td>
+                    <td>${order.driver}</td>
+                    <td>${getRandomLocation()}</td>
+                    <td><span class="status on-the-way"><i class="fas fa-truck"></i> ${getText('statusOnTheWay')}</span></td>
+                    <td class="actions">
+                        <button class="action-btn change-status" onclick="openChangeStatusModal(${order.id}, '${order.status}')">
+                            <i class="fas fa-exchange-alt"></i>
+                        </button>
+                        <button class="action-btn view" onclick="viewOrderDetails(${order.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // تحديث قائمة الإشعارات
+        function updateNotificationsList() {
+            const notificationList = document.getElementById('notificationList');
+            notificationList.innerHTML = '';
+            
+            if (appData.notifications.length === 0) {
+                notificationList.innerHTML = `<div class="notification-item" style="text-align: center; color: #777;">${getText('noNotifications')}</div>`;
+                return;
+            }
+            
+            // ترتيب الإشعارات من الأحدث إلى الأقدم
+            const sortedNotifications = [...appData.notifications].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            sortedNotifications.forEach(notification => {
+                const notificationItem = document.createElement('div');
+                notificationItem.className = `notification-item ${notification.read ? '' : 'unread'}`;
+                notificationItem.onclick = () => viewNotification(notification.id);
+                
+                let icon, title;
+                switch (notification.type) {
+                    case 'new-order':
+                        icon = 'fa-clipboard-list';
+                        title = getText('notificationNewOrder');
+                        break;
+                    case 'order-status':
+                        icon = 'fa-exchange-alt';
+                        title = getText('notificationOrderStatusChanged');
+                        break;
+                    case 'new-driver':
+                        icon = 'fa-user-plus';
+                        title = getText('notificationNewDriver');
+                        break;
+                }
+                
+                notificationItem.innerHTML = `
+                    <div class="notification-title">
+                        <i class="fas ${icon}"></i>
+                        ${title}
+                    </div>
+                    <div class="notification-message">${notification.message}</div>
+                    <div class="notification-time">${formatTimeAgo(notification.date)}</div>
+                `;
+                
+                notificationList.appendChild(notificationItem);
+            });
+        }
+
+        // تحديث عدد الإشعارات غير المقروءة
+        function updateNotificationsBadge() {
+            const unreadCount = appData.notifications.filter(n => !n.read).length;
+            const badge = document.getElementById('notificationBadge');
+            
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount;
+                badge.style.display = 'flex';
+                
+                // تحديث عدد الإشعارات في القائمة الجانبية
+                const ordersBadge = document.getElementById('ordersBadge');
+                ordersBadge.textContent = unreadCount;
+                ordersBadge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+                document.getElementById('ordersBadge').style.display = 'none';
+            }
+        }
+
+        // تحديث إعدادات الملف الشخصي
+        function updateProfileSettings() {
+            const user = appData.currentUser;
+            if (!user) return;
+            
+            document.getElementById('name').value = user.name;
+            document.getElementById('email').value = user.email || '';
+            document.getElementById('phone').value = user.phone;
+            document.getElementById('address').value = user.address || '';
+            document.getElementById('profilePhotoPreview').src = user.photo || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name) + '&background=2c7be5&color=fff';
+        }
+
+        // تحديث إعدادات المطعم
+        function updateRestaurantSettings() {
+            const restaurant = appData.restaurant;
+            
+            document.getElementById('restaurantName').value = restaurant.name;
+            document.getElementById('restaurantAddress').value = restaurant.address;
+            document.getElementById('restaurantPhone').value = restaurant.phone;
+            document.getElementById('restaurantEmail').value = restaurant.email;
+            document.getElementById('restaurantDescription').value = restaurant.description;
+        }
+
+        // تحديث إعدادات الإشعارات
+        function updateNotificationsSettings() {
+            const notifications = appData.settings.notifications;
+            
+            document.getElementById('newOrderNotification').checked = notifications.newOrder;
+            document.getElementById('orderStatusNotification').checked = notifications.orderStatus;
+            document.getElementById('driverNotification').checked = notifications.driver;
+            document.getElementById('soundNotification').checked = notifications.sound;
+        }
+
+        // تحديث إعدادات الأمان
+        function updateSecuritySettings() {
+            const security = appData.settings.security;
+            
+            document.getElementById('twoFactorAuth').checked = security.twoFactorAuth;
+        }
+
+        // تحديث قائمة المندوبين في نموذج إضافة طلب
+        function updateDriversDropdown() {
+            const select = document.getElementById('orderDriver');
+            select.innerHTML = '';
+            
+            for (const [username, driver] of Object.entries(appData.drivers)) {
+                if (driver.role === 'driver' && driver.status === 'active') {
+                    const option = document.createElement('option');
+                    option.value = driver.name;
+                    option.textContent = driver.name;
+                    select.appendChild(option);
+                }
+            }
+        }
+
+        // إضافة طلب جديد
+        function handleAddOrder(e) {
+            e.preventDefault();
+            
+            // إنشاء معرف فريد للطلب
+            const newId = appData.orders.length > 0 ? Math.max(...appData.orders.map(o => o.id)) + 1 : 1001;
+            
+            const newOrder = {
+                id: newId,
+                customer: document.getElementById('orderCustomerName').value,
+                phone: document.getElementById('orderCustomerPhone').value,
+                address: document.getElementById('orderAddress').value,
+                driver: document.getElementById('orderDriver').value,
+                status: document.getElementById('orderStatus').value,
+                date: new Date().toISOString(),
+                deliveryDate: '',
+                details: document.getElementById('orderDetails').value,
+                notes: ''
+            };
+            
+            // إضافة الطلب إلى المصفوفة
+            appData.orders.unshift(newOrder);
+            
+            // حفظ البيانات
+            saveDataToLocalStorage();
+            
+            // تحديث الجداول
+            updateStatistics();
+            updateRecentOrdersTable();
+            updateAllOrdersTable();
+            updateActiveOrdersTable();
+            
+            // إغلاق النموذج
+            closeModal('addOrderModal');
+            
+            // إظهار رسالة نجاح
+            alert('تم إضافة الطلب بنجاح');
+            
+            // إضافة إشعار جديد
+            addNotification('new-order', `طلب جديد #${newId} من ${newOrder.customer}`);
+            
+            // تشغيل صوت الإشعار إذا كان مسموحًا
+            if (appData.settings.notifications.sound) {
+                playNotificationSound();
+            }
+        }
+
+        // إضافة مندوب جديد
+        function handleAddDriver(e) {
+            e.preventDefault();
+            
+            const username = 'driver' + (Object.keys(appData.drivers).length + 1);
+            const name = document.getElementById('driverName').value;
+            
+            const newDriver = {
+                password: document.getElementById('driverPassword').value,
+                name: name,
+                phone: document.getElementById('driverPhone').value,
+                email: document.getElementById('driverEmail').value || '',
+                role: 'driver',
+                status: document.getElementById('driverStatus').value,
+                photo: document.getElementById('driverPhotoPreview').src,
+                orders: 0,
+                address: document.getElementById('driverAddress').value || ''
+            };
+            
+            // إضافة المندوب إلى الكائن
+            appData.drivers[username] = newDriver;
+            
+            // حفظ البيانات
+            saveDataToLocalStorage();
+            
+            // تحديث الجداول
+            updateStatistics();
+            updateDriversTable();
+            updateDriversDropdown();
+            
+            // إغلاق النموذج
+            closeModal('addDriverModal');
+            
+            // إظهار رسالة نجاح
+            alert(`تم إضافة المندوب ${name} بنجاح`);
+            
+            // إضافة إشعار جديد
+            addNotification('new-driver', `مندوب جديد: ${name}`);
+            
+            // تشغيل صوت الإشعار إذا كان مسموحًا
+            if (appData.settings.notifications.sound) {
+                playNotificationSound();
+            }
+        }
+
+        // حفظ إعدادات الملف الشخصي
+        function handleSaveProfile(e) {
+            e.preventDefault();
+            
+            const user = appData.currentUser;
+            if (!user) return;
+            
+            // تحديث بيانات المستخدم
+            user.name = document.getElementById('name').value;
+            user.email = document.getElementById('email').value;
+            user.phone = document.getElementById('phone').value;
+            user.address = document.getElementById('address').value;
+            
+            // إذا تم إدخال كلمة مرور جديدة، نقوم بتحديثها
+            const newPassword = document.getElementById('password2').value;
+            if (newPassword) {
+                user.password = newPassword;
+            }
+            
+            // تحديث الصورة إذا تم تحميلها
+            const photoPreview = document.getElementById('profilePhotoPreview').src;
+            if (photoPreview && photoPreview !== user.photo) {
+                user.photo = photoPreview;
+                document.getElementById('userImage').src = photoPreview;
+            }
+            
+            // حفظ البيانات
+            saveDataToLocalStorage();
+            
+            // إظهار رسالة نجاح
+            alert('تم تحديث الملف الشخصي بنجاح');
+            
+            // إضافة إشعار جديد
+            addNotification('profile-updated', 'تم تحديث الملف الشخصي');
+        }
+
+        // حفظ إعدادات المطعم
+        function handleSaveRestaurant(e) {
+            e.preventDefault();
+            
+            // تحديث بيانات المطعم
+            appData.restaurant.name = document.getElementById('restaurantName').value;
+            appData.restaurant.address = document.getElementById('restaurantAddress').value;
+            appData.restaurant.phone = document.getElementById('restaurantPhone').value;
+            appData.restaurant.email = document.getElementById('restaurantEmail').value;
+            appData.restaurant.description = document.getElementById('restaurantDescription').value;
+            
+            // حفظ البيانات
+            saveDataToLocalStorage();
+            
+            // إظهار رسالة نجاح
+            alert('تم تحديث بيانات المطعم بنجاح');
+            
+            // إضافة إشعار جديد
+            addNotification('restaurant-updated', 'تم تحديث بيانات المطعم');
+        }
+
+        // حفظ إعدادات الإشعارات
+        function handleSaveNotifications(e) {
+            e.preventDefault();
+            
+            // تحديث إعدادات الإشعارات
+            appData.settings.notifications.newOrder = document.getElementById('newOrderNotification').checked;
+            appData.settings.notifications.orderStatus = document.getElementById('orderStatusNotification').checked;
+            appData.settings.notifications.driver = document.getElementById('driverNotification').checked;
+            appData.settings.notifications.sound = document.getElementById('soundNotification').checked;
+            
+            // حفظ البيانات
+            saveDataToLocalStorage();
+            
+            // إظهار رسالة نجاح
+            alert('تم تحديث إعدادات الإشعارات بنجاح');
+        }
+
+        // حفظ إعدادات الأمان
+        function handleSaveSecurity(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // التحقق من كلمة المرور الحالية
+            if (currentPassword !== appData.currentUser.password) {
+                alert('كلمة المرور الحالية غير صحيحة');
+                return;
+            }
+            
+            // التحقق من تطابق كلمتي المرور الجديدتين
+            if (newPassword !== confirmPassword) {
+                alert('كلمتا المرور غير متطابقتين');
+                return;
+            }
+            
+            // تحديث كلمة المرور
+            appData.currentUser.password = newPassword;
+            
+            // تحديث إعدادات الأمان
+            appData.settings.security.twoFactorAuth = document.getElementById('twoFactorAuth').checked;
+            
+            // حفظ البيانات
+            saveDataToLocalStorage();
+            
+            // إظهار رسالة نجاح
+            alert('تم تحديث إعدادات الأمان بنجاح');
+            
+            // إغلاق النموذج
+            closeModal('securitySettingsTab');
+        }
+
+        // تغيير حالة الطلب
+        function handleChangeStatus(e) {
+            e.preventDefault();
+            
+            const orderId = parseInt(document.getElementById('orderIdForStatus').value);
+            const newStatus = document.getElementById('newOrderStatus').value;
+            const notes = document.getElementById('statusNotes').value;
+            
+            // البحث عن الطلب وتحديث حالته
+            const order = appData.orders.find(o => o.id === orderId);
+            if (order) {
+                const oldStatus = order.status;
+                order.status = newStatus;
+                
+                // إذا كانت الحالة الجديدة "تم التوصيل"، نضيف تاريخ التوصيل
+                if (newStatus === 'delivered') {
+                    order.deliveryDate = new Date().toISOString();
+                }
+                
+                // إضافة الملاحظات إذا وجدت
+                if (notes) {
+                    order.notes = notes;
+                }
+                
+                // حفظ البيانات
+                saveDataToLocalStorage();
+                
+                // تحديث الجداول
+                updateStatistics();
+                updateRecentOrdersTable();
+                updateAllOrdersTable();
+                updateActiveOrdersTable();
+                
+                // إغلاق النموذج
+                closeModal('changeStatusModal');
+                
+                // إظهار رسالة نجاح
+                alert('تم تغيير حالة الطلب بنجاح');
+                
+                // إضافة إشعار جديد
+                addNotification('order-status', `تم تغيير حالة الطلب #${orderId} من ${getStatusText(oldStatus)} إلى ${getStatusText(newStatus)}`);
+                
+                // تشغيل صوت الإشعار إذا كان مسموحًا
+                if (appData.settings.notifications.sound) {
+                    playNotificationSound();
+                }
+            }
+        }
+
+        // فتح نموذج تغيير حالة الطلب
+        function openChangeStatusModal(orderId, currentStatus) {
+            appData.selectedOrderId = orderId;
+            
+            // تعبئة النموذج
+            document.getElementById('orderIdForStatus').value = orderId;
+            
+            // تحديد حالة الطلب الحالية
+            let statusClass, statusIcon, statusText;
+            switch (currentStatus) {
+                case 'pending':
+                    statusClass = 'pending';
+                    statusIcon = 'fa-clock';
+                    statusText = getText('statusPending');
+                    break;
+                case 'on-the-way':
+                    statusClass = 'on-the-way';
+                    statusIcon = 'fa-truck';
+                    statusText = getText('statusOnTheWay');
+                    break;
+                case 'delivered':
+                    statusClass = 'delivered';
+                    statusIcon = 'fa-check-circle';
+                    statusText = getText('statusDelivered');
+                    break;
+                case 'cancelled':
+                    statusClass = 'cancelled';
+                    statusIcon = 'fa-times-circle';
+                    statusText = getText('statusCancelled');
+                    break;
+            }
+            
+            const currentStatusDisplay = document.getElementById('currentStatusDisplay');
+            currentStatusDisplay.className = `status ${statusClass}`;
+            currentStatusDisplay.innerHTML = `<i class="fas ${statusIcon}"></i> <span>${statusText}</span>`;
+            
+            // تحديد الحالة المحددة مسبقًا
+            document.querySelectorAll('.status-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            document.querySelector(`.status-option.${currentStatus}`).classList.add('selected');
+            document.getElementById('newOrderStatus').value = currentStatus;
+            
+            // فتح النموذج
+            openModal('changeStatusModal');
+        }
+
+        // تأكيد الحذف
+        function confirmDelete(type, id) {
+            appData.selectedItemToDelete = { type, id };
+            
+            // فتح نموذج التأكيد
+            openModal('confirmDeleteModal');
+        }
+
+        // تنفيذ الحذف بعد التأكيد
+        function executeDelete() {
+            const { type, id } = appData.selectedItemToDelete;
+            
+            if (type === 'order') {
+                // حذف الطلب
+                const index = appData.orders.findIndex(o => o.id === id);
+                if (index !== -1) {
+                    const deletedOrder = appData.orders.splice(index, 1)[0];
+                    
+                    // حفظ البيانات
+                    saveDataToLocalStorage();
+                    
+                    // تحديث الجداول
+                    updateStatistics();
+                    updateRecentOrdersTable();
+                    updateAllOrdersTable();
+                    updateActiveOrdersTable();
+                    
+                    // إغلاق النموذج
+                    closeModal('confirmDeleteModal');
+                    
+                    // إظهار رسالة نجاح
+                    alert('تم حذف الطلب بنجاح');
+                    
+                    // إضافة إشعار جديد
+                    addNotification('order-deleted', `تم حذف الطلب #${deletedOrder.id}`);
+                }
+            } else if (type === 'driver') {
+                // حذف المندوب
+                if (appData.drivers[id]) {
+                    const deletedDriver = appData.drivers[id];
+                    delete appData.drivers[id];
+                    
+                    // حفظ البيانات
+                    saveDataToLocalStorage();
+                    
+                    // تحديث الجداول
+                    updateStatistics();
+                    updateDriversTable();
+                    updateDriversDropdown();
+                    
+                    // إغلاق النموذج
+                    closeModal('confirmDeleteModal');
+                    
+                    // إظهار رسالة نجاح
+                    alert(`تم حذف المندوب ${deletedDriver.name} بنجاح`);
+                    
+                    // إضافة إشعار جديد
+                    addNotification('driver-deleted', `تم حذف المندوب: ${deletedDriver.name}`);
+                }
+            }
+            
+            // تشغيل صوت الإشعار إذا كان مسموحًا
+            if (appData.settings.notifications.sound) {
+                playNotificationSound();
+            }
+        }
+
+        // عرض تفاصيل الطلب
+        function viewOrderDetails(orderId) {
+            const order = appData.orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            // تعبئة النموذج
+            document.getElementById('orderDetailsId').textContent = `#${order.id}`;
+            document.getElementById('orderDetailsCustomer').textContent = order.customer;
+            document.getElementById('orderDetailsPhone').textContent = order.phone;
+            document.getElementById('orderDetailsAddress').textContent = order.address;
+            document.getElementById('orderDetailsDriver').textContent = order.driver;
+            document.getElementById('orderDetailsDate').textContent = formatDate(order.date);
+            document.getElementById('orderDetailsDeliveryDate').textContent = order.deliveryDate ? formatDate(order.deliveryDate) : 'لم يتم التسليم بعد';
+            document.getElementById('orderDetailsDetails').textContent = order.details || 'لا توجد تفاصيل';
+            document.getElementById('orderDetailsNotes').textContent = order.notes || 'لا توجد ملاحظات';
+            
+            // تحديد حالة الطلب
+            let statusClass, statusIcon, statusText;
+            switch (order.status) {
+                case 'pending':
+                    statusClass = 'pending';
+                    statusIcon = 'fa-clock';
+                    statusText = getText('statusPending');
+                    break;
+                case 'on-the-way':
+                    statusClass = 'on-the-way';
+                    statusIcon = 'fa-truck';
+                    statusText = getText('statusOnTheWay');
+                    break;
+                case 'delivered':
+                    statusClass = 'delivered';
+                    statusIcon = 'fa-check-circle';
+                    statusText = getText('statusDelivered');
+                    break;
+                case 'cancelled':
+                    statusClass = 'cancelled';
+                    statusIcon = 'fa-times-circle';
+                    statusText = getText('statusCancelled');
+                    break;
+            }
+            
+            const statusElement = document.getElementById('orderDetailsStatus');
+            statusElement.className = `status ${statusClass}`;
+            statusElement.innerHTML = `<i class="fas ${statusIcon}"></i> <span>${statusText}</span>`;
+            
+            // فتح النموذج
+            openModal('orderDetailsModal');
+        }
+
+        // تحميل صورة الملف الشخصي
+        function handleProfilePhotoUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('profilePhotoPreview').src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // تحميل صورة المندوب
+        function handleDriverPhotoUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('driverPhotoPreview').src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // البحث في الطلبات
+        function handleSearchOrders(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#recentOrdersTable tbody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        }
+
+        // البحث في جميع الطلبات
+        function handleSearchAllOrders(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#allOrdersTable tbody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        }
+
+        // البحث في المندوبين
+        function handleSearchDrivers(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#driversTable tbody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        }
+
+        // تبديل الأقسام
+        function showSection(section) {
+            // إخفاء جميع الأقسام
+            document.getElementById('dashboardSection').style.display = 'none';
+            document.getElementById('ordersSection').style.display = 'none';
+            document.getElementById('driversSection').style.display = 'none';
+            document.getElementById('mapSection').style.display = 'none';
+            document.getElementById('settingsSection').style.display = 'none';
+            
+            // إخفاء جميع تبويبات الإعدادات
+            document.getElementById('profileSettingsTab').style.display = 'none';
+            document.getElementById('restaurantSettingsTab').style.display = 'none';
+            document.getElementById('notificationsSettingsTab').style.display = 'none';
+            document.getElementById('securitySettingsTab').style.display = 'none';
+            
+            // عرض تبويب الملف الشخصي افتراضيًا عند الدخول إلى الإعدادات
+            if (section === 'settings') {
+                document.getElementById('profileSettingsTab').style.display = 'block';
+            }
+            
+            // تحديث القائمة الجانبية
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => item.classList.remove('active'));
+            
+            event.currentTarget.classList.add('active');
+            
+            // عرض القسم المحدد
+            document.getElementById(section + 'Section').style.display = 'block';
+            
+            // تحديث عنوان الصفحة
+            const pageTitleMap = {
+                'dashboard': getText('menuDashboard'),
+                'orders': getText('ordersTitle'),
+                'drivers': getText('driversTitle'),
+                'map': getText('trackingTitle'),
+                'settings': getText('settingsTitle')
+            };
+            document.getElementById('pageTitle').textContent = pageTitleMap[section];
+            
+            // إذا كان القسم هو الخريطة، نقوم بتحميلها
+            if (section === 'map') {
+                initMap();
+            }
+        }
+
+        // تبديل تبويبات الإعدادات
+        function showSettingsTab(tab) {
+            // إخفاء جميع التبويبات
+            document.getElementById('profileSettingsTab').style.display = 'none';
+            document.getElementById('restaurantSettingsTab').style.display = 'none';
+            document.getElementById('notificationsSettingsTab').style.display = 'none';
+            document.getElementById('securitySettingsTab').style.display = 'none';
+            
+            // عرض التبويب المحدد
+            document.getElementById(tab + 'SettingsTab').style.display = 'block';
+        }
+
+        // فتح النموذج
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // إغلاق النموذج
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        // إغلاق جميع النماذج
+        function closeAllModals() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.classList.remove('show');
+            });
+            document.body.style.overflow = '';
+        }
+
+        // تحديد حالة الطلب
+        function selectOrderStatus(status) {
+            document.querySelectorAll('.status-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            document.querySelector(`.status-option.${status}`).classList.add('selected');
+            document.getElementById('orderStatus').value = status;
+        }
+
+        // تحديد الحالة الجديدة للطلب
+        function selectNewOrderStatus(status) {
+            document.querySelectorAll('.status-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            document.querySelector(`.status-option.${status}`).classList.add('selected');
+            document.getElementById('newOrderStatus').value = status;
+        }
+
+        // إعادة تعيين نموذج الملف الشخصي
+        function resetProfileForm() {
+            updateProfileSettings();
+        }
+
+        // إعادة تعيين نموذج المطعم
+        function resetRestaurantForm() {
+            updateRestaurantSettings();
+        }
+
+        // إعادة تعيين نموذج الإشعارات
+        function resetNotificationsForm() {
+            updateNotificationsSettings();
+        }
+
+        // إعادة تعيين نموذج الأمان
+        function resetSecurityForm() {
+            updateSecuritySettings();
+        }
+
+        // عرض الإشعارات
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notificationDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // تعيين جميع الإشعارات كمقروءة
+        function markAllAsRead() {
+            appData.notifications.forEach(notification => {
+                notification.read = true;
+            });
+            
+            // حفظ البيانات
+            saveDataToLocalStorage();
+            
+            // تحديث قائمة الإشعارات
+            updateNotificationsList();
+            
+            // تحديث عدد الإشعارات غير المقروءة
+            updateNotificationsBadge();
+        }
+
+        // عرض تفاصيل الإشعار
+        function viewNotification(notificationId) {
+            const notification = appData.notifications.find(n => n.id === notificationId);
+            if (!notification) return;
+            
+            // تعيين الإشعار كمقروء
+            notification.read = true;
+            
+            // حفظ البيانات
+            saveDataToLocalStorage();
+            
+            // تحديث قائمة الإشعارات
+            updateNotificationsList();
+            
+            // تحديث عدد الإشعارات غير المقروءة
+            updateNotificationsBadge();
+            
+            // عرض تفاصيل الإشعار حسب نوعه
+            if (notification.type === 'new-order' || notification.type === 'order-status') {
+                // استخراج معرف الطلب من الرسالة
+                const orderIdMatch = notification.message.match(/#(\d+)/);
+                if (orderIdMatch) {
+                    const orderId = parseInt(orderIdMatch[1]);
+                    viewOrderDetails(orderId);
+                }
+            }
+        }
+
+        // إضافة إشعار جديد
+        function addNotification(type, message) {
+            const newNotification = {
+                id: Date.now(),
+                type,
+                message,
+                date: new Date().toISOString(),
+                read: false
+            };
+            
+            appData.notifications.unshift(newNotification);
+            
+            // حفظ البيانات
+            saveDataToLocalStorage();
+            
+            // تحديث قائمة الإشعارات
+            updateNotificationsList();
+            
+            // تحديث عدد الإشعارات غير المقروءة
+            updateNotificationsBadge();
+        }
+
+        // تشغيل صوت الإشعار
+        function playNotificationSound() {
+            const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3');
+            audio.play().catch(e => console.log('Failed to play notification sound:', e));
+        }
+
+        // الخريطة
+        function initMap() {
+            const mapElement = document.getElementById('map');
+            
+            // إحداثيات دبي (مركز الخريطة)
+            const dubai = { lat: 25.2048, lng: 55.2708 };
+            
+            // إنشاء الخريطة
+            appData.map = new google.maps.Map(mapElement, {
+                zoom: 12,
+                center: dubai,
+                mapTypeId: 'roadmap',
+                styles: [
+                    {
+                        "featureType": "administrative",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#444444"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "landscape",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "color": "#f2f2f2"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "saturation": -100
+                            },
+                            {
+                                "lightness": 45
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "simplified"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "labels.icon",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "color": "#46bcec"
+                            },
+                            {
+                                "visibility": "on"
+                            }
+                        ]
+                    }
+                ]
+            });
+            
+            // مسح العلامات القديمة
+            appData.markers.forEach(marker => marker.setMap(null));
+            appData.markers = [];
+            
+            // إضافة علامات للمندوبين النشطين
+            const activeDrivers = Object.values(appData.drivers).filter(driver => 
+                driver.role === 'driver' && (driver.status === 'active' || driver.status === 'on-mission')
+            );
+            
+            activeDrivers.forEach(driver => {
+                // إحداثيات عشوائية ضمن دبي لأغراض العرض
+                const lat = dubai.lat + (Math.random() * 0.1 - 0.05);
+                const lng = dubai.lng + (Math.random() * 0.1 - 0.05);
+                
+                const marker = new google.maps.Marker({
+                    position: { lat, lng },
+                    map: appData.map,
+                    title: driver.name,
+                    icon: {
+                        url: driver.status === 'on-mission' ? 
+                            'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' :
+                            'https://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                    }
+                });
+                
+                // إضافة نافذة معلومات
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `
+                        <div class="driver-info-window">
+                            <h3>${driver.name}</h3>
+                            <p><strong>${getText('phoneLabel')}:</strong> ${driver.phone}</p>
+                            <p><strong>${getText('statusHeader3')}:</strong> 
+                                <span class="status ${driver.status === 'on-mission' ? 'on-the-way' :
