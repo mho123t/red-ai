@@ -3532,4 +3532,217 @@
                             <h3>${driver.name}</h3>
                             <p><strong>${getText('phoneLabel')}:</strong> ${driver.phone}</p>
                             <p><strong>${getText('statusHeader3')}:</strong> 
-                                <span class="status ${driver.status === 'on-mission' ? 'on-the-way' :
+                                <span class="status ${driver.status === 'on-mission' ? 'on-the-way' : 'delivered'}">
+                                    <i class="fas ${driver.status === 'on-mission' ? 'fa-truck' : 'fa-check-circle'}"></i> 
+                                    ${driver.status === 'on-mission' ? getText('statusOnMission') : getText('statusActive')}
+                                </span>
+                            </p>
+                        </div>
+                    `
+                });
+                
+                marker.addListener('click', () => {
+                    infoWindow.open(appData.map, marker);
+                });
+                
+                appData.markers.push(marker);
+            });
+            
+            // إضافة علامات للطلبات النشطة
+            const activeOrders = appData.orders.filter(order => order.status === 'on-the-way');
+            
+            activeOrders.forEach(order => {
+                // إحداثيات عشوائية ضمن دبي لأغراض العرض
+                const lat = dubai.lat + (Math.random() * 0.1 - 0.05);
+                const lng = dubai.lng + (Math.random() * 0.1 - 0.05);
+                
+                const marker = new google.maps.Marker({
+                    position: { lat, lng },
+                    map: appData.map,
+                    title: `طلب #${order.id} - ${order.customer}`,
+                    icon: {
+                        url: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                    }
+                });
+                
+                // إضافة نافذة معلومات
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `
+                        <div style="padding: 0.5rem;">
+                            <h3 style="margin: 0 0 0.5rem 0;">${getText('orderIdHeader')} ${order.id}</h3>
+                            <p style="margin: 0.3rem 0;"><strong>${getText('customerHeader')}:</strong> ${order.customer}</p>
+                            <p style="margin: 0.3rem 0;"><strong>${getText('driverHeader')}:</strong> ${order.driver}</p>
+                            <p style="margin: 0.3rem 0;"><strong>${getText('statusHeader')}:</strong> 
+                                <span class="status on-the-way"><i class="fas fa-truck"></i> ${getText('statusOnTheWay')}</span>
+                            </p>
+                        </div>
+                    `
+                });
+                
+                marker.addListener('click', () => {
+                    infoWindow.open(appData.map, marker);
+                });
+                
+                appData.markers.push(marker);
+            });
+        }
+
+        // تغيير اللغة
+        function changeLanguage(lang) {
+            appData.currentLanguage = lang;
+            
+            // تحديث اتجاه الصفحة
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            // تحديث النصوص بناءً على اللغة المحددة
+            const texts = lang === 'ar' ? arabicText : englishText;
+            updateUITexts(texts);
+            
+            // تحديث أزرار تغيير اللغة
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.language-btn[onclick="changeLanguage('${lang}')"]`).classList.add('active');
+            
+            // إعادة تحميل الجداول
+            if (appData.currentUser) {
+                loadInitialData();
+            }
+        }
+
+        // تحديث نصوص واجهة المستخدم
+        function updateUITexts(texts) {
+            for (const [key, value] of Object.entries(texts)) {
+                const elements = document.querySelectorAll(`[id="${key}"]`);
+                
+                elements.forEach(element => {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = value;
+                    } else {
+                        element.textContent = value;
+                    }
+                });
+            }
+        }
+
+        // الحصول على النص بناءً على اللغة الحالية
+        function getText(key) {
+            return appData.currentLanguage === 'ar' ? arabicText[key] : englishText[key];
+        }
+
+        // الحصول على نص الحالة
+        function getStatusText(status) {
+            switch (status) {
+                case 'pending': return getText('statusPending');
+                case 'on-the-way': return getText('statusOnTheWay');
+                case 'delivered': return getText('statusDelivered');
+                case 'cancelled': return getText('statusCancelled');
+                case 'active': return getText('statusActive');
+                case 'inactive': return getText('statusInactive');
+                case 'on-mission': return getText('statusOnMission');
+                default: return status;
+            }
+        }
+
+        // تنسيق التاريخ
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString(appData.currentLanguage === 'ar' ? 'ar-SA' : 'en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // تنسيق الوقت منذ الآن
+        function formatTimeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const seconds = Math.floor((now - date) / 1000);
+            
+            if (seconds < 60) return appData.currentLanguage === 'ar' ? 'منذ ثوان' : 'Just now';
+            
+            const minutes = Math.floor(seconds / 60);
+            if (minutes < 60) return appData.currentLanguage === 'ar' ? `منذ ${minutes} دقيقة` : `${minutes} minute(s) ago`;
+            
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return appData.currentLanguage === 'ar' ? `منذ ${hours} ساعة` : `${hours} hour(s) ago`;
+            
+            const days = Math.floor(hours / 24);
+            return appData.currentLanguage === 'ar' ? `منذ ${days} يوم` : `${days} day(s) ago`;
+        }
+
+        // إنشاء موقع عشوائي في دبي
+        function getRandomLocation() {
+            const locations = [
+                "دبي، مارينا",
+                "دبي، ديرة",
+                "دبي، البرشاء",
+                "دبي، مردف",
+                "دبي، القرهود",
+                "دبي، الخوانيج",
+                "دبي، ند الشبا",
+                "دبي، الممزر",
+                "دبي، الوصل",
+                "دبي، الواحة"
+            ];
+            
+            return locations[Math.floor(Math.random() * locations.length)];
+        }
+
+        // إنشاء بعض الإشعارات الافتراضية
+        function createSampleNotifications() {
+            if (appData.notifications.length > 0) return;
+            
+            const sampleNotifications = [
+                {
+                    id: 1,
+                    type: 'new-order',
+                    message: 'طلب جديد #1254 من خالد أحمد',
+                    date: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
+                    read: false
+                },
+                {
+                    id: 2,
+                    type: 'order-status',
+                    message: 'تم تغيير حالة الطلب #1253 من في الانتظار إلى قيد التوصيل',
+                    date: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+                    read: false
+                },
+                {
+                    id: 3,
+                    type: 'new-driver',
+                    message: 'مندوب جديد: شهرزاد',
+                    date: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+                    read: true
+                }
+            ];
+            
+            appData.notifications = sampleNotifications;
+            saveDataToLocalStorage();
+        }
+
+        // تعيين وظائف للزر العالمي
+        window.changeLanguage = changeLanguage;
+        window.showSection = showSection;
+        window.showSettingsTab = showSettingsTab;
+        window.logout = logout;
+        window.toggleNotifications = toggleNotifications;
+        window.markAllAsRead = markAllAsRead;
+        window.openModal = openModal;
+        window.closeModal = closeModal;
+        window.selectOrderStatus = selectOrderStatus;
+        window.selectNewOrderStatus = selectNewOrderStatus;
+        window.resetProfileForm = resetProfileForm;
+        window.resetRestaurantForm = resetRestaurantForm;
+        window.resetNotificationsForm = resetNotificationsForm;
+        window.resetSecurityForm = resetSecurityForm;
+        window.viewOrderDetails = viewOrderDetails;
+        window.openChangeStatusModal = openChangeStatusModal;
+        window.confirmDelete = confirmDelete;
+        window.executeDelete = executeDelete;
+    </script>
+</body>
+</html>
