@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة دلفري ريدان - نظام التوصيل</title>
+    <title>نظام دلفري ريدان - الإمارات</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #e67e22;
-            --dark: #2c3e50;
-            --light: #ecf0f1;
-            --danger: #e74c3c;
-            --success: #2ecc71;
+            --primary: #2c7be5;
+            --dark: #283e59;
+            --light: #f9fafd;
+            --danger: #e63757;
+            --success: #00d97e;
         }
         
         * {
@@ -37,7 +37,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, var(--primary), #d35400);
+            background: linear-gradient(135deg, var(--primary), #1a5bc4);
         }
         
         .login-box {
@@ -94,7 +94,29 @@
         }
         
         .btn:hover {
-            background: #d35400;
+            background: #1a5bc4;
+        }
+        
+        .language-switcher {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .language-btn {
+            background: none;
+            border: none;
+            color: var(--dark);
+            cursor: pointer;
+            padding: 0.3rem 0.6rem;
+            margin: 0 0.3rem;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+        
+        .language-btn.active {
+            background: var(--primary);
+            color: white;
         }
         
         /* لوحة التحكم */
@@ -292,20 +314,24 @@
     <div id="loginPage" class="container login-container">
         <div class="login-box">
             <div class="logo">
-                <i class="fas fa-utensils"></i>
+                <i class="fas fa-truck"></i>
             </div>
-            <h2>تسجيل الدخول - دلفري ريدان</h2>
+            <h2 id="loginTitle">تسجيل الدخول - دلفري ريدان</h2>
             <form id="loginForm">
                 <div class="input-group">
-                    <label for="username">اسم المستخدم</label>
+                    <label id="usernameLabel">اسم المستخدم</label>
                     <input type="text" id="username" placeholder="أدخل اسم المستخدم" required>
                 </div>
                 <div class="input-group">
-                    <label for="password">كلمة المرور</label>
+                    <label id="passwordLabel">كلمة المرور</label>
                     <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
                 </div>
-                <button type="submit" class="btn">تسجيل الدخول</button>
+                <button type="submit" class="btn" id="loginBtn">تسجيل الدخول</button>
             </form>
+            <div class="language-switcher">
+                <button class="language-btn active" onclick="changeLanguage('ar')">العربية</button>
+                <button class="language-btn" onclick="changeLanguage('en')">English</button>
+            </div>
         </div>
     </div>
     
@@ -315,35 +341,35 @@
         <div class="sidebar">
             <div class="sidebar-header">
                 <div style="font-size: 2rem; color: var(--primary);">
-                    <i class="fas fa-utensils"></i>
+                    <i class="fas fa-truck"></i>
                 </div>
-                <h3>دلفري ريدان</h3>
-                <p>نظام إدارة التوصيل</p>
+                <h3 id="appName">دلفري ريدان</h3>
+                <p id="appDesc">نظام إدارة التوصيل</p>
             </div>
             
             <div class="sidebar-menu">
                 <div class="menu-item active" onclick="showSection('dashboard')">
-                    <span>لوحة التحكم</span>
+                    <span id="menuDashboard">لوحة التحكم</span>
                     <i class="fas fa-tachometer-alt"></i>
                 </div>
                 <div class="menu-item" onclick="showSection('orders')">
-                    <span>الطلبات</span>
+                    <span id="menuOrders">الطلبات</span>
                     <i class="fas fa-clipboard-list"></i>
                 </div>
                 <div class="menu-item" onclick="showSection('drivers')">
-                    <span>المندوبين</span>
+                    <span id="menuDrivers">المندوبين</span>
                     <i class="fas fa-motorcycle"></i>
                 </div>
                 <div class="menu-item" onclick="showSection('map')">
-                    <span>تتبع الطلبات</span>
+                    <span id="menuTracking">تتبع الطلبات</span>
                     <i class="fas fa-map-marked-alt"></i>
                 </div>
                 <div class="menu-item" onclick="showSection('settings')">
-                    <span>الإعدادات</span>
+                    <span id="menuSettings">الإعدادات</span>
                     <i class="fas fa-cog"></i>
                 </div>
                 <div class="menu-item" onclick="logout()">
-                    <span>تسجيل الخروج</span>
+                    <span id="menuLogout">تسجيل الخروج</span>
                     <i class="fas fa-sign-out-alt"></i>
                 </div>
             </div>
@@ -356,8 +382,8 @@
                 <h2 id="pageTitle">لوحة التحكم</h2>
                 <div class="user-info">
                     <div>
-                        <h4>مدير النظام</h4>
-                        <p style="color: #777; font-size: 0.8rem;">آخر دخول: اليوم 10:30 ص</p>
+                        <h4 id="userRole">مدير النظام</h4>
+                        <p id="lastLogin" style="color: #777; font-size: 0.8rem;">آخر دخول: اليوم 10:30 ص</p>
                     </div>
                     <img src="https://via.placeholder.com/40" alt="صورة المستخدم">
                 </div>
@@ -367,61 +393,61 @@
             <div id="dashboardSection">
                 <div class="cards">
                     <div class="card success">
-                        <p class="card-title">الطلبات المكتملة</p>
-                        <p class="card-value">124</p>
+                        <p class="card-title" id="completedOrders">الطلبات المكتملة</p>
+                        <p class="card-value">87</p>
                     </div>
                     <div class="card warning">
-                        <p class="card-title">الطلبات قيد التوصيل</p>
-                        <p class="card-value">15</p>
+                        <p class="card-title" id="inProgressOrders">الطلبات قيد التوصيل</p>
+                        <p class="card-value">12</p>
                     </div>
                     <div class="card danger">
-                        <p class="card-title">الطلبات الملغاة</p>
-                        <p class="card-value">8</p>
+                        <p class="card-title" id="cancelledOrders">الطلبات الملغاة</p>
+                        <p class="card-value">5</p>
                     </div>
                     <div class="card">
-                        <p class="card-title">عدد المندوبين</p>
-                        <p class="card-value">7</p>
+                        <p class="card-title" id="totalDrivers">عدد المندوبين</p>
+                        <p class="card-value">8</p>
                     </div>
                 </div>
                 
                 <div class="table-container">
-                    <h3 style="margin-bottom: 1rem;">آخر الطلبات</h3>
+                    <h3 id="recentOrdersTitle" style="margin-bottom: 1rem;">آخر الطلبات</h3>
                     <table>
                         <thead>
                             <tr>
-                                <th>رقم الطلب</th>
-                                <th>العميل</th>
-                                <th>المندوب</th>
-                                <th>الحالة</th>
-                                <th>التاريخ</th>
+                                <th id="orderIdHeader">رقم الطلب</th>
+                                <th id="customerHeader">العميل</th>
+                                <th id="driverHeader">المندوب</th>
+                                <th id="statusHeader">الحالة</th>
+                                <th id="dateHeader">التاريخ</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>#1254</td>
-                                <td>أحمد محمد</td>
-                                <td>علي محمود</td>
+                                <td>خالد أحمد</td>
+                                <td>شاهد</td>
                                 <td><span class="status delivered">تم التوصيل</span></td>
                                 <td>10/06/2023 10:30 ص</td>
                             </tr>
                             <tr>
                                 <td>#1253</td>
-                                <td>سارة خالد</td>
-                                <td>محمود عبدالله</td>
+                                <td>مريم علي</td>
+                                <td>حامد</td>
                                 <td><span class="status on-the-way">قيد التوصيل</span></td>
                                 <td>10/06/2023 09:45 ص</td>
                             </tr>
                             <tr>
                                 <td>#1252</td>
-                                <td>عبدالرحمن سعيد</td>
-                                <td>ياسر أحمد</td>
+                                <td>سعيد راشد</td>
+                                <td>نعيم</td>
                                 <td><span class="status pending">في الانتظار</span></td>
                                 <td>10/06/2023 09:30 ص</td>
                             </tr>
                             <tr>
                                 <td>#1251</td>
-                                <td>فاطمة علي</td>
-                                <td>خالد إبراهيم</td>
+                                <td>فاطمة خالد</td>
+                                <td>شهرزاد</td>
                                 <td><span class="status delivered">تم التوصيل</span></td>
                                 <td>09/06/2023 08:15 م</td>
                             </tr>
@@ -433,30 +459,30 @@
             <!-- قسم الطلبات -->
             <div id="ordersSection" style="display: none;">
                 <div class="header" style="border-bottom: none; padding-bottom: 0;">
-                    <h2>إدارة الطلبات</h2>
-                    <button class="btn" style="width: auto;">إضافة طلب جديد</button>
+                    <h2 id="ordersTitle">إدارة الطلبات</h2>
+                    <button class="btn" style="width: auto;" id="addOrderBtn">إضافة طلب جديد</button>
                 </div>
                 
                 <div class="table-container">
                     <table>
                         <thead>
                             <tr>
-                                <th>رقم الطلب</th>
-                                <th>العميل</th>
-                                <th>الهاتف</th>
-                                <th>العنوان</th>
-                                <th>المندوب</th>
-                                <th>الحالة</th>
-                                <th>الإجراءات</th>
+                                <th id="orderIdHeader2">رقم الطلب</th>
+                                <th id="customerHeader2">العميل</th>
+                                <th id="phoneHeader">الهاتف</th>
+                                <th id="addressHeader">العنوان</th>
+                                <th id="driverHeader2">المندوب</th>
+                                <th id="statusHeader2">الحالة</th>
+                                <th id="actionsHeader">الإجراءات</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>#1254</td>
-                                <td>أحمد محمد</td>
-                                <td>0551234567</td>
-                                <td>حي الرياض، شارع الملك فهد</td>
-                                <td>علي محمود</td>
+                                <td>خالد أحمد</td>
+                                <td>0501234567</td>
+                                <td>دبي، مارينا</td>
+                                <td>شاهد</td>
                                 <td><span class="status delivered">تم التوصيل</span></td>
                                 <td>
                                     <button style="background: none; border: none; color: var(--primary); cursor: pointer;">
@@ -469,10 +495,10 @@
                             </tr>
                             <tr>
                                 <td>#1253</td>
-                                <td>سارة خالد</td>
-                                <td>0509876543</td>
-                                <td>حي النخيل، شارع الأمير محمد</td>
-                                <td>محمود عبدالله</td>
+                                <td>مريم علي</td>
+                                <td>0559876543</td>
+                                <td>أبوظبي، الخالدية</td>
+                                <td>حامد</td>
                                 <td><span class="status on-the-way">قيد التوصيل</span></td>
                                 <td>
                                     <button style="background: none; border: none; color: var(--primary); cursor: pointer;">
@@ -485,10 +511,10 @@
                             </tr>
                             <tr>
                                 <td>#1252</td>
-                                <td>عبدالرحمن سعيد</td>
+                                <td>سعيد راشد</td>
                                 <td>0545678901</td>
-                                <td>حي العليا، شارع العروبة</td>
-                                <td>ياسر أحمد</td>
+                                <td>الشارقة، النخيلة</td>
+                                <td>نعيم</td>
                                 <td><span class="status pending">في الانتظار</span></td>
                                 <td>
                                     <button style="background: none; border: none; color: var(--primary); cursor: pointer;">
@@ -507,28 +533,28 @@
             <!-- قسم المندوبين -->
             <div id="driversSection" style="display: none;">
                 <div class="header" style="border-bottom: none; padding-bottom: 0;">
-                    <h2>إدارة المندوبين</h2>
-                    <button class="btn" style="width: auto;">إضافة مندوب جديد</button>
+                    <h2 id="driversTitle">إدارة المندوبين</h2>
+                    <button class="btn" style="width: auto;" id="addDriverBtn">إضافة مندوب جديد</button>
                 </div>
                 
                 <div class="table-container">
                     <table>
                         <thead>
                             <tr>
-                                <th>الصورة</th>
-                                <th>اسم المندوب</th>
-                                <th>الهاتف</th>
-                                <th>عدد الطلبات</th>
-                                <th>الحالة</th>
-                                <th>الإجراءات</th>
+                                <th id="photoHeader">الصورة</th>
+                                <th id="driverNameHeader">اسم المندوب</th>
+                                <th id="phoneHeader2">الهاتف</th>
+                                <th id="ordersCountHeader">عدد الطلبات</th>
+                                <th id="statusHeader3">الحالة</th>
+                                <th id="actionsHeader2">الإجراءات</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><img src="https://via.placeholder.com/40" alt="صورة المندوب" style="border-radius: 50%;"></td>
-                                <td>علي محمود</td>
+                                <td>شاهد</td>
                                 <td>0501234567</td>
-                                <td>45</td>
+                                <td>32</td>
                                 <td><span class="status delivered">نشط</span></td>
                                 <td>
                                     <button style="background: none; border: none; color: var(--primary); cursor: pointer;">
@@ -541,9 +567,9 @@
                             </tr>
                             <tr>
                                 <td><img src="https://via.placeholder.com/40" alt="صورة المندوب" style="border-radius: 50%;"></td>
-                                <td>محمود عبدالله</td>
+                                <td>حامد</td>
                                 <td>0559876543</td>
-                                <td>32</td>
+                                <td>28</td>
                                 <td><span class="status on-the-way">في مهمة</span></td>
                                 <td>
                                     <button style="background: none; border: none; color: var(--primary); cursor: pointer;">
@@ -556,10 +582,25 @@
                             </tr>
                             <tr>
                                 <td><img src="https://via.placeholder.com/40" alt="صورة المندوب" style="border-radius: 50%;"></td>
-                                <td>ياسر أحمد</td>
+                                <td>نعيم</td>
                                 <td>0545678901</td>
-                                <td>28</td>
+                                <td>25</td>
                                 <td><span class="status pending">غير نشط</span></td>
+                                <td>
+                                    <button style="background: none; border: none; color: var(--primary); cursor: pointer;">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button style="background: none; border: none; color: var(--danger); cursor: pointer; margin-right: 0.5rem;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://via.placeholder.com/40" alt="صورة المندوب" style="border-radius: 50%;"></td>
+                                <td>شهرزاد</td>
+                                <td>0567890123</td>
+                                <td>18</td>
+                                <td><span class="status delivered">نشط</span></td>
                                 <td>
                                     <button style="background: none; border: none; color: var(--primary); cursor: pointer;">
                                         <i class="fas fa-edit"></i>
@@ -576,39 +617,39 @@
             
             <!-- قسم الخريطة -->
             <div id="mapSection" style="display: none;">
-                <h2>تتبع الطلبات على الخريطة</h2>
-                <p style="margin-bottom: 1rem; color: #777;">عرض مواقع المندوبين والطلبات على الخريطة</p>
+                <h2 id="trackingTitle">تتبع الطلبات على الخريطة</h2>
+                <p id="trackingDesc" style="margin-bottom: 1rem; color: #777;">عرض مواقع المندوبين والطلبات على الخريطة</p>
                 
                 <div class="map-container">
                     <div id="map"></div>
                 </div>
                 
                 <div style="margin-top: 1.5rem;">
-                    <h3>الطلبات قيد التوصيل</h3>
+                    <h3 id="activeOrdersTitle">الطلبات قيد التوصيل</h3>
                     <div class="table-container" style="margin-top: 1rem;">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>رقم الطلب</th>
-                                    <th>العميل</th>
-                                    <th>المندوب</th>
-                                    <th>الموقع الحالي</th>
-                                    <th>الحالة</th>
+                                    <th id="orderIdHeader3">رقم الطلب</th>
+                                    <th id="customerHeader3">العميل</th>
+                                    <th id="driverHeader3">المندوب</th>
+                                    <th id="locationHeader">الموقع الحالي</th>
+                                    <th id="statusHeader4">الحالة</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>#1253</td>
-                                    <td>سارة خالد</td>
-                                    <td>محمود عبدالله</td>
-                                    <td>شارع الملك عبدالعزيز</td>
+                                    <td>مريم علي</td>
+                                    <td>حامد</td>
+                                    <td>دبي، شارع الشيخ زايد</td>
                                     <td><span class="status on-the-way">قيد التوصيل</span></td>
                                 </tr>
                                 <tr>
                                     <td>#1249</td>
                                     <td>ناصر علي</td>
-                                    <td>خالد إبراهيم</td>
-                                    <td>حي الصحافة</td>
+                                    <td>قاسم</td>
+                                    <td>أبوظبي، كورنيش</td>
                                     <td><span class="status on-the-way">قيد التوصيل</span></td>
                                 </tr>
                             </tbody>
@@ -619,87 +660,87 @@
             
             <!-- قسم الإعدادات -->
             <div id="settingsSection" style="display: none;">
-                <h2>إعدادات النظام</h2>
-                <p style="margin-bottom: 1.5rem; color: #777;">تعديل إعدادات حسابك وإعدادات النظام</p>
+                <h2 id="settingsTitle">إعدادات النظام</h2>
+                <p id="settingsDesc" style="margin-bottom: 1.5rem; color: #777;">تعديل إعدادات حسابك وإعدادات النظام</p>
                 
                 <div class="cards">
                     <div class="card" onclick="showSettingsTab('profile')" style="cursor: pointer;">
-                        <p class="card-title">الملف الشخصي</p>
+                        <p class="card-title" id="profileSettingsTitle">الملف الشخصي</p>
                         <p class="card-value"><i class="fas fa-user" style="font-size: 2rem;"></i></p>
                     </div>
                     <div class="card" onclick="showSettingsTab('restaurant')" style="cursor: pointer;">
-                        <p class="card-title">بيانات المطعم</p>
+                        <p class="card-title" id="restaurantSettingsTitle">بيانات المطعم</p>
                         <p class="card-value"><i class="fas fa-utensils" style="font-size: 2rem;"></i></p>
                     </div>
                     <div class="card" onclick="showSettingsTab('notifications')" style="cursor: pointer;">
-                        <p class="card-title">الإشعارات</p>
+                        <p class="card-title" id="notificationsSettingsTitle">الإشعارات</p>
                         <p class="card-value"><i class="fas fa-bell" style="font-size: 2rem;"></i></p>
                     </div>
                     <div class="card" onclick="showSettingsTab('security')" style="cursor: pointer;">
-                        <p class="card-title">الأمان</p>
+                        <p class="card-title" id="securitySettingsTitle">الأمان</p>
                         <p class="card-value"><i class="fas fa-lock" style="font-size: 2rem;"></i></p>
                     </div>
                 </div>
                 
-                <div id="profileSettings" class="table-container" style="display: block;">
-                    <h3 style="margin-bottom: 1rem;">الملف الشخصي</h3>
+                <div id="profileSettingsTab" class="table-container" style="display: block;">
+                    <h3 id="profileTitle" style="margin-bottom: 1rem;">الملف الشخصي</h3>
                     <form>
                         <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
                             <img src="https://via.placeholder.com/100" alt="صورة المستخدم" style="border-radius: 50%; margin-left: 1rem;">
-                            <button type="button" class="btn" style="width: auto; height: fit-content;">تغيير الصورة</button>
+                            <button type="button" class="btn" style="width: auto; height: fit-content;" id="changePhotoBtn">تغيير الصورة</button>
                         </div>
                         
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
                             <div class="input-group">
-                                <label for="name">الاسم الكامل</label>
+                                <label id="fullNameLabel">الاسم الكامل</label>
                                 <input type="text" id="name" value="مدير النظام">
                             </div>
                             <div class="input-group">
-                                <label for="email">البريد الإلكتروني</label>
+                                <label id="emailLabel">البريد الإلكتروني</label>
                                 <input type="email" id="email" value="admin@delivery.com">
                             </div>
                         </div>
                         
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
                             <div class="input-group">
-                                <label for="phone">رقم الهاتف</label>
+                                <label id="phoneLabel">رقم الهاتف</label>
                                 <input type="tel" id="phone" value="0551234567">
                             </div>
                             <div class="input-group">
-                                <label for="password">كلمة المرور</label>
-                                <input type="password" id="password" placeholder="أدخل كلمة المرور الجديدة">
+                                <label id="passwordLabel2">كلمة المرور</label>
+                                <input type="password" id="password2" placeholder="أدخل كلمة المرور الجديدة">
                             </div>
                         </div>
                         
-                        <button type="submit" class="btn" style="width: auto;">حفظ التغييرات</button>
+                        <button type="submit" class="btn" style="width: auto;" id="saveProfileBtn">حفظ التغييرات</button>
                     </form>
                 </div>
                 
-                <div id="restaurantSettings" class="table-container" style="display: none;">
-                    <h3 style="margin-bottom: 1rem;">بيانات المطعم</h3>
+                <div id="restaurantSettingsTab" class="table-container" style="display: none;">
+                    <h3 id="restaurantInfoTitle" style="margin-bottom: 1rem;">بيانات المطعم</h3>
                     <form>
                         <div class="input-group" style="margin-bottom: 1.5rem;">
-                            <label for="restaurantName">اسم المطعم</label>
+                            <label id="restaurantNameLabel">اسم المطعم</label>
                             <input type="text" id="restaurantName" value="مطعم دلفري ريدان">
                         </div>
                         
                         <div class="input-group" style="margin-bottom: 1.5rem;">
-                            <label for="restaurantAddress">عنوان المطعم</label>
-                            <input type="text" id="restaurantAddress" value="الرياض، حي المروج، شارع الملك فهد">
+                            <label id="restaurantAddressLabel">عنوان المطعم</label>
+                            <input type="text" id="restaurantAddress" value="دبي، مارينا مول">
                         </div>
                         
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
                             <div class="input-group">
-                                <label for="restaurantPhone">هاتف المطعم</label>
-                                <input type="tel" id="restaurantPhone" value="0112345678">
+                                <label id="restaurantPhoneLabel">هاتف المطعم</label>
+                                <input type="tel" id="restaurantPhone" value="043456789">
                             </div>
                             <div class="input-group">
-                                <label for="restaurantEmail">بريد المطعم</label>
+                                <label id="restaurantEmailLabel">بريد المطعم</label>
                                 <input type="email" id="restaurantEmail" value="info@delivery.com">
                             </div>
                         </div>
                         
-                        <button type="submit" class="btn" style="width: auto;">حفظ التغييرات</button>
+                        <button type="submit" class="btn" style="width: auto;" id="saveRestaurantBtn">حفظ التغييرات</button>
                     </form>
                 </div>
             </div>
@@ -707,19 +748,232 @@
     </div>
 
     <script>
+        // بيانات المندوبين وكلمات المرور
+        const drivers = {
+            "شاهد": "1234",
+            "حامد": "1111",
+            "نعيم": "2222",
+            "شهرزاد": "3333",
+            "قاسم": "4444",
+            "منهاج": "5555",
+            "ارشد": "6666",
+            "أديب": "7777",
+            "منور علي": "8888",
+            "admin": "admin123" // مدير النظام
+        };
+        
+        // نصوص اللغة العربية
+        const arabicText = {
+            loginTitle: "تسجيل الدخول - دلفري ريدان",
+            usernameLabel: "اسم المستخدم",
+            passwordLabel: "كلمة المرور",
+            loginBtn: "تسجيل الدخول",
+            appName: "دلفري ريدان",
+            appDesc: "نظام إدارة التوصيل",
+            menuDashboard: "لوحة التحكم",
+            menuOrders: "الطلبات",
+            menuDrivers: "المندوبين",
+            menuTracking: "تتبع الطلبات",
+            menuSettings: "الإعدادات",
+            menuLogout: "تسجيل الخروج",
+            userRole: "مدير النظام",
+            lastLogin: "آخر دخول: اليوم 10:30 ص",
+            completedOrders: "الطلبات المكتملة",
+            inProgressOrders: "الطلبات قيد التوصيل",
+            cancelledOrders: "الطلبات الملغاة",
+            totalDrivers: "عدد المندوبين",
+            recentOrdersTitle: "آخر الطلبات",
+            orderIdHeader: "رقم الطلب",
+            customerHeader: "العميل",
+            driverHeader: "المندوب",
+            statusHeader: "الحالة",
+            dateHeader: "التاريخ",
+            ordersTitle: "إدارة الطلبات",
+            addOrderBtn: "إضافة طلب جديد",
+            orderIdHeader2: "رقم الطلب",
+            customerHeader2: "العميل",
+            phoneHeader: "الهاتف",
+            addressHeader: "العنوان",
+            driverHeader2: "المندوب",
+            statusHeader2: "الحالة",
+            actionsHeader: "الإجراءات",
+            driversTitle: "إدارة المندوبين",
+            addDriverBtn: "إضافة مندوب جديد",
+            photoHeader: "الصورة",
+            driverNameHeader: "اسم المندوب",
+            phoneHeader2: "الهاتف",
+            ordersCountHeader: "عدد الطلبات",
+            statusHeader3: "الحالة",
+            actionsHeader2: "الإجراءات",
+            trackingTitle: "تتبع الطلبات على الخريطة",
+            trackingDesc: "عرض مواقع المندوبين والطلبات على الخريطة",
+            activeOrdersTitle: "الطلبات قيد التوصيل",
+            orderIdHeader3: "رقم الطلب",
+            customerHeader3: "العميل",
+            driverHeader3: "المندوب",
+            locationHeader: "الموقع الحالي",
+            statusHeader4: "الحالة",
+            settingsTitle: "إعدادات النظام",
+            settingsDesc: "تعديل إعدادات حسابك وإعدادات النظام",
+            profileSettingsTitle: "الملف الشخصي",
+            restaurantSettingsTitle: "بيانات المطعم",
+            notificationsSettingsTitle: "الإشعارات",
+            securitySettingsTitle: "الأمان",
+            profileTitle: "الملف الشخصي",
+            changePhotoBtn: "تغيير الصورة",
+            fullNameLabel: "الاسم الكامل",
+            emailLabel: "البريد الإلكتروني",
+            phoneLabel: "رقم الهاتف",
+            passwordLabel2: "كلمة المرور",
+            saveProfileBtn: "حفظ التغييرات",
+            restaurantInfoTitle: "بيانات المطعم",
+            restaurantNameLabel: "اسم المطعم",
+            restaurantAddressLabel: "عنوان المطعم",
+            restaurantPhoneLabel: "هاتف المطعم",
+            restaurantEmailLabel: "بريد المطعم",
+            saveRestaurantBtn: "حفظ التغييرات"
+        };
+        
+        // نصوص اللغة الإنجليزية
+        const englishText = {
+            loginTitle: "Login - Delivery Raydan",
+            usernameLabel: "Username",
+            passwordLabel: "Password",
+            loginBtn: "Login",
+            appName: "Delivery Raydan",
+            appDesc: "Delivery Management System",
+            menuDashboard: "Dashboard",
+            menuOrders: "Orders",
+            menuDrivers: "Drivers",
+            menuTracking: "Order Tracking",
+            menuSettings: "Settings",
+            menuLogout: "Logout",
+            userRole: "System Admin",
+            lastLogin: "Last login: Today 10:30 AM",
+            completedOrders: "Completed Orders",
+            inProgressOrders: "In Progress Orders",
+            cancelledOrders: "Cancelled Orders",
+            totalDrivers: "Total Drivers",
+            recentOrdersTitle: "Recent Orders",
+            orderIdHeader: "Order ID",
+            customerHeader: "Customer",
+            driverHeader: "Driver",
+            statusHeader: "Status",
+            dateHeader: "Date",
+            ordersTitle: "Orders Management",
+            addOrderBtn: "Add New Order",
+            orderIdHeader2: "Order ID",
+            customerHeader2: "Customer",
+            phoneHeader: "Phone",
+            addressHeader: "Address",
+            driverHeader2: "Driver",
+            statusHeader2: "Status",
+            actionsHeader: "Actions",
+            driversTitle: "Drivers Management",
+            addDriverBtn: "Add New Driver",
+            photoHeader: "Photo",
+            driverNameHeader: "Driver Name",
+            phoneHeader2: "Phone",
+            ordersCountHeader: "Orders Count",
+            statusHeader3: "Status",
+            actionsHeader2: "Actions",
+            trackingTitle: "Orders Tracking Map",
+            trackingDesc: "View drivers and orders locations on map",
+            activeOrdersTitle: "Active Orders",
+            orderIdHeader3: "Order ID",
+            customerHeader3: "Customer",
+            driverHeader3: "Driver",
+            locationHeader: "Current Location",
+            statusHeader4: "Status",
+            settingsTitle: "System Settings",
+            settingsDesc: "Modify your account and system settings",
+            profileSettingsTitle: "Profile",
+            restaurantSettingsTitle: "Restaurant Info",
+            notificationsSettingsTitle: "Notifications",
+            securitySettingsTitle: "Security",
+            profileTitle: "Profile",
+            changePhotoBtn: "Change Photo",
+            fullNameLabel: "Full Name",
+            emailLabel: "Email",
+            phoneLabel: "Phone",
+            passwordLabel2: "Password",
+            saveProfileBtn: "Save Changes",
+            restaurantInfoTitle: "Restaurant Information",
+            restaurantNameLabel: "Restaurant Name",
+            restaurantAddressLabel: "Restaurant Address",
+            restaurantPhoneLabel: "Restaurant Phone",
+            restaurantEmailLabel: "Restaurant Email",
+            saveRestaurantBtn: "Save Changes"
+        };
+        
+        // اللغة الحالية
+        let currentLanguage = 'ar';
+        
+        // تغيير اللغة
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            const texts = lang === 'ar' ? arabicText : englishText;
+            
+            // تحديث النصوص في صفحة تسجيل الدخول
+            document.getElementById('loginTitle').textContent = texts.loginTitle;
+            document.getElementById('usernameLabel').textContent = texts.usernameLabel;
+            document.getElementById('passwordLabel').textContent = texts.passwordLabel;
+            document.getElementById('loginBtn').textContent = texts.loginBtn;
+            
+            // تحديث النصوص في لوحة التحكم
+            document.getElementById('appName').textContent = texts.appName;
+            document.getElementById('appDesc').textContent = texts.appDesc;
+            document.getElementById('menuDashboard').textContent = texts.menuDashboard;
+            document.getElementById('menuOrders').textContent = texts.menuOrders;
+            document.getElementById('menuDrivers').textContent = texts.menuDrivers;
+            document.getElementById('menuTracking').textContent = texts.menuTracking;
+            document.getElementById('menuSettings').textContent = texts.menuSettings;
+            document.getElementById('menuLogout').textContent = texts.menuLogout;
+            document.getElementById('userRole').textContent = texts.userRole;
+            document.getElementById('lastLogin').textContent = texts.lastLogin;
+            
+            // تحديث أزرار تغيير اللغة
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.language-btn[onclick="changeLanguage('${lang}')"]`).classList.add('active');
+            
+            // تغيير اتجاه الصفحة
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            // تحديث بقية النصوص
+            updateUITexts(texts);
+        }
+        
+        // تحديث النصوص في واجهة المستخدم
+        function updateUITexts(texts) {
+            for (const [key, value] of Object.entries(texts)) {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = value;
+                }
+            }
+        }
+        
         // تسجيل الدخول
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
-            // هنا يمكنك إضافة التحقق من اسم المستخدم وكلمة المرور
-            if(username === 'admin' && password === 'admin123') {
+            // التحقق من اسم المستخدم وكلمة المرور
+            if (drivers.hasOwnProperty(username) && drivers[username] === password) {
                 document.getElementById('loginPage').style.display = 'none';
                 document.getElementById('dashboardPage').style.display = 'flex';
                 initMap();
+                
+                // تحديث اسم المستخدم في لوحة التحكم
+                document.getElementById('userRole').textContent = 
+                    username === 'admin' ? 
+                    (currentLanguage === 'ar' ? 'مدير النظام' : 'System Admin') : 
+                    (currentLanguage === 'ar' ? 'مندوب التوصيل' : 'Delivery Driver');
             } else {
-                alert('اسم المستخدم أو كلمة المرور غير صحيحة!');
+                alert(currentLanguage === 'ar' ? 'اسم المستخدم أو كلمة المرور غير صحيحة!' : 'Invalid username or password!');
             }
         });
         
@@ -739,6 +993,15 @@
             document.getElementById('mapSection').style.display = 'none';
             document.getElementById('settingsSection').style.display = 'none';
             
+            // إخفاء جميع تبويبات الإعدادات
+            document.getElementById('profileSettingsTab').style.display = 'none';
+            document.getElementById('restaurantSettingsTab').style.display = 'none';
+            
+            // عرض تبويب الملف الشخصي افتراضيًا عند الدخول إلى الإعدادات
+            if (section === 'settings') {
+                document.getElementById('profileSettingsTab').style.display = 'block';
+            }
+            
             // تحديث القائمة الجانبية
             const menuItems = document.querySelectorAll('.menu-item');
             menuItems.forEach(item => item.classList.remove('active'));
@@ -747,15 +1010,24 @@
             
             // عرض القسم المحدد
             document.getElementById(section + 'Section').style.display = 'block';
-            document.getElementById('pageTitle').textContent = event.currentTarget.querySelector('span').textContent;
+            
+            // تحديث عنوان الصفحة
+            const pageTitleMap = {
+                'dashboard': currentLanguage === 'ar' ? 'لوحة التحكم' : 'Dashboard',
+                'orders': currentLanguage === 'ar' ? 'الطلبات' : 'Orders',
+                'drivers': currentLanguage === 'ar' ? 'المندوبين' : 'Drivers',
+                'map': currentLanguage === 'ar' ? 'تتبع الطلبات' : 'Order Tracking',
+                'settings': currentLanguage === 'ar' ? 'الإعدادات' : 'Settings'
+            };
+            document.getElementById('pageTitle').textContent = pageTitleMap[section];
         }
         
         // تبديل تبويبات الإعدادات
         function showSettingsTab(tab) {
-            document.getElementById('profileSettings').style.display = 'none';
-            document.getElementById('restaurantSettings').style.display = 'none';
+            document.getElementById('profileSettingsTab').style.display = 'none';
+            document.getElementById('restaurantSettingsTab').style.display = 'none';
             
-            document.getElementById(tab + 'Settings').style.display = 'block';
+            document.getElementById(tab + 'SettingsTab').style.display = 'block';
         }
         
         // الخريطة
@@ -766,8 +1038,8 @@
                 <div style="width: 100%; height: 100%; background: #eee; display: flex; justify-content: center; align-items: center; color: #777;">
                     <div style="text-align: center;">
                         <i class="fas fa-map-marked-alt" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                        <p>خريطة تتبع الطلبات</p>
-                        <p style="font-size: 0.8rem;">(سيتم عرض الخريطة الفعلية باستخدام Google Maps API)</p>
+                        <p>${currentLanguage === 'ar' ? 'خريطة تتبع الطلبات' : 'Order Tracking Map'}</p>
+                        <p style="font-size: 0.8rem;">(${currentLanguage === 'ar' ? 'سيتم عرض الخريطة الفعلية باستخدام Google Maps API' : 'Actual map will be displayed using Google Maps API'})</p>
                     </div>
                 </div>
             `;
