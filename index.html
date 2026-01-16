@@ -3,930 +3,568 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام مراقبة التوصيل - دلفري ريدان</title>
+    <title>مطعم ريدان للمندي - حجز وجبات إفطار رمضان</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary-color: #6C63FF;
-            --secondary-color: #f8f9fa;
-            --danger-color: #FF4D4D;
-            --warning-color: #FFB74D;
-            --info-color: #4D8BFF;
-            --success-color: #66BB6A;
-            --dark-color: #2D3748;
-            --light-color: #F7FAFC;
-        }
-        
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            margin: 0;
-            padding: 0;
             background-color: #f5f5f5;
             color: #333;
-            transition: all 0.3s ease;
+            line-height: 1.6;
         }
         
         .container {
-            max-width: 100%;
-            padding: 15px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
         }
         
         header {
-            background: linear-gradient(135deg, var(--primary-color), #8A78FF);
+            background: linear-gradient(to right, #8B0000, #B22222);
             color: white;
-            padding: 20px;
+            padding: 25px 0;
             text-align: center;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
-            position: relative;
-            overflow: hidden;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         
-        header::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
-            opacity: 0.3;
-        }
-        
-        h1 {
-            margin: 0;
-            font-size: 1.8rem;
-            font-weight: 700;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .header-subtitle {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-top: 5px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .status-filter {
-            display: flex;
-            overflow-x: auto;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            gap: 8px;
-        }
-        
-        .status-btn {
-            padding: 10px 18px;
-            border: none;
-            border-radius: 25px;
-            background-color: var(--secondary-color);
-            cursor: pointer;
-            white-space: nowrap;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--dark-color);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
+        .logo {
             display: flex;
             align-items: center;
-            gap: 6px;
-        }
-        
-        .status-btn i {
-            font-size: 0.9rem;
-        }
-        
-        .status-btn.active {
-            background-color: var(--primary-color);
-            color: white;
-            box-shadow: 0 4px 10px rgba(108, 99, 255, 0.3);
-        }
-        
-        .status-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .order-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            position: relative;
-            transition: all 0.3s ease;
-            border-left: 4px solid var(--primary-color);
-        }
-        
-        .order-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-        }
-        
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed #eee;
-        }
-        
-        .order-id {
-            font-weight: bold;
-            color: var(--primary-color);
-            font-size: 1.1rem;
-        }
-        
-        .order-status {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: white;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .status-pending {
-            background-color: var(--warning-color);
-        }
-        
-        .status-processing {
-            background-color: var(--info-color);
-        }
-        
-        .status-delivered {
-            background-color: var(--success-color);
-        }
-        
-        .status-cancelled {
-            background-color: var(--danger-color);
-        }
-        
-        .order-details {
-            margin-bottom: 15px;
-        }
-        
-        .detail-row {
-            display: flex;
+            justify-content: center;
             margin-bottom: 10px;
         }
         
-        .detail-label {
+        .logo i {
+            font-size: 2.8rem;
+            margin-left: 15px;
+            color: #FFD700;
+        }
+        
+        .logo-text {
+            font-size: 2.5rem;
             font-weight: bold;
-            min-width: 120px;
-            color: var(--dark-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
         
-        .order-actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 15px;
-            gap: 10px;
+        .tagline {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-top: 5px;
         }
         
-        .action-btn {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .btn-edit {
-            background-color: var(--info-color);
+        .ramadan-banner {
+            background-color: #2E8B57;
             color: white;
-        }
-        
-        .btn-delete {
-            background-color: var(--danger-color);
-            color: white;
-        }
-        
-        .btn-complete {
-            background-color: var(--success-color);
-            color: white;
-        }
-        
-        .btn-edit:hover, .btn-delete:hover, .btn-complete:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .add-order-btn {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: linear-gradient(135deg, var(--primary-color), #8A78FF);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            box-shadow: 0 4px 20px rgba(108, 99, 255, 0.3);
-            cursor: pointer;
-            z-index: 100;
-            transition: all 0.3s ease;
-        }
-        
-        .add-order-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 25px rgba(108, 99, 255, 0.4);
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 200;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
-        }
-        
-        .modal-content {
-            background-color: white;
-            padding: 25px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transform: translateY(20px);
-            opacity: 0;
-            animation: modalFadeIn 0.3s forwards;
-        }
-        
-        @keyframes modalFadeIn {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .modal-title {
+            text-align: center;
+            padding: 15px;
+            margin: 25px 0;
+            border-radius: 10px;
             font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--dark-color);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
         }
         
-        .close-btn {
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #999;
-            transition: all 0.3s ease;
+        .ramadan-banner i {
+            margin-left: 10px;
+            color: #FFD700;
         }
         
-        .close-btn:hover {
-            color: var(--danger-color);
-            transform: rotate(90deg);
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #8B0000;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #FFD700;
+            text-align: center;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
-        .form-label {
+        label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: var(--dark-color);
+            color: #555;
+            font-size: 1.1rem;
         }
         
-        .form-input, .form-select {
+        input, select {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-        
-        .form-input:focus, .form-select:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
-            outline: none;
-        }
-        
-        .submit-btn {
-            background: linear-gradient(135deg, var(--primary-color), #8A78FF);
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: 600;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #8B0000;
+            box-shadow: 0 0 0 2px rgba(139, 0, 0, 0.1);
+        }
+        
+        .days-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
             margin-top: 10px;
         }
         
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
-        }
-        
-        /* Animation for notifications */
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-        
-        .notification {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-color: var(--success-color);
-            color: white;
-            padding: 15px 20px;
+        .day-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background-color: #f9f9f9;
             border-radius: 8px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            z-index: 300;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            max-width: 90%;
-            animation: slideIn 0.5s forwards;
-            display: none;
-        }
-        
-        .notification.error {
-            background-color: var(--danger-color);
-        }
-        
-        .notification.warning {
-            background-color: var(--warning-color);
-        }
-        
-        .notification.info {
-            background-color: var(--info-color);
-        }
-        
-        .notification i {
-            font-size: 1.2rem;
-        }
-        
-        .notification-close {
-            margin-right: 10px;
+            border: 1px solid #ddd;
             cursor: pointer;
-            opacity: 0.8;
+            transition: all 0.2s;
         }
         
-        .notification-close:hover {
-            opacity: 1;
+        .day-option:hover {
+            background-color: #f0f0f0;
         }
         
-        /* Delivery person avatar */
-        .delivery-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary-color);
+        .day-option.selected {
+            background-color: #8B0000;
             color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
+            border-color: #8B0000;
+        }
+        
+        .day-option input {
+            width: auto;
             margin-left: 10px;
         }
         
-        .delivery-info {
+        .meals-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .meal-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .meal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .meal-image {
+            height: 180px;
+            background-color: #f0f0f0;
             display: flex;
             align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+        }
+        
+        .meal-details {
+            padding: 18px;
+        }
+        
+        .meal-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #8B0000;
+            margin-bottom: 8px;
+        }
+        
+        .meal-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        
+        .meal-quantity {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .quantity-btn {
+            background-color: #8B0000;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+        
+        .quantity-btn:hover {
+            background-color: #A52A2A;
+        }
+        
+        .quantity-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(to right, #2E8B57, #3CB371);
+            color: white;
+            border: none;
+            padding: 18px;
+            width: 100%;
+            font-size: 1.3rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .submit-btn i {
+            margin-left: 10px;
+            font-size: 1.4rem;
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(to right, #267349, #2E8B57);
+            box-shadow: 0 5px 12px rgba(46, 139, 87, 0.3);
+        }
+        
+        .contact-info {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .contact-info h3 {
+            color: #8B0000;
+            margin-bottom: 15px;
+        }
+        
+        .whatsapp-link {
+            display: inline-flex;
+            align-items: center;
+            background-color: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        
+        .whatsapp-link:hover {
+            background-color: #128C7E;
+        }
+        
+        .whatsapp-link i {
+            margin-left: 10px;
+            font-size: 1.5rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px 0;
+            color: #666;
+            border-top: 1px solid #ddd;
         }
         
         @media (max-width: 768px) {
-            .detail-row {
-                flex-direction: column;
-                gap: 3px;
+            .logo-text {
+                font-size: 2rem;
             }
             
-            .order-actions {
-                flex-wrap: wrap;
+            .meals-container {
+                grid-template-columns: 1fr;
             }
             
-            .action-btn {
-                flex-grow: 1;
+            .days-selection {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>نظام مراقبة التوصيل</h1>
-            <div class="header-subtitle">دلفري ريدان - تتبع طلبات الدلفري</div>
-        </header>
-        
-        <div class="status-filter">
-            <button class="status-btn active" data-status="all">
-                <i class="fas fa-list"></i>
-                <span>الكل</span>
-            </button>
-            <button class="status-btn" data-status="pending">
-                <i class="fas fa-clock"></i>
-                <span>قيد الانتظار</span>
-            </button>
-            <button class="status-btn" data-status="processing">
-                <i class="fas fa-truck"></i>
-                <span>قيد التوصيل</span>
-            </button>
-            <button class="status-btn" data-status="delivered">
-                <i class="fas fa-check-circle"></i>
-                <span>تم التوصيل</span>
-            </button>
-            <button class="status-btn" data-status="cancelled">
-                <i class="fas fa-times-circle"></i>
-                <span>ملغي</span>
-            </button>
-        </div>
-        
-        <div id="orders-container">
-            <!-- Orders will be dynamically inserted here -->
-        </div>
-        
-        <div class="add-order-btn" id="addOrderBtn">
-            <i class="fas fa-plus"></i>
-        </div>
-    </div>
-    
-    <!-- Add/Edit Order Modal -->
-    <div class="modal" id="orderModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="modalTitle">إضافة طلب جديد</h2>
-                <span class="close-btn">&times;</span>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <div class="logo-text">مطعم ريدان للمندي</div>
             </div>
-            <form id="orderForm">
-                <input type="hidden" id="orderId">
+            <div class="tagline">أشهى المأكولات اليمنية الأصيلة</div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="ramadan-banner">
+            <i class="fas fa-moon"></i>
+            <span>حجز وجبات إفطار الصائم خلال شهر رمضان المبارك</span>
+            <i class="fas fa-moon"></i>
+        </div>
+        
+        <div class="form-container">
+            <h2>نموذج حجز وجبات الإفطار</h2>
+            
+            <form id="reservationForm">
                 <div class="form-group">
-                    <label class="form-label" for="deliveryPerson">اسم الدلفري:</label>
-                    <select class="form-select" id="deliveryPerson" required>
-                        <option value="">اختر اسم الدلفري</option>
-                        <option value="شاهد">شاهد</option>
-                        <option value="نعيم">نعيم</option>
-                        <option value="حامد">حامد</option>
-                        <option value="منهاج">منهاج</option>
-                        <option value="محمد ارشد">محمد ارشد</option>
-                        <option value="قاسم">قاسم</option>
-                        <option value="منور علي">منور علي</option>
-                        <option value="أديب">أديب</option>
-                        <option value="شهرزاد">شهرزاد</option>
-                    </select>
+                    <label for="name">الاسم الكامل</label>
+                    <input type="text" id="name" placeholder="أدخل اسمك الكامل" required>
                 </div>
+                
                 <div class="form-group">
-                    <label class="form-label" for="deliveryAddress">عنوان التوصيل:</label>
-                    <input type="text" class="form-input" id="deliveryAddress" required>
+                    <label for="phone">رقم الهاتف</label>
+                    <input type="tel" id="phone" placeholder="أدخل رقم هاتفك" required>
                 </div>
+                
                 <div class="form-group">
-                    <label class="form-label" for="orderStatus">حالة الطلب:</label>
-                    <select class="form-select" id="orderStatus" required>
-                        <option value="pending">قيد الانتظار</option>
-                        <option value="processing">قيد التوصيل</option>
-                        <option value="delivered">تم التوصيل</option>
-                        <option value="cancelled">ملغي</option>
-                    </select>
+                    <label>اليوم والتاريخ</label>
+                    <input type="date" id="date" required>
                 </div>
-                <button type="submit" class="submit-btn">حفظ</button>
+                
+                <div class="form-group">
+                    <label>تكرر الحجز (يومياً)</label>
+                    <div class="days-selection">
+                        <div class="day-option" data-day="السبت">
+                            <input type="checkbox" id="saturday" name="repeatDays" value="السبت">
+                            <label for="saturday">السبت</label>
+                        </div>
+                        <div class="day-option" data-day="الأحد">
+                            <input type="checkbox" id="sunday" name="repeatDays" value="الأحد">
+                            <label for="sunday">الأحد</label>
+                        </div>
+                        <div class="day-option" data-day="الإثنين">
+                            <input type="checkbox" id="monday" name="repeatDays" value="الإثنين">
+                            <label for="monday">الإثنين</label>
+                        </div>
+                        <div class="day-option" data-day="الثلاثاء">
+                            <input type="checkbox" id="tuesday" name="repeatDays" value="الثلاثاء">
+                            <label for="tuesday">الثلاثاء</label>
+                        </div>
+                        <div class="day-option" data-day="الأربعاء">
+                            <input type="checkbox" id="wednesday" name="repeatDays" value="الأربعاء">
+                            <label for="wednesday">الأربعاء</label>
+                        </div>
+                        <div class="day-option" data-day="الخميس">
+                            <input type="checkbox" id="thursday" name="repeatDays" value="الخميس">
+                            <label for="thursday">الخميس</label>
+                        </div>
+                        <div class="day-option" data-day="الجمعة">
+                            <input type="checkbox" id="friday" name="repeatDays" value="الجمعة">
+                            <label for="friday">الجمعة</label>
+                        </div>
+                    </div>
+                    <small style="color: #666; display: block; margin-top: 8px;">يمكنك اختيار أكثر من يوم لتكرار الحجز أسبوعياً</small>
+                </div>
+                
+                <div class="form-group">
+                    <label>اختيار الوجبات والكميات</label>
+                    <div class="meals-container">
+                        <div class="meal-card">
+                            <div class="meal-image">
+                                <i class="fas fa-drumstick-bite fa-3x" style="color: #8B0000;"></i>
+                            </div>
+                            <div class="meal-details">
+                                <div class="meal-title">مندي دجاج</div>
+                                <div class="meal-description">دجاج مندي لذيذ مع أرع بخاري وخلطة توابل خاصة</div>
+                                <div class="meal-quantity">
+                                    <button type="button" class="quantity-btn minus" data-meal="مندي دجاج">-</button>
+                                    <span class="quantity-value" data-meal="مندي دجاج">0</span>
+                                    <button type="button" class="quantity-btn plus" data-meal="مندي دجاج">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="meal-card">
+                            <div class="meal-image">
+                                <i class="fas fa-hamburger fa-3x" style="color: #8B0000;"></i>
+                            </div>
+                            <div class="meal-details">
+                                <div class="meal-title">مندي لحم</div>
+                                <div class="meal-description">لحم غنم مندي مع الأرع البخاري والخضار المشكلة</div>
+                                <div class="meal-quantity">
+                                    <button type="button" class="quantity-btn minus" data-meal="مندي لحم">-</button>
+                                    <span class="quantity-value" data-meal="مندي لحم">0</span>
+                                    <button type="button" class="quantity-btn plus" data-meal="مندي لحم">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="meal-card">
+                            <div class="meal-image">
+                                <i class="fas fa-fish fa-3x" style="color: #8B0000;"></i>
+                            </div>
+                            <div class="meal-details">
+                                <div class="meal-title">مندي سمك</div>
+                                <div class="meal-description">سمك مندي طازج مع الأرع البخاري والصلصة الخاصة</div>
+                                <div class="meal-quantity">
+                                    <button type="button" class="quantity-btn minus" data-meal="مندي سمك">-</button>
+                                    <span class="quantity-value" data-meal="مندي سمك">0</span>
+                                    <button type="button" class="quantity-btn plus" data-meal="مندي سمك">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب
+                </button>
             </form>
         </div>
+        
+        <div class="contact-info">
+            <h3>للتواصل معنا</h3>
+            <p>يمكنك التواصل معنا مباشرة عبر واتساب للاستفسار أو التعديل على الطلب</p>
+            <a href="https://wa.me/971581505066" class="whatsapp-link" target="_blank">
+                <i class="fab fa-whatsapp"></i> تواصل معنا على واتساب
+            </a>
+            <p style="margin-top: 15px; font-weight: 600; color: #8B0000;">رقم الواتساب: +971581505066</p>
+        </div>
     </div>
     
-    <!-- Notification -->
-    <div class="notification" id="notification">
-        <i class="fas fa-check-circle"></i>
-        <span id="notification-message"></span>
-        <span class="notification-close">&times;</span>
-    </div>
-    
+    <footer class="container">
+        <p>© 2023 مطعم ريدان للمندي - جميع الحقوق محفوظة</p>
+        <p>تأسس المطعم عام 2010 ويقدم أشهى المأكولات اليمنية الأصيلة</p>
+    </footer>
+
     <script>
-        // Sample data - in a real app, this would come from a database
-        let orders = [
-            {
-                id: 1,
-                deliveryPerson: "شاهد",
-                deliveryAddress: "شارع الملك فهد، الرياض",
-                status: "processing",
-                timestamp: new Date().toISOString()
-            },
-            {
-                id: 2,
-                deliveryPerson: "نعيم",
-                deliveryAddress: "حي النخيل، جدة",
-                status: "pending",
-                timestamp: new Date(Date.now() - 86400000).toISOString()
-            },
-            {
-                id: 3,
-                deliveryPerson: "حامد",
-                deliveryAddress: "حي الروضة، الدمام",
-                status: "delivered",
-                timestamp: new Date(Date.now() - 172800000).toISOString()
-            },
-            {
-                id: 4,
-                deliveryPerson: "منهاج",
-                deliveryAddress: "حي العليا، الرياض",
-                status: "cancelled",
-                timestamp: new Date(Date.now() - 259200000).toISOString()
-            }
-        ];
+        // تعيين التاريخ الحالي كحد أدنى
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').min = today;
         
-        // DOM Elements
-        const ordersContainer = document.getElementById('orders-container');
-        const statusBtns = document.querySelectorAll('.status-btn');
-        const addOrderBtn = document.getElementById('addOrderBtn');
-        const orderModal = document.getElementById('orderModal');
-        const closeBtn = document.querySelector('.close-btn');
-        const orderForm = document.getElementById('orderForm');
-        const modalTitle = document.getElementById('modalTitle');
-        const notification = document.getElementById('notification');
-        const notificationMessage = document.getElementById('notification-message');
-        const notificationClose = document.querySelector('.notification-close');
+        // تعيين التاريخ الحالي كقيمة افتراضية
+        document.getElementById('date').value = today;
         
-        // Current filter
-        let currentFilter = 'all';
+        // إضافة تفاعلية لأيام التكرار
+        const dayOptions = document.querySelectorAll('.day-option');
+        dayOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const checkbox = this.querySelector('input');
+                checkbox.checked = !checkbox.checked;
+                this.classList.toggle('selected', checkbox.checked);
+            });
+        });
         
-        // Initialize the app
-        function init() {
-            renderOrders();
-            setupEventListeners();
+        // تفاعلية أزرار زيادة/تقليل الكمية
+        const plusButtons = document.querySelectorAll('.plus');
+        const minusButtons = document.querySelectorAll('.minus');
+        
+        plusButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const meal = this.getAttribute('data-meal');
+                const quantityElement = document.querySelector(`.quantity-value[data-meal="${meal}"]`);
+                let quantity = parseInt(quantityElement.textContent);
+                quantity++;
+                quantityElement.textContent = quantity;
+            });
+        });
+        
+        minusButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const meal = this.getAttribute('data-meal');
+                const quantityElement = document.querySelector(`.quantity-value[data-meal="${meal}"]`);
+                let quantity = parseInt(quantityElement.textContent);
+                if (quantity > 0) {
+                    quantity--;
+                    quantityElement.textContent = quantity;
+                }
+            });
+        });
+        
+        // معالجة إرسال النموذج
+        document.getElementById('reservationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            // Check for new orders periodically (simulated)
-            setInterval(checkForNewOrders, 30000);
-        }
-        
-        // Render orders based on current filter
-        function renderOrders() {
-            ordersContainer.innerHTML = '';
+            // جمع بيانات النموذج
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const date = document.getElementById('date').value;
             
-            const filteredOrders = currentFilter === 'all' 
-                ? orders 
-                : orders.filter(order => order.status === currentFilter);
+            // جمع أيام التكرار المختارة
+            const repeatDaysCheckboxes = document.querySelectorAll('input[name="repeatDays"]:checked');
+            const repeatDays = Array.from(repeatDaysCheckboxes).map(checkbox => checkbox.value);
             
-            if (filteredOrders.length === 0) {
-                ordersContainer.innerHTML = '<p style="text-align: center;">لا توجد طلبات لعرضها</p>';
+            // جمع كميات الوجبات
+            const meals = [];
+            const mealQuantities = document.querySelectorAll('.quantity-value');
+            mealQuantities.forEach(element => {
+                const mealName = element.getAttribute('data-meal');
+                const quantity = parseInt(element.textContent);
+                if (quantity > 0) {
+                    meals.push({name: mealName, quantity: quantity});
+                }
+            });
+            
+            // التحقق من إدخال البيانات الأساسية
+            if (!name || !phone || !date) {
+                alert('الرجاء إدخال جميع البيانات المطلوبة');
                 return;
             }
             
-            filteredOrders.forEach(order => {
-                const orderCard = document.createElement('div');
-                orderCard.className = 'order-card';
-                
-                // Add notification badge for pending/processing orders
-                if (order.status === 'pending' || order.status === 'processing') {
-                    orderCard.innerHTML += '<div class="notification-badge">!</div>';
-                }
-                
-                // Status class and text
-                let statusClass = '';
-                let statusText = '';
-                let statusIcon = '';
-                
-                switch(order.status) {
-                    case 'pending':
-                        statusClass = 'status-pending';
-                        statusText = 'قيد الانتظار';
-                        statusIcon = '<i class="fas fa-clock"></i>';
-                        break;
-                    case 'processing':
-                        statusClass = 'status-processing';
-                        statusText = 'قيد التوصيل';
-                        statusIcon = '<i class="fas fa-truck"></i>';
-                        break;
-                    case 'delivered':
-                        statusClass = 'status-delivered';
-                        statusText = 'تم التوصيل';
-                        statusIcon = '<i class="fas fa-check-circle"></i>';
-                        break;
-                    case 'cancelled':
-                        statusClass = 'status-cancelled';
-                        statusText = 'ملغي';
-                        statusIcon = '<i class="fas fa-times-circle"></i>';
-                        break;
-                }
-                
-                // Format date
-                const orderDate = new Date(order.timestamp);
-                const formattedDate = orderDate.toLocaleDateString('ar-EG', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-                
-                // Get first letter for avatar
-                const firstLetter = order.deliveryPerson.charAt(0);
-                
-                orderCard.innerHTML += `
-                    <div class="order-header">
-                        <span class="order-id">طلب #${order.id}</span>
-                        <span class="order-status ${statusClass}">${statusIcon} ${statusText}</span>
-                    </div>
-                    <div class="order-details">
-                        <div class="detail-row">
-                            <span class="detail-label">اسم الدلفري:</span>
-                            <div class="delivery-info">
-                                <span>${order.deliveryPerson}</span>
-                                <div class="delivery-avatar">${firstLetter}</div>
-                            </div>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">عنوان التوصيل:</span>
-                            <span>${order.deliveryAddress}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">تاريخ الطلب:</span>
-                            <span>${formattedDate}</span>
-                        </div>
-                    </div>
-                    <div class="order-actions">
-                        <button class="action-btn btn-edit" data-id="${order.id}">
-                            <i class="fas fa-edit"></i>
-                            <span>تعديل</span>
-                        </button>
-                        <button class="action-btn btn-delete" data-id="${order.id}">
-                            <i class="fas fa-trash"></i>
-                            <span>حذف</span>
-                        </button>
-                        ${order.status !== 'delivered' && order.status !== 'cancelled' ? 
-                            `<button class="action-btn btn-complete" data-id="${order.id}">
-                                <i class="fas fa-check"></i>
-                                <span>تم التوصيل</span>
-                            </button>` : ''}
-                    </div>
-                `;
-                
-                ordersContainer.appendChild(orderCard);
-            });
-            
-            // Add event listeners to action buttons
-            document.querySelectorAll('.btn-edit').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const orderId = e.currentTarget.getAttribute('data-id');
-                    editOrder(orderId);
-                });
-            });
-            
-            document.querySelectorAll('.btn-delete').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const orderId = e.currentTarget.getAttribute('data-id');
-                    deleteOrder(orderId);
-                });
-            });
-            
-            document.querySelectorAll('.btn-complete').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const orderId = e.currentTarget.getAttribute('data-id');
-                    completeOrder(orderId);
-                });
-            });
-        }
-        
-        // Setup event listeners
-        function setupEventListeners() {
-            // Status filter buttons
-            statusBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    statusBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    currentFilter = btn.dataset.status;
-                    renderOrders();
-                });
-            });
-            
-            // Add order button
-            addOrderBtn.addEventListener('click', () => {
-                openModal('add');
-            });
-            
-            // Close modal button
-            closeBtn.addEventListener('click', () => {
-                closeModal();
-            });
-            
-            // Click outside modal to close
-            window.addEventListener('click', (e) => {
-                if (e.target === orderModal) {
-                    closeModal();
-                }
-            });
-            
-            // Form submission
-            orderForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                saveOrder();
-            });
-            
-            // Notification close button
-            notificationClose.addEventListener('click', () => {
-                hideNotification();
-            });
-        }
-        
-        // Open modal for adding/editing
-        function openModal(action, orderId = null) {
-            if (action === 'add') {
-                modalTitle.textContent = 'إضافة طلب جديد';
-                orderForm.reset();
-                document.getElementById('orderId').value = '';
-            } else if (action === 'edit') {
-                modalTitle.textContent = 'تعديل الطلب';
-                const order = orders.find(o => o.id == orderId);
-                if (order) {
-                    document.getElementById('orderId').value = order.id;
-                    document.getElementById('deliveryPerson').value = order.deliveryPerson;
-                    document.getElementById('deliveryAddress').value = order.deliveryAddress;
-                    document.getElementById('orderStatus').value = order.status;
-                }
+            // التحقق من اختيار وجبة على الأقل
+            if (meals.length === 0) {
+                alert('الرجاء اختيار وجبة واحدة على الأقل');
+                return;
             }
             
-            orderModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        
-        // Close modal
-        function closeModal() {
-            orderModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-        
-        // Save order (add or update)
-        function saveOrder() {
-            const orderId = document.getElementById('orderId').value;
-            const deliveryPerson = document.getElementById('deliveryPerson').value;
-            const deliveryAddress = document.getElementById('deliveryAddress').value;
-            const status = document.getElementById('orderStatus').value;
+            // إنشاء نص الرسالة للواتساب
+            let message = `*حجز وجبات إفطار رمضان - مطعم ريدان للمندي*%0A%0A`;
+            message += `*الاسم:* ${name}%0A`;
+            message += `*رقم الهاتف:* ${phone}%0A`;
+            message += `*تاريخ الحجز:* ${date}%0A`;
             
-            if (orderId) {
-                // Update existing order
-                const index = orders.findIndex(o => o.id == orderId);
-                if (index !== -1) {
-                    const oldStatus = orders[index].status;
-                    orders[index] = {
-                        ...orders[index],
-                        deliveryPerson,
-                        deliveryAddress,
-                        status
-                    };
-                    
-                    // Show delivery success notification if status changed to delivered
-                    if (oldStatus !== 'delivered' && status === 'delivered') {
-                        showNotification('تم التوصيل بنجاح لـ ' + deliveryPerson);
-                    } else {
-                        showNotification('تم تحديث الطلب بنجاح');
-                    }
-                }
-            } else {
-                // Add new order
-                const newOrder = {
-                    id: generateId(),
-                    deliveryPerson,
-                    deliveryAddress,
-                    status,
-                    timestamp: new Date().toISOString()
-                };
-                
-                orders.unshift(newOrder);
-                showNotification('تم إضافة طلب جديد بنجاح');
-                
-                // Simulate notification for new order
-                if (status === 'pending' || status === 'processing') {
-                    setTimeout(() => {
-                        showNotification('طلب جديد من ' + deliveryPerson + ' يحتاج إلى متابعة');
-                    }, 1000);
-                }
+            if (repeatDays.length > 0) {
+                message += `*تكرار الحجز يومياً في أيام:* ${repeatDays.join('، ')}%0A`;
             }
             
-            closeModal();
-            renderOrders();
-        }
-        
-        // Edit order
-        function editOrder(orderId) {
-            openModal('edit', orderId);
-        }
-        
-        // Delete order
-        function deleteOrder(orderId) {
-            if (confirm('هل أنت متأكد من حذف هذا الطلب؟')) {
-                orders = orders.filter(o => o.id != orderId);
-                showNotification('تم حذف الطلب بنجاح');
-                renderOrders();
-            }
-        }
-        
-        // Complete order
-        function completeOrder(orderId) {
-            const index = orders.findIndex(o => o.id == orderId);
-            if (index !== -1) {
-                const deliveryPerson = orders[index].deliveryPerson;
-                orders[index].status = 'delivered';
-                showNotification('تم التوصيل بنجاح لـ ' + deliveryPerson);
-                renderOrders();
-            }
-        }
-        
-        // Generate unique ID
-        function generateId() {
-            return orders.length > 0 ? Math.max(...orders.map(o => o.id)) + 1 : 1;
-        }
-        
-        // Show notification
-        function showNotification(message, type = 'success') {
-            notification.className = 'notification ' + type;
-            notificationMessage.textContent = message;
+            message += `*الوجبات المطلوبة:*%0A`;
+            meals.forEach(meal => {
+                message += `- ${meal.name}: ${meal.quantity} وجبة%0A`;
+            });
             
-            // Set icon based on type
-            const icon = notification.querySelector('i');
-            if (type === 'error') {
-                icon.className = 'fas fa-exclamation-circle';
-            } else if (type === 'warning') {
-                icon.className = 'fas fa-exclamation-triangle';
-            } else if (type === 'info') {
-                icon.className = 'fas fa-info-circle';
-            } else {
-                icon.className = 'fas fa-check-circle';
-            }
+            message += `%0A*إجمالي عدد الوجبات:* ${meals.reduce((sum, meal) => sum + meal.quantity, 0)} وجبة%0A%0A`;
+            message += `شكراً لاختياركم مطعم ريدان للمندي!`;
             
-            notification.style.display = 'flex';
-            notification.style.animation = 'slideIn 0.5s forwards';
+            // إنشاء رابط الواتساب
+            const whatsappNumber = '+971581505066';
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
             
-            // Auto hide after 3 seconds
-            setTimeout(() => {
-                hideNotification();
-            }, 3000);
-        }
-        
-        // Hide notification
-        function hideNotification() {
-            notification.style.animation = 'slideOut 0.5s forwards';
+            // فتح الرابط في نافذة جديدة
+            window.open(whatsappUrl, '_blank');
             
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 500);
-        }
-        
-        // Check for new orders (simulated)
-        function checkForNewOrders() {
-            // In a real app, this would check the server for new orders
-            // Here we'll just simulate it occasionally
-            if (Math.random() > 0.7) {
-                const names = ["شاهد", "نعيم", "حامد", "منهاج", "محمد ارشد", "قاسم", "منور علي", "أديب", "شهرزاد"];
-                const randomName = names[Math.floor(Math.random() * names.length)];
-                
-                const newOrder = {
-                    id: generateId(),
-                    deliveryPerson: randomName,
-                    deliveryAddress: "عنوان افتراضي",
-                    status: "pending",
-                    timestamp: new Date().toISOString()
-                };
-                
-                orders.unshift(newOrder);
-                renderOrders();
-                showNotification('طلب جديد من ' + randomName + ' يحتاج إلى متابعة', 'info');
-            }
-        }
-        
-        // Initialize the app
-        init();
+            // إظهار رسالة تأكيد
+            alert('سيتم فتح تطبيق واتساب لإرسال تأكيد الطلب. إذا لم يفتح تلقائياً، يمكنك النسخ واللصق يدوياً.');
+        });
     </script>
 </body>
 </html>
