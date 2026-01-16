@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مطعم ريدان للمندي - وجبات إفطار الصائم</title>
+    <title>مطعم ريدان للمندي - حجز وجبات إفطار الصائم</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Tajawal', 'Segoe UI', sans-serif;
+            font-family: 'Arial', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #0c1a2d 0%, #1a3a5f 100%);
-            color: #fff;
+            background: linear-gradient(135deg, #8B0000 0%, #B22222 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -25,440 +24,470 @@
         
         .container {
             width: 100%;
-            max-width: 500px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         
-        .card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(15px);
-            border-radius: 25px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
-                        0 0 0 1px rgba(255, 255, 255, 0.1),
-                        inset 0 0 30px rgba(255, 215, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            text-align: center;
-            position: relative;
+        .main-card {
+            background: white;
+            border-radius: 30px;
             overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
         }
         
-        .card:before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
-            z-index: -1;
+        .header {
+            background: linear-gradient(135deg, #FFD700 0%, #ffed4e 100%);
+            padding: 30px;
+            text-align: center;
         }
         
-        .logo-container {
-            margin-bottom: 30px;
-        }
-        
-        .logo-image {
-            background-color: #fff;
+        .restaurant-name {
             color: #8B0000;
-            font-size: 3rem;
+            font-size: 4rem;
             font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            color: #8B0000;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .content-area {
+            display: flex;
+            min-height: 700px;
+        }
+        
+        .image-section {
+            flex: 1.5;
+            background: #f5f5f5;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .meal-image-container {
+            width: 100%;
+            height: 550px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .meal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .quantity-controls {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
             padding: 25px 40px;
             border-radius: 20px;
-            display: inline-block;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            margin-bottom: 10px;
-            font-family: 'Arial', sans-serif;
-            letter-spacing: 1px;
-            border: 3px solid #FFD700;
-            background: linear-gradient(45deg, #fff 0%, #f8f8f8 100%);
-            text-align: center;
-            line-height: 1.3;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            border: 4px solid #FFD700;
         }
         
-        .logo-subtitle {
-            color: #FFD700;
-            font-size: 1.2rem;
-            margin-top: 5px;
-            letter-spacing: 2px;
+        .quantity-btn {
+            background: #8B0000;
+            color: white;
+            border: none;
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            font-size: 3.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        
+        .quantity-btn:hover {
+            background: #B22222;
+            transform: scale(1.1);
+        }
+        
+        .quantity-value {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #8B0000;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .quantity-label {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 1.8rem;
+            color: #8B0000;
+            font-weight: bold;
+        }
+        
+        .form-section {
+            flex: 1;
+            padding: 50px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
         .title {
-            color: #FFD700;
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+            color: #8B0000;
+            font-size: 2.8rem;
+            margin-bottom: 40px;
+            text-align: center;
             position: relative;
-            padding-bottom: 15px;
+            padding-bottom: 20px;
         }
         
         .title:after {
             content: '';
             position: absolute;
             bottom: 0;
-            right: 35%;
-            left: 35%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #FFD700, transparent);
-            border-radius: 2px;
+            right: 30%;
+            left: 30%;
+            height: 5px;
+            background: #FFD700;
+            border-radius: 3px;
         }
         
         .form-group {
-            margin-bottom: 25px;
-            text-align: right;
+            margin-bottom: 30px;
         }
         
         label {
             display: block;
-            margin-bottom: 10px;
-            color: #ddd;
-            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: #8B0000;
+            font-size: 1.4rem;
+            font-weight: bold;
         }
         
         input {
             width: 100%;
-            padding: 16px 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            color: #fff;
-            font-size: 1.1rem;
+            padding: 20px;
+            border: 3px solid #FFD700;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            color: #333;
             transition: all 0.3s;
         }
         
         input:focus {
             outline: none;
-            border-color: #FFD700;
-            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
-            background: rgba(255, 255, 255, 0.15);
+            border-color: #8B0000;
+            box-shadow: 0 0 0 4px rgba(139, 0, 0, 0.2);
         }
         
-        .date-icon {
+        .date-input {
             position: relative;
         }
         
-        .date-icon:after {
-            content: '\f073';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
+        .date-input i {
             position: absolute;
             left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: #FFD700;
-            font-size: 1.2rem;
-        }
-        
-        .meals-selection {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255, 215, 0, 0.2);
-        }
-        
-        .meal-counter {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .meal-label {
-            font-size: 1.3rem;
-            color: #FFD700;
-            font-weight: bold;
-        }
-        
-        .counter {
-            display: flex;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 5px;
-        }
-        
-        .counter-btn {
-            background: #FFD700;
-            color: #0c1a2d;
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 10px;
+            color: #8B0000;
             font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
         
-        .counter-btn:hover {
-            background: #ffed4e;
-            transform: scale(1.05);
-        }
-        
-        .counter-btn:active {
-            transform: scale(0.95);
-        }
-        
-        .counter-value {
-            min-width: 60px;
+        .total-section {
+            background: #FFD700;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
             text-align: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #fff;
-        }
-        
-        .total-meals {
-            background: rgba(255, 215, 0, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
         }
         
         .total-label {
-            color: #FFD700;
-            font-size: 1.3rem;
+            font-size: 1.8rem;
+            color: #8B0000;
+            margin-bottom: 15px;
             font-weight: bold;
-            margin-bottom: 10px;
         }
         
         .total-value {
-            font-size: 3rem;
+            font-size: 6rem;
             font-weight: bold;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            color: #8B0000;
         }
         
         .submit-btn {
-            background: linear-gradient(135deg, #FFD700 0%, #ffed4e 100%);
-            color: #0c1a2d;
+            background: #25D366;
+            color: white;
             border: none;
-            padding: 20px;
+            padding: 25px;
             width: 100%;
-            border-radius: 15px;
-            font-size: 1.4rem;
+            border-radius: 20px;
+            font-size: 1.8rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 25px;
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+            gap: 15px;
         }
         
         .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.4);
-        }
-        
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-        
-        .submit-btn i {
-            margin-left: 15px;
-            font-size: 1.6rem;
+            background: #128C7E;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
         }
         
         .whatsapp-info {
-            margin-top: 25px;
-            padding: 20px;
-            background: rgba(37, 211, 102, 0.1);
+            margin-top: 30px;
+            padding: 25px;
+            background: #f5f5f5;
             border-radius: 15px;
-            border: 1px solid rgba(37, 211, 102, 0.3);
-        }
-        
-        .whatsapp-info p {
-            color: #25D366;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+            border: 3px solid #25D366;
+            text-align: center;
         }
         
         .whatsapp-number {
-            font-size: 1.4rem;
+            font-size: 2rem;
             font-weight: bold;
-            color: #fff;
+            color: #8B0000;
+            margin-top: 10px;
         }
         
-        .ramadan-icon {
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            width: 80px;
-            height: 80px;
-            background: #8B0000;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2.5rem;
-            color: #FFD700;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            z-index: 1;
+        footer {
+            padding: 30px;
+            text-align: center;
+            background: #f5f5f5;
+            color: #666;
+            border-top: 3px solid #FFD700;
         }
         
-        .ramadan-icon:after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 2px dashed #FFD700;
-            animation: rotate 20s linear infinite;
-        }
-        
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        @media (max-width: 600px) {
-            .card {
-                padding: 30px 20px;
+        @media (max-width: 1100px) {
+            .content-area {
+                flex-direction: column;
             }
             
-            .logo-image {
-                font-size: 2.2rem;
+            .meal-image-container {
+                height: 400px;
+            }
+            
+            .quantity-controls {
                 padding: 20px 30px;
+                gap: 20px;
+            }
+            
+            .quantity-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 2.5rem;
+            }
+            
+            .quantity-value {
+                font-size: 4rem;
+                min-width: 90px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .restaurant-name {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .image-section, .form-section {
+                padding: 20px;
             }
             
             .title {
-                font-size: 1.6rem;
+                font-size: 2rem;
+            }
+            
+            .total-value {
+                font-size: 4rem;
             }
         }
         
-        /* تأثيرات دخول الصفحة */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .pulse-animation {
+            animation: pulse 1.5s infinite;
         }
         
-        .card {
-            animation: fadeInUp 0.8s ease-out;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .bounce-animation {
+            animation: bounce 0.5s;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="ramadan-icon">
-            <i class="fas fa-moon"></i>
-        </div>
-        
-        <div class="card">
-            <div class="logo-container">
-                <div class="logo-image">
-                    Raidan Mandi<br>Restaurant
-                </div>
-                <div class="logo-subtitle">مطعم ريدان للمندي</div>
+        <div class="main-card">
+            <div class="header">
+                <div class="restaurant-name">Raidan Mandi Restaurant</div>
+                <div class="subtitle">مطعم ريدان للمندي</div>
             </div>
             
-            <h1 class="title">وجبات إفطار الصائم</h1>
-            
-            <form id="fastingMealForm">
-                <div class="form-group">
-                    <label for="name">الاسم الكامل</label>
-                    <input type="text" id="name" placeholder="أدخل اسمك الكامل" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="phone">رقم الهاتف</label>
-                    <input type="tel" id="phone" placeholder="أدخل رقم هاتفك" required>
-                </div>
-                
-                <div class="form-group date-icon">
-                    <label for="date">تاريخ الإفطار</label>
-                    <input type="date" id="date" required>
-                </div>
-                
-                <div class="meals-selection">
-                    <div class="meal-counter">
-                        <div class="meal-label">وجبات إفطار الصائم</div>
-                        <div class="counter">
-                            <button type="button" class="counter-btn minus">-</button>
-                            <div class="counter-value" id="mealCount">0</div>
-                            <button type="button" class="counter-btn plus">+</button>
-                        </div>
+            <div class="content-area">
+                <!-- قسم الصورة والأزرار -->
+                <div class="image-section">
+                    <div class="meal-image-container">
+                        <img src="https://i.ibb.co/mkgj7pD/meal.jpg" 
+                             alt="وجبة إفطار الصائم" 
+                             class="meal-image">
                     </div>
                     
-                    <div class="total-meals">
-                        <div class="total-label">إجمالي عدد الوجبات</div>
-                        <div class="total-value" id="totalMeals">0</div>
+                    <div class="quantity-controls">
+                        <div class="quantity-label">عدد وجبات الإفطار</div>
+                        <button class="quantity-btn minus">-</button>
+                        <div class="quantity-value" id="mealCount">0</div>
+                        <button class="quantity-btn plus">+</button>
                     </div>
                 </div>
                 
-                <button type="submit" class="submit-btn">
-                    <i class="fab fa-whatsapp"></i> تأكيد الحجز عبر واتساب
-                </button>
-            </form>
-            
-            <div class="whatsapp-info">
-                <p>سيتم إرسال تأكيد الحجز عبر واتساب إلى الرقم:</p>
-                <div class="whatsapp-number">+971 58 150 5066</div>
+                <!-- قسم النموذج -->
+                <div class="form-section">
+                    <h1 class="title">حجز وجبات إفطار الصائم</h1>
+                    
+                    <form id="reservationForm">
+                        <div class="form-group">
+                            <label for="name">الاسم الكامل</label>
+                            <input type="text" id="name" placeholder="أدخل اسمك الكامل" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">رقم الهاتف</label>
+                            <input type="tel" id="phone" placeholder="مثال: 05XXXXXXXX" required>
+                        </div>
+                        
+                        <div class="form-group date-input">
+                            <label for="date">تاريخ الإفطار</label>
+                            <i class="fas fa-calendar-alt"></i>
+                            <input type="date" id="date" required>
+                        </div>
+                        
+                        <div class="total-section">
+                            <div class="total-label">إجمالي عدد الوجبات</div>
+                            <div class="total-value" id="totalMeals">0</div>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn pulse-animation">
+                            <i class="fab fa-whatsapp"></i>
+                            تأكيد الحجز عبر واتساب
+                        </button>
+                    </form>
+                    
+                    <div class="whatsapp-info">
+                        <p>سيتم إرسال تأكيد الحجز مباشرة إلى واتساب:</p>
+                        <div class="whatsapp-number">+971 58 150 5066</div>
+                    </div>
+                </div>
             </div>
+            
+            <footer>
+                <p>© 2023 مطعم ريدان للمندي - وجبات إفطار الصائم خلال شهر رمضان المبارك</p>
+                <p>نضمن لكم وجبات طازجة ولذيذة تصل إليكم في الوقت المحدد</p>
+            </footer>
         </div>
     </div>
 
     <script>
-        // تعيين التاريخ الحالي كقيمة افتراضية
+        // تهيئة المتغيرات
+        let mealCount = 0;
+        const mealCountElement = document.getElementById('mealCount');
+        const totalMealsElement = document.getElementById('totalMeals');
+        
+        // تعيين التاريخ الحالي
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('date').value = today;
         document.getElementById('date').min = today;
         
-        // زيادة وتقليل عدد الوجبات
-        const mealCountElement = document.getElementById('mealCount');
-        const totalMealsElement = document.getElementById('totalMeals');
-        let mealCount = 0;
-        
+        // زر الزيادة
         document.querySelector('.plus').addEventListener('click', function() {
             mealCount++;
-            updateMealCount();
+            updateCount();
+            animateButton(this);
         });
         
+        // زر النقصان
         document.querySelector('.minus').addEventListener('click', function() {
             if (mealCount > 0) {
                 mealCount--;
-                updateMealCount();
+                updateCount();
+                animateButton(this);
             }
         });
         
-        function updateMealCount() {
+        // تحديث العداد
+        function updateCount() {
             mealCountElement.textContent = mealCount;
             totalMealsElement.textContent = mealCount;
             
-            // تأثير عند تغيير القيمة
+            // تأثير عند التغيير
+            mealCountElement.classList.add('bounce-animation');
+            totalMealsElement.classList.add('bounce-animation');
+            
+            setTimeout(() => {
+                mealCountElement.classList.remove('bounce-animation');
+                totalMealsElement.classList.remove('bounce-animation');
+            }, 500);
+            
+            // تغيير اللون حسب الكمية
             if (mealCount > 0) {
-                totalMealsElement.style.transform = 'scale(1.1)';
-                setTimeout(() => {
-                    totalMealsElement.style.transform = 'scale(1)';
-                }, 200);
+                mealCountElement.style.color = '#B22222';
+                totalMealsElement.style.color = '#B22222';
+            } else {
+                mealCountElement.style.color = '#8B0000';
+                totalMealsElement.style.color = '#8B0000';
             }
         }
         
-        // إرسال النموذج عبر واتساب
-        document.getElementById('fastingMealForm').addEventListener('submit', function(e) {
+        // تأثير على الأزرار
+        function animateButton(button) {
+            button.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+            }, 150);
+        }
+        
+        // إرسال النموذج
+        document.getElementById('reservationForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const name = document.getElementById('name').value;
             const phone = document.getElementById('phone').value;
             const date = document.getElementById('date').value;
             
+            // التحقق من البيانات
             if (!name || !phone || !date) {
-                alert('الرجاء إدخال جميع البيانات المطلوبة');
+                alert('الرجاء ملء جميع الحقول المطلوبة');
                 return;
             }
             
@@ -467,34 +496,48 @@
                 return;
             }
             
-            // إنشاء نص الرسالة للواتساب
-            let message = `*حجز وجبات إفطار الصائم - مطعم ريدان للمندي*%0A%0A`;
+            // تنسيق التاريخ
+            const dateObj = new Date(date);
+            const formattedDate = dateObj.toLocaleDateString('ar-SA', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // إنشاء رسالة الواتساب
+            let message = `*حجز وجبات إفطار الصائم* 🍽️%0A%0A`;
+            message += `*مطعم:* ريدان للمندي%0A`;
             message += `*الاسم:* ${name}%0A`;
             message += `*رقم الهاتف:* ${phone}%0A`;
-            message += `*تاريخ الإفطار:* ${date}%0A`;
-            message += `*عدد وجبات الإفطار:* ${mealCount} وجبة%0A%0A`;
-            message += `نشكر لكم ثقتكم بمطعم ريدان للمندي%0A`;
-            message += `سيتم تجهيز وجبات الإفطار وتوصيلها في الموعد المحدد`;
+            message += `*تاريخ الإفطار:* ${formattedDate}%0A`;
+            message += `*عدد الوجبات:* ${mealCount} وجبة%0A%0A`;
+            message += `📞 *رقم التواصل:* +971581505066%0A%0A`;
+            message += `شكراً لاختياركم مطعم ريدان للمندي 🌟`;
             
-            // إنشاء رابط الواتساب
+            // رابط الواتساب
             const whatsappNumber = '971581505066';
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
             
-            // فتح الرابط في نافذة جديدة
+            // فتح الواتساب
             window.open(whatsappUrl, '_blank');
             
-            // تأثير تأكيد
+            // تأثير بعد الإرسال
             const submitBtn = document.querySelector('.submit-btn');
-            submitBtn.innerHTML = '<i class="fas fa-check"></i> تم إرسال الطلب';
-            submitBtn.style.background = 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)';
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-check"></i> تم الإرسال بنجاح!';
+            submitBtn.style.background = '#2E8B57';
+            submitBtn.disabled = true;
             
             setTimeout(() => {
-                submitBtn.innerHTML = '<i class="fab fa-whatsapp"></i> تأكيد الحجز عبر واتساب';
-                submitBtn.style.background = 'linear-gradient(135deg, #FFD700 0%, #ffed4e 100%)';
+                submitBtn.innerHTML = originalText;
+                submitBtn.style.background = '#25D366';
+                submitBtn.disabled = false;
             }, 3000);
         });
         
-        // تأثيرات إضافية
+        // تأثيرات للحقول
         const inputs = document.querySelectorAll('input');
         inputs.forEach(input => {
             input.addEventListener('focus', function() {
@@ -504,6 +547,17 @@
             input.addEventListener('blur', function() {
                 this.parentElement.style.transform = 'translateY(0)';
             });
+        });
+        
+        // تحميل الصورة
+        window.addEventListener('load', function() {
+            const mealImage = document.querySelector('.meal-image');
+            
+            // إذا لم تحمل الصورة، استخدم صورة بديلة
+            mealImage.onerror = function() {
+                this.src = 'https://images.unsplash.com/photo-1613479205649-68f1c17e4df9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80';
+                this.alt = 'وجبة إفطار رمضانية بديلة';
+            };
         });
     </script>
 </body>
