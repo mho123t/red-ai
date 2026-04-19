@@ -3,476 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مطعم ريدان للمندي</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>الأمانة للخضار والفواكه | جودة وطبيعة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --gold: #c5a022;
+            --dark-green: #0d2e08;
+            --main-green: #1e4d16;
+            --light-bg: #fdfdfd;
+            --uae-red: #d91e18;
         }
-        
-        body {
-            background-color: #0a0a0a;
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Cairo', sans-serif; transition: all 0.3s ease; }
+
+        body { background: var(--light-bg); color: #333; overflow-x: hidden; }
+
+        /* شريط العبارات الوطنية المتحركة */
+        .national-marquee {
+            background: linear-gradient(90deg, #000 0%, #d91e18 25%, #fff 50%, #00732f 100%);
             color: #fff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            flex: 1;
-        }
-        
-        /* العنوان */
-        .header {
-            text-align: center;
-            padding: 20px 0;
-            margin-bottom: 30px;
-            border-bottom: 2px solid rgba(201, 161, 69, 0.3);
-        }
-        
-        .header h1 {
-            font-size: 3rem;
-            color: #c9a145;
-            text-shadow: 0 0 10px rgba(201, 161, 69, 0.5);
-            margin-bottom: 10px;
-        }
-        
-        .header .subtitle {
-            font-size: 1.3rem;
-            color: #ddd;
-            font-weight: 300;
-        }
-        
-        /* المحتوى الرئيسي */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-        
-        /* صورة الوجبة */
-        .meal-image-container {
-            width: 100%;
-            max-width: 800px;
-            border-radius: 20px;
+            padding: 10px 0;
+            font-weight: bold;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
-            position: relative;
+            white-space: nowrap;
+            border-bottom: 2px solid var(--gold);
         }
-        
-        .meal-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s;
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 25s linear infinite;
+            font-size: 1.1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
-        
-        .meal-image:hover {
-            transform: scale(1.03);
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
-        
-        .image-label {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: rgba(201, 161, 69, 0.9);
-            color: #000;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
-        /* تفاصيل الوجبة */
-        .meal-details {
-            width: 100%;
-            max-width: 800px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            border: 2px solid rgba(201, 161, 69, 0.3);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-        }
-        
-        .meal-title {
-            font-size: 2.5rem;
-            color: #c9a145;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .meal-description {
-            font-size: 1.2rem;
-            color: #ccc;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        .meal-price {
-            font-size: 2rem;
-            color: #c9a145;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        /* عناصر التحكم بالكمية */
-        .quantity-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .quantity-control {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 15px 40px;
-            border-radius: 50px;
-            border: 2px solid rgba(201, 161, 69, 0.5);
-        }
-        
-        .quantity-btn {
-            background-color: #c9a145;
-            color: #000;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .quantity-btn:hover {
-            background-color: #e0b952;
-            transform: scale(1.1);
-        }
-        
-        .quantity-btn:active {
-            transform: scale(0.95);
-        }
-        
-        .quantity-value {
-            font-size: 3rem;
-            font-weight: bold;
-            min-width: 80px;
-            text-align: center;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(201, 161, 69, 0.7);
-        }
-        
-        .quantity-label {
-            font-size: 1.3rem;
-            color: #ddd;
-        }
-        
-        /* ملخص الطلب */
-        .order-summary {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 20px;
-            border: 1px solid rgba(201, 161, 69, 0.2);
-        }
-        
-        .summary-title {
-            font-size: 1.5rem;
-            color: #c9a145;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .summary-details {
+
+        /* الهيدر الفخم */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        
-        .summary-total {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            padding-top: 15px;
-        }
-        
-        .total-label {
-            color: #fff;
-        }
-        
-        .total-value {
-            color: #c9a145;
-        }
-        
-        /* زر التأكيد */
-        .confirm-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 40px;
-        }
-        
-        .confirm-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            background-color: #25D366;
+
+        .logo { font-size: 1.8rem; font-weight: 900; color: var(--dark-green); border-right: 5px solid var(--gold); padding-right: 15px; }
+        .logo span { color: var(--gold); }
+
+        .controls { display: flex; gap: 15px; align-items: center; }
+
+        /* الأزرار الخرافية */
+        .btn-action {
+            background: linear-gradient(135deg, var(--main-green), var(--dark-green));
             color: white;
             border: none;
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-            font-size: 1.5rem;
+            padding: 12px 25px;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s;
             font-weight: bold;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        
-        .confirm-btn:hover {
-            background-color: #20b858;
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+        .btn-action:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); background: var(--gold); }
+
+        /* سلة المشتريات */
+        .cart-count { background: var(--uae-red); color: white; padding: 2px 8px; border-radius: 50%; font-size: 0.8rem; }
+
+        /* قسم الترحيب */
+        .hero {
+            height: 50vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
         }
-        
-        .confirm-btn:active {
-            transform: translateY(0);
+        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
+
+        /* التصنيفات */
+        .container { padding: 40px 5%; }
+        .section-header { 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+            margin: 40px 0 25px;
+            color: var(--dark-green);
         }
-        
-        .whatsapp-icon {
-            font-size: 1.8rem;
+        .section-header hr { flex-grow: 1; border: 1px solid #ddd; }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
         }
-        
-        /* التذييل */
-        .footer {
-            text-align: center;
-            padding: 30px 0;
-            color: #aaa;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 40px;
+
+        /* كارت المنتج الفخم */
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+            position: relative;
         }
+        .product-card:hover { border-color: var(--gold); }
+        .product-card img { width: 100%; height: 180px; object-fit: cover; transition: 0.5s; }
+        .product-card:hover img { transform: scale(1.1); }
+
+        .product-info { padding: 15px; text-align: center; }
+        .product-info h3 { margin-bottom: 15px; font-size: 1.1rem; color: #444; }
+
+        .qty-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        .qty-controls select, .qty-controls input {
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 0.9rem;
+        }
+
+        /* سلة الطلبات */
+        .cart-sidebar {
+            position: fixed;
+            top: 0; right: -400px;
+            width: 380px;
+            height: 100%;
+            background: white;
+            z-index: 2000;
+            box-shadow: -5px 0 30px rgba(0,0,0,0.2);
+            padding: 30px;
+            overflow-y: auto;
+        }
+        .cart-sidebar.open { right: 0; }
         
-        .phone-number {
-            color: #c9a145;
+        .delivery-details { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .delivery-details select, .delivery-details input { padding: 12px; border-radius: 10px; border: 1px solid #ddd; }
+
+        /* زر الواتساب */
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
             font-weight: bold;
-            direction: ltr;
-            display: block;
-            margin-top: 10px;
-            font-size: 1.3rem;
+            cursor: pointer;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-        
-        /* تحسينات للشاشات الصغيرة */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.2rem;
-            }
-            
-            .meal-title {
-                font-size: 2rem;
-            }
-            
-            .quantity-control {
-                padding: 12px 30px;
-                gap: 20px;
-            }
-            
-            .quantity-btn {
-                width: 45px;
-                height: 45px;
-                font-size: 1.5rem;
-            }
-            
-            .quantity-value {
-                font-size: 2.5rem;
-            }
-            
-            .confirm-btn {
-                font-size: 1.3rem;
-                padding: 18px;
-            }
-        }
+
+        [lang="en"] { direction: ltr; }
     </style>
 </head>
-<body>
-    <div class="container">
-        <!-- العنوان -->
-        <header class="header">
-            <h1>مطعم ريدان للمندي</h1>
-            <div class="subtitle">أشهى مذاق للمندي الأصيل</div>
-        </header>
-        
-        <!-- المحتوى الرئيسي -->
-        <main class="main-content">
-            <!-- صورة الوجبة -->
-            <div class="meal-image-container">
-                <img src="<a href="https://ibb.co/8g3DJHf0"><img src="https://i.ibb.co/YB976x13/file-00000000ac9471fdb33ec3fcadaa129f.png" alt="file-00000000ac9471fdb33ec3fcadaa129f" 
-                 alt="مندي لحم" class="meal-image">
-                <div class="image-label">الوجبة المميزة</div>
-            </div>
-            
-            <!-- تفاصيل الوجبة -->
-            <div class="meal-details">
-                <h2 class="meal-title">وجبة افطار الصائم </h2>
-                
-                <p class="meal-description">
-                    تتكون الوجبه من ربع دجاج مع ارز مع لبن اب مع فاكهه مع ماي وتمر وجبه فاخره 
-                </p>
-                
-                <div class="meal-price">سعر الوجبة: 12 درهم</div>
-                
-                <!-- التحكم بالكمية -->
-                <div class="quantity-section">
-                    <div class="quantity-label">اختر عدد الوجبات</div>
-                    
-                    <div class="quantity-control">
-                        <button class="quantity-btn" id="decrease-btn">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        
-                        <span class="quantity-value" id="quantity">0</span>
-                        
-                        <button class="quantity-btn" id="increase-btn">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- ملخص الطلب -->
-                <div class="order-summary">
-                    <h3 class="summary-title">ملخص طلبك</h3>
-                    
-                    <div class="summary-details">
-                        <span> </span>وجبة افطار الصائم</span>
-                        <span id="order-quantity">0 × 12 درهم</span>
-                    </div>
-                    
-                    <div class="summary-total">
-                        <span class="total-label">المجموع الكلي:</span>
-                        <span class="total-value" id="total-price">0 درهم</span>
-                    </div>
-                </div>
-                
-                <!-- زر التأكيد -->
-                <div class="confirm-section">
-                    <button class="confirm-btn" id="confirm-order">
-                        <i class="fab fa-whatsapp whatsapp-icon"></i>
-                        تأكيد الطلب عبر واتساب
-                    </button>
-                    
-                    <p style="margin-top: 15px; color: #aaa; text-align: center;">
-                        اضغط للتأكيد وسيتم فتح واتساب لإرسال طلبك تلقائياً
-                    </p>
-                </div>
-            </div>
-        </main>
-        
-        <!-- التذييل -->
-        <footer class="footer">
-            <p>مطعم ريدان للمندي - جميع الحقوق محفوظة &copy; 2026</p>
-            <p>للاستفسارات والتوصيل: <span class="phone-number">+971 58 150 5066</span></p>
-            <p>خدمة العملاء متاحة من الساعة 10 صباحاً حتى 12 منتصف الليل</p>
-        </footer>
+<body id="body">
+
+    <div class="national-marquee">
+        <div class="marquee-content" id="marqueeText">
+            🇦🇪 دام عزك يا وطن - اللهم اجعل هذا البلد آمناً مطمئناً وسائر بلاد المسلمين 🇦🇪 أسعارنا تنافسية - جودة الأمانة تصلكم لكل بيت في الإمارات 🇦🇪 توصيل إلى: عجمان، دبي، أبوظبي، الشارقة، رأس الخيمة، أم القيوين، الفجيرة
+        </div>
+    </div>
+
+    <header>
+        <div class="logo">الأمانة <span>للخضار</span></div>
+        <div class="controls">
+            <button class="btn-action" onclick="toggleLanguage()" id="langBtn">English</button>
+            <button class="btn-action" onclick="toggleCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1 id="heroTitle">طبيعة طازجة لباب بيتك</h1>
+        <p id="heroSub">نختار لك المحصول بعناية فائقة وأسعارنا تنافسية</p>
+    </section>
+
+    <main class="container">
+        <!-- الخضروات -->
+        <div class="section-header">
+            <h2 id="titleVeg">الخضروات الطازجة</h2>
+            <hr>
+        </div>
+        <div class="products-grid" id="vegGrid"></div>
+
+        <!-- الفواكه -->
+        <div class="section-header">
+            <h2 id="titleFruit">الفواكه المختارة</h2>
+            <hr>
+        </div>
+        <div class="products-grid" id="fruitGrid"></div>
+
+        <!-- الورقيات -->
+        <div class="section-header">
+            <h2 id="titleLeaf">الورقيات والربطات</h2>
+            <hr>
+        </div>
+        <div class="products-grid" id="leafGrid"></div>
+    </main>
+
+    <!-- سلة التسوق -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <h2 id="cartTitle" style="margin-bottom: 20px;">سلة طلباتك</h2>
+        <div id="cartItemsList"></div>
+        <div class="delivery-details">
+            <h4 id="shipTitle">بيانات التوصيل</h4>
+            <select id="emirate">
+                <option value="">اختر الإمارات</option>
+                <option value="عجمان">عجمان</option>
+                <option value="دبي">دبي</option>
+                <option value="أبوظبي">أبوظبي</option>
+                <option value="الشارقة">الشارقة</option>
+                <option value="رأس الخيمة">رأس الخيمة</option>
+                <option value="أم القيوين">أم القيوين</option>
+                <option value="الفجيرة">الفجيرة</option>
+            </select>
+            <input type="text" id="custName" placeholder="الاسم الكامل">
+            <input type="text" id="custAddress" placeholder="العنوان بالتفصيل">
+            <button class="whatsapp-btn" onclick="sendOrder()">
+                <i class="fab fa-whatsapp"></i> إرسال الطلب (واتساب)
+            </button>
+        </div>
+        <button class="btn-action" onclick="toggleCart()" style="margin-top: 20px; width:100%; background: #666;">إغلاق</button>
     </div>
 
     <script>
-        // تعريف المتغيرات
-        let quantity = 0;
-        const mealPrice = 12;
-        
-        // العناصر في الصفحة
-        const quantityElement = document.getElementById('quantity');
-        const orderQuantityElement = document.getElementById('order-quantity');
-        const totalPriceElement = document.getElementById('total-price');
-        const increaseBtn = document.getElementById('increase-btn');
-        const decreaseBtn = document.getElementById('decrease-btn');
-        const confirmBtn = document.getElementById('confirm-order');
-        
-        // تحديث العرض
-        function updateDisplay() {
-            quantityElement.textContent = quantity;
-            orderQuantityElement.textContent = `${quantity} × ${mealPrice} درهم`;
-            
-            const totalPrice = quantity * mealPrice;
-            totalPriceElement.textContent = `${totalPrice} درهم`;
-            
-            // تغيير لون زر التأكيد إذا كانت الكمية صفر
-            if (quantity === 0) {
-                confirmBtn.style.backgroundColor = '#666';
-                confirmBtn.style.cursor = 'not-allowed';
-            } else {
-                confirmBtn.style.backgroundColor = '#25D366';
-                confirmBtn.style.cursor = 'pointer';
-            }
-        }
-        
-        // زيادة الكمية
-        increaseBtn.addEventListener('click', function() {
-            quantity++;
-            updateDisplay();
-        });
-        
-        // تقليل الكمية
-        decreaseBtn.addEventListener('click', function() {
-            if (quantity > 0) {
-                quantity--;
-                updateDisplay();
-            }
-        });
-        
-        // تأكيد الطلب عبر واتساب
-        confirmBtn.addEventListener('click', function() {
-            if (quantity === 0) {
-                alert("الرجاء اختيار عدد الوجبات أولاً");
-                return;
-            }
-            
-            const totalPrice = quantity * mealPrice;
-            
-            // نص الرسالة
-            const message = `مرحباً، أريد طلب من مطعم ريدان للمندي:
-            
-الطلب: وجبة افطار الصائم
-الكمية: ${quantity} وجبة
-السعر للوجبة: ${mealPrice} درهم
-المجموع الكلي: ${totalPrice} درهم
-
-            
-شكراً!`;
-            
-            // ترميز الرسالة لرابط واتساب
-            const encodedMessage = encodeURIComponent(message);
-            const phoneNumber = "+971581505066";
-            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-            
-            // فتح واتساب في نافذة جديدة
-            window.open(whatsappUrl, '_blank');
-        });
-        
-        // تهيئة العرض عند تحميل الصفحة
-        updateDisplay();
-    </script>
-</body>
-</html>
+        // قاعدة البيانات الشاملة للمنتجات
+        const data = {
+            vegetables: [
+                { id: 1, name: 'طماطم بلدي', en: 'Tomato', img: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400', type: 'weight' },
+                { id: 2, name: 'خيار طازج', en: 'Cucumber', img: 'https://images.unsplash.com/photo-1449300079323-02e209d9d02e?w=400', type: 'weight' },
+                { id: 3, name: 'بطاطس', en: 'Potato', img: 'https://images.unsplash.com/photo-1518977676601-b53f02ac6d5d?w=400', type: 'weight' },
+                { id: 4, name: 'باذنجان', en: 'Eggplant', img: 'https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?w=400', type: 'weight' },
+                { id: 5, name: 'بصل أحمر', en: 'Red Onion', img: 'https://images.unsplash.com/photo-1618512496248-a07fe8376321?w=400', type: 'weight' },
+                { id: 6, name: 'بصل أبيض', en: 'White Onion', img: 'https://images.unsplash.com/photo-1580201092675-a0a6a6cafbb1?w=400', type: 'weight' },
+                { id: 7, name: 'فلفل بارد', en: 'Capsicum', img: 'https://images.unsplash.com/photo-1563565312874-84399f475ee3?w=400', type: 'weight' },
+                { id: 8, name: 'كوسا', en: 'Zucchini', img: 'https://images.unsplash.com/photo-1599307767316-776533da941c?w=400', type: 'weight' },
+                { id: 9, name: 'جزر', en: 'Carrot', img: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400', type: 'weight' },
+                { id: 10, name: 'ثوم', en: 'Garlic', img: 'https://images.unsplash.com/photo-1583600193724-6cd4e466395b?w=400', type: 'weight' }
+            ],
+            fruits: [
+                { id: 11, name: 'تفاح أحمر', en: 'Red Apple', img: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6bcd6?w=400', type: 'weight' },
+                { id: 12, name: 'موز هندي', en: 'Banana', img: 'https://images.unsplash.com/photo-1571771894821-ad9902d83f4e?w=400', type: 'weight' },
+                { id: 13, name: 'برتقال عصير', en: 'Orange', img: 'https://images.unsplash.com/photo-1547514701-42782101795e?w=400', type: 'weight' },
+                { id: 14, name: 'عنب أسود', en: 'Black Grapes', img: 'https://images.unsplash.com/photo-1533616688419-b7a585564566?w=400', type: 'weight' },
+                { id: 15, name: 'مانجو', en: 'Mango', img: 'https://images.unsplash.com/photo-1553279768
