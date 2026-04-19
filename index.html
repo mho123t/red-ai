@@ -3,45 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الأمانة للخضار والفواكه | جودة وطبيعة</title>
+    <title>الأمانة للخضار والفواكه | Al Amana</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --gold: #c5a022;
             --dark-green: #0d2e08;
             --main-green: #1e4d16;
-            --light-bg: #fdfdfd;
+            --white: #ffffff;
             --uae-red: #d91e18;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Cairo', sans-serif; transition: all 0.3s ease; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; transition: 0.3s; }
+        body { background: #f9f9f9; color: #333; overflow-x: hidden; }
 
-        body { background: var(--light-bg); color: #333; overflow-x: hidden; }
-
-        /* شريط العبارات الوطنية المتحركة */
-        .national-marquee {
-            background: linear-gradient(90deg, #000 0%, #d91e18 25%, #fff 50%, #00732f 100%);
-            color: #fff;
+        /* شريط متحرك وطني */
+        .marquee-top {
+            background: linear-gradient(90deg, #000, #d91e18, #fff, #00732f);
+            color: white;
             padding: 10px 0;
-            font-weight: bold;
-            overflow: hidden;
             white-space: nowrap;
-            border-bottom: 2px solid var(--gold);
+            overflow: hidden;
+            font-weight: bold;
         }
         .marquee-content {
             display: inline-block;
-            animation: marquee 25s linear infinite;
-            font-size: 1.1rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            animation: scroll 30s linear infinite;
         }
-        @keyframes marquee {
+        @keyframes scroll {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
 
-        /* الهيدر الفخم */
         header {
-            background: rgba(255, 255, 255, 0.98);
+            background: white;
             padding: 15px 5%;
             display: flex;
             justify-content: space-between;
@@ -49,37 +44,27 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .logo { font-size: 1.8rem; font-weight: 900; color: var(--dark-green); border-right: 5px solid var(--gold); padding-right: 15px; }
-        .logo span { color: var(--gold); }
-
-        .controls { display: flex; gap: 15px; align-items: center; }
-
-        /* الأزرار الخرافية */
-        .btn-action {
-            background: linear-gradient(135deg, var(--main-green), var(--dark-green));
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--dark-green); border-right: 4px solid var(--gold); padding-right: 10px; }
+        
+        .btn-luxury {
+            background: var(--dark-green);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
+            padding: 10px 20px;
+            border-radius: 25px;
             cursor: pointer;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
-        .btn-action:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); background: var(--gold); }
 
-        /* سلة المشتريات */
-        .cart-count { background: var(--uae-red); color: white; padding: 2px 8px; border-radius: 50%; font-size: 0.8rem; }
-
-        /* قسم الترحيب */
         .hero {
-            height: 50vh;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=2070&auto=format&fit=crop');
+            height: 40vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?w=800');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -87,185 +72,214 @@
             justify-content: center;
             align-items: center;
             color: white;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+            text-align: center;
         }
-        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
 
-        /* التصنيفات */
         .container { padding: 40px 5%; }
-        .section-header { 
+        .section-title { 
             display: flex; 
             align-items: center; 
-            gap: 20px; 
-            margin: 40px 0 25px;
+            gap: 15px; 
+            margin: 30px 0;
             color: var(--dark-green);
         }
-        .section-header hr { flex-grow: 1; border: 1px solid #ddd; }
+        .section-title hr { flex-grow: 1; border: 1px solid #ddd; }
 
-        .products-grid {
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
         }
 
-        /* كارت المنتج الفخم */
-        .product-card {
+        .card {
             background: white;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-align: center;
             border: 1px solid #eee;
-            position: relative;
         }
-        .product-card:hover { border-color: var(--gold); }
-        .product-card img { width: 100%; height: 180px; object-fit: cover; transition: 0.5s; }
-        .product-card:hover img { transform: scale(1.1); }
+        .card img { width: 100%; height: 150px; object-fit: cover; }
+        .card-body { padding: 15px; }
+        .card-body h3 { font-size: 1rem; margin-bottom: 10px; }
 
-        .product-info { padding: 15px; text-align: center; }
-        .product-info h3 { margin-bottom: 15px; font-size: 1.1rem; color: #444; }
+        .selectors { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+        select, input { padding: 5px; border-radius: 5px; border: 1px solid #ccc; outline: none; }
 
-        .qty-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            margin-bottom: 15px;
-        }
-        .qty-controls select, .qty-controls input {
+        .add-btn {
+            background: var(--main-green);
+            color: white;
+            border: none;
+            width: 100%;
             padding: 8px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            font-size: 0.9rem;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
-        /* سلة الطلبات */
         .cart-sidebar {
             position: fixed;
-            top: 0; right: -400px;
-            width: 380px;
+            top: 0; right: -100%;
+            width: 320px;
             height: 100%;
             background: white;
             z-index: 2000;
-            box-shadow: -5px 0 30px rgba(0,0,0,0.2);
-            padding: 30px;
+            padding: 20px;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.2);
             overflow-y: auto;
         }
-        .cart-sidebar.open { right: 0; }
+        .cart-sidebar.active { right: 0; }
         
-        .delivery-details { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
-        .delivery-details select, .delivery-details input { padding: 12px; border-radius: 10px; border: 1px solid #ddd; }
-
-        /* زر الواتساب */
         .whatsapp-btn {
             background: #25D366;
             color: white;
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
+            border-radius: 10px;
             font-weight: bold;
+            margin-top: 15px;
             cursor: pointer;
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
         }
 
-        [lang="en"] { direction: ltr; }
+        [dir="ltr"] .cart-sidebar { right: auto; left: -100%; }
+        [dir="ltr"] .cart-sidebar.active { left: 0; }
     </style>
 </head>
-<body id="body">
+<body id="mainBody">
 
-    <div class="national-marquee">
-        <div class="marquee-content" id="marqueeText">
-            🇦🇪 دام عزك يا وطن - اللهم اجعل هذا البلد آمناً مطمئناً وسائر بلاد المسلمين 🇦🇪 أسعارنا تنافسية - جودة الأمانة تصلكم لكل بيت في الإمارات 🇦🇪 توصيل إلى: عجمان، دبي، أبوظبي، الشارقة، رأس الخيمة، أم القيوين، الفجيرة
+    <div class="marquee-top">
+        <div class="marquee-content">
+            🇦🇪 دام عزك يا وطن - اللهم اجعل هذا البلد آمناً مطمئناً 🇦🇪 أسعارنا تنافسية - جودة الأمانة 🇦🇪 توصيل لجميع إمارات الدولة: عجمان، دبي، أبوظبي، الشارقة، رأس الخيمة، أم القيوين، الفجيرة
         </div>
     </div>
 
     <header>
         <div class="logo">الأمانة <span>للخضار</span></div>
-        <div class="controls">
-            <button class="btn-action" onclick="toggleLanguage()" id="langBtn">English</button>
-            <button class="btn-action" onclick="toggleCart()">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count" id="cartCount">0</span>
+        <div style="display:flex; gap:10px;">
+            <button class="btn-luxury" onclick="toggleLanguage()">English</button>
+            <button class="btn-luxury" onclick="toggleCart()">
+                <i class="fas fa-shopping-basket"></i> (<span id="count">0</span>)
             </button>
         </div>
     </header>
 
     <section class="hero">
-        <h1 id="heroTitle">طبيعة طازجة لباب بيتك</h1>
-        <p id="heroSub">نختار لك المحصول بعناية فائقة وأسعارنا تنافسية</p>
+        <h1 id="h-title">خضروات وفواكه طازجة</h1>
+        <p id="h-sub">نختار لك الأفضل بعناية وأسعارنا تنافسية</p>
     </section>
 
-    <main class="container">
+    <div class="container">
         <!-- الخضروات -->
-        <div class="section-header">
-            <h2 id="titleVeg">الخضروات الطازجة</h2>
+        <div class="section-title">
+            <h2 id="t-veg">الخضروات الطازجة</h2>
             <hr>
         </div>
-        <div class="products-grid" id="vegGrid"></div>
+        <div class="grid" id="vegContainer"></div>
 
         <!-- الفواكه -->
-        <div class="section-header">
-            <h2 id="titleFruit">الفواكه المختارة</h2>
+        <div class="section-title">
+            <h2 id="t-fruit">الفواكه المختارة</h2>
             <hr>
         </div>
-        <div class="products-grid" id="fruitGrid"></div>
+        <div class="grid" id="fruitContainer"></div>
 
         <!-- الورقيات -->
-        <div class="section-header">
-            <h2 id="titleLeaf">الورقيات والربطات</h2>
+        <div class="section-title">
+            <h2 id="t-leaf">الورقيات والربطات</h2>
             <hr>
         </div>
-        <div class="products-grid" id="leafGrid"></div>
-    </main>
+        <div class="grid" id="leafContainer"></div>
+    </div>
 
-    <!-- سلة التسوق -->
-    <div class="cart-sidebar" id="cartSidebar">
-        <h2 id="cartTitle" style="margin-bottom: 20px;">سلة طلباتك</h2>
-        <div id="cartItemsList"></div>
-        <div class="delivery-details">
-            <h4 id="shipTitle">بيانات التوصيل</h4>
-            <select id="emirate">
-                <option value="">اختر الإمارات</option>
-                <option value="عجمان">عجمان</option>
-                <option value="دبي">دبي</option>
-                <option value="أبوظبي">أبوظبي</option>
-                <option value="الشارقة">الشارقة</option>
-                <option value="رأس الخيمة">رأس الخيمة</option>
-                <option value="أم القيوين">أم القيوين</option>
-                <option value="الفجيرة">الفجيرة</option>
-            </select>
-            <input type="text" id="custName" placeholder="الاسم الكامل">
-            <input type="text" id="custAddress" placeholder="العنوان بالتفصيل">
-            <button class="whatsapp-btn" onclick="sendOrder()">
-                <i class="fab fa-whatsapp"></i> إرسال الطلب (واتساب)
-            </button>
-        </div>
-        <button class="btn-action" onclick="toggleCart()" style="margin-top: 20px; width:100%; background: #666;">إغلاق</button>
+    <!-- السلة -->
+    <div class="cart-sidebar" id="cartSide">
+        <h2 id="t-cart">سلة الطلبات</h2>
+        <div id="cartList" style="margin: 20px 0; border-bottom: 1px solid #eee; padding-bottom: 10px;"></div>
+        
+        <label id="l-emirate">منطقة التوصيل:</label>
+        <select id="emirate" style="width: 100%; margin-bottom: 10px;">
+            <option value="عجمان">عجمان</option>
+            <option value="دبي">دبي</option>
+            <option value="أبوظبي">أبوظبي</option>
+            <option value="الشارقة">الشارقة</option>
+            <option value="رأس الخيمة">رأس الخيمة</option>
+            <option value="أم القيوين">أم القيوين</option>
+            <option value="الفجيرة">الفجيرة</option>
+        </select>
+        <input type="text" id="address" placeholder="العنوان بالتفصيل" style="width: 100%;">
+        
+        <button class="whatsapp-btn" onclick="sendOrder()">إرسال الطلب عبر واتساب</button>
+        <button onclick="toggleCart()" style="width:100%; margin-top:10px; border:none; background:#eee; padding:10px; cursor:pointer;">إغلاق</button>
     </div>
 
     <script>
-        // قاعدة البيانات الشاملة للمنتجات
-        const data = {
-            vegetables: [
-                { id: 1, name: 'طماطم بلدي', en: 'Tomato', img: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400', type: 'weight' },
-                { id: 2, name: 'خيار طازج', en: 'Cucumber', img: 'https://images.unsplash.com/photo-1449300079323-02e209d9d02e?w=400', type: 'weight' },
-                { id: 3, name: 'بطاطس', en: 'Potato', img: 'https://images.unsplash.com/photo-1518977676601-b53f02ac6d5d?w=400', type: 'weight' },
-                { id: 4, name: 'باذنجان', en: 'Eggplant', img: 'https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?w=400', type: 'weight' },
-                { id: 5, name: 'بصل أحمر', en: 'Red Onion', img: 'https://images.unsplash.com/photo-1618512496248-a07fe8376321?w=400', type: 'weight' },
-                { id: 6, name: 'بصل أبيض', en: 'White Onion', img: 'https://images.unsplash.com/photo-1580201092675-a0a6a6cafbb1?w=400', type: 'weight' },
-                { id: 7, name: 'فلفل بارد', en: 'Capsicum', img: 'https://images.unsplash.com/photo-1563565312874-84399f475ee3?w=400', type: 'weight' },
-                { id: 8, name: 'كوسا', en: 'Zucchini', img: 'https://images.unsplash.com/photo-1599307767316-776533da941c?w=400', type: 'weight' },
-                { id: 9, name: 'جزر', en: 'Carrot', img: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400', type: 'weight' },
-                { id: 10, name: 'ثوم', en: 'Garlic', img: 'https://images.unsplash.com/photo-1583600193724-6cd4e466395b?w=400', type: 'weight' }
+        const products = {
+            veg: [
+                { id: 1, n: 'طماطم', e: 'Tomato', img: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=200', u: ['كيلو', 'صندوق'] },
+                { id: 2, n: 'خيار', e: 'Cucumber', img: 'https://images.unsplash.com/photo-1449300079323-02e209d9d02e?w=200', u: ['كيلو', 'صندوق'] },
+                { id: 3, n: 'بطاطس', e: 'Potato', img: 'https://images.unsplash.com/photo-1518977676601-b53f02ac6d5d?w=200', u: ['كيلو', 'صندوق'] },
+                { id: 4, n: 'بصل', e: 'Onion', img: 'https://images.unsplash.com/photo-1618512496248-a07fe8376321?w=200', u: ['كيلو', 'صندوق'] },
+                { id: 5, n: 'باذنجان', e: 'Eggplant', img: 'https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?w=200', u: ['كيلو', 'صندوق'] },
+                { id: 6, n: 'فلفل بارد', e: 'Capsicum', img: 'https://images.unsplash.com/photo-1563565312874-84399f475ee3?w=200', u: ['كيلو', 'صندوق'] }
             ],
-            fruits: [
-                { id: 11, name: 'تفاح أحمر', en: 'Red Apple', img: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6bcd6?w=400', type: 'weight' },
-                { id: 12, name: 'موز هندي', en: 'Banana', img: 'https://images.unsplash.com/photo-1571771894821-ad9902d83f4e?w=400', type: 'weight' },
-                { id: 13, name: 'برتقال عصير', en: 'Orange', img: 'https://images.unsplash.com/photo-1547514701-42782101795e?w=400', type: 'weight' },
-                { id: 14, name: 'عنب أسود', en: 'Black Grapes', img: 'https://images.unsplash.com/photo-1533616688419-b7a585564566?w=400', type: 'weight' },
-                { id: 15, name: 'مانجو', en: 'Mango', img: 'https://images.unsplash.com/photo-1553279768
+            fruit: [
+                { id: 7, n: 'تفاح', e: 'Apple', img: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6bcd6?w=200', u: ['كيلو', 'صندوق'] },
+                { id: 8, n: 'موز', e: 'Banana', img: 'https://images.unsplash.com/photo-1571771894821-ad9902d83f4e?w=200', u: ['كيلو', 'صندوق'] },
+                { id: 9, n: 'برتقال', e: 'Orange', img: 'https://images.unsplash.com/photo-1547514701-42782101795e?w=200', u: ['كيلو', 'صندوق'] },
+                { id: 10, n: 'عنب', e: 'Grapes', img: 'https://images.unsplash.com/photo-1533616688419-b7a585564566?w=200', u: ['كيلو', 'صندوق'] },
+                { id: 11, n: 'مانجو', e: 'Mango', img: 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=200', u: ['كيلو', 'صندوق'] }
+            ],
+            leaf: [
+                { id: 12, n: 'كزبرة', e: 'Coriander', img: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=200', u: ['بالحبة'] },
+                { id: 13, n: 'جرجير', e: 'Arugula', img: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=200', u: ['بالحبة'] },
+                { id: 14, n: 'بقدونس', e: 'Parsley', img: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=200', u: ['بالحبة'] },
+                { id: 15, n: 'نعناع', e: 'Mint', img: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=200', u: ['بالحبة'] }
+            ]
+        };
+
+        let cart = [];
+        let lang = 'ar';
+
+        function init() {
+            render('vegContainer', products.veg);
+            render('fruitContainer', products.fruit);
+            render('leafContainer', products.leaf);
+        }
+
+        function render(divId, list) {
+            const container = document.getElementById(divId);
+            container.innerHTML = '';
+            list.forEach(p => {
+                container.innerHTML += `
+                    <div class="card">
+                        <img src="${p.img}" loading="lazy">
+                        <div class="card-body">
+                            <h3>${lang === 'ar' ? p.n : p.e}</h3>
+                            <div class="selectors">
+                                <select id="u-${p.id}">${p.u.map(x => `<option value="${x}">${x}</option>`).join('')}</select>
+                                <input type="number" id="q-${p.id}" value="1" min="1">
+                            </div>
+                            <button class="add-btn" onclick="addToCart(${p.id}, '${divId}')">${lang === 'ar' ? 'أضف للسلة' : 'Add'}</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function addToCart(id, type) {
+            const list = type === 'vegContainer' ? products.veg : (type === 'fruitContainer' ? products.fruit : products.leaf);
+            const p = list.find(x => x.id === id);
+            const unit = document.getElementById(`u-${id}`).value;
+            const qty = document.getElementById(`q-${id}`).value;
+            
+            cart.push({ name: (lang === 'ar' ? p.n : p.e), unit, qty });
+            document.getElementById('count').innerText = cart.length;
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const list = document.getElementById('cartList');
+            list.innerHTML = cart.map(item => `<div>${item.name} - ${item.qty} ${item.unit}</div>`).join('');
+        }
+
+        
