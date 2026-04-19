@@ -6,280 +6,159 @@
     <title>الأمانة للخضار والفواكه | Al Amana</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --gold: #c5a022;
-            --dark-green: #0d2e08;
-            --main-green: #1e4d16;
-            --white: #ffffff;
-            --uae-red: #d91e18;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; transition: 0.3s; }
-        body { background: #f9f9f9; color: #333; overflow-x: hidden; }
-
-        /* شريط متحرك وطني */
-        .marquee-top {
-            background: linear-gradient(90deg, #000, #d91e18, #fff, #00732f);
-            color: white;
-            padding: 10px 0;
-            white-space: nowrap;
-            overflow: hidden;
-            font-weight: bold;
-        }
-        .marquee-content {
-            display: inline-block;
-            animation: scroll 30s linear infinite;
-        }
-        @keyframes scroll {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        header {
-            background: white;
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--dark-green); border-right: 4px solid var(--gold); padding-right: 10px; }
+        :root { --gold: #c5a022; --dark: #0d2e08; --green: #1e4d16; --red: #d91e18; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #f4f4f4; }
         
-        .btn-luxury {
-            background: var(--dark-green);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        /* نصوص متحركة */
+        .marquee { background: #000; color: #fff; padding: 10px; overflow: hidden; white-space: nowrap; border-bottom: 3px solid var(--gold); }
+        .marquee div { display: inline-block; animation: move 20s linear infinite; font-weight: bold; }
+        @keyframes move { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        .hero {
-            height: 40vh;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?w=800');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-        }
+        header { background: #fff; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; sticky; top:0; z-index:100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--dark); border-right: 4px solid var(--gold); padding-right: 10px; }
+        .btn { background: var(--dark); color: #fff; border:none; padding:10px 15px; border-radius:20px; cursor:pointer; font-weight:bold; }
 
-        .container { padding: 40px 5%; }
-        .section-title { 
-            display: flex; 
-            align-items: center; 
-            gap: 15px; 
-            margin: 30px 0;
-            color: var(--dark-green);
-        }
-        .section-title hr { flex-grow: 1; border: 1px solid #ddd; }
+        .hero { height: 300px; background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?w=800'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #fff; text-align: center; }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            text-align: center;
-            border: 1px solid #eee;
-        }
-        .card img { width: 100%; height: 150px; object-fit: cover; }
-        .card-body { padding: 15px; }
-        .card-body h3 { font-size: 1rem; margin-bottom: 10px; }
-
-        .selectors { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
-        select, input { padding: 5px; border-radius: 5px; border: 1px solid #ccc; outline: none; }
-
-        .add-btn {
-            background: var(--main-green);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 8px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .cart-sidebar {
-            position: fixed;
-            top: 0; right: -100%;
-            width: 320px;
-            height: 100%;
-            background: white;
-            z-index: 2000;
-            padding: 20px;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.2);
-            overflow-y: auto;
-        }
-        .cart-sidebar.active { right: 0; }
+        .container { padding: 30px 5%; }
+        .sec-title { border-right: 5px solid var(--gold); padding-right: 15px; margin: 30px 0 20px; color: var(--dark); }
         
-        .whatsapp-btn {
-            background: #25D366;
-            color: white;
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            font-weight: bold;
-            margin-top: 15px;
-            cursor: pointer;
-        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+        .card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; padding-bottom: 10px; }
+        .card img { width: 100%; height: 130px; object-fit: cover; }
+        .card h3 { font-size: 0.9rem; padding: 10px 5px; }
+        .card select, .card input { width: 80%; margin: 5px; padding: 5px; }
+        .add-btn { background: var(--green); color: #fff; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; width: 80%; }
 
-        [dir="ltr"] .cart-sidebar { right: auto; left: -100%; }
-        [dir="ltr"] .cart-sidebar.active { left: 0; }
+        .cart-panel { position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background: #fff; z-index: 1000; padding: 20px; box-shadow: -2px 0 10px rgba(0,0,0,0.2); transition: 0.4s; }
+        .cart-panel.open { right: 0; }
+        .whatsapp-btn { background: #25D366; color: #fff; width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: bold; margin-top: 15px; cursor: pointer; }
     </style>
 </head>
-<body id="mainBody">
+<body>
 
-    <div class="marquee-top">
-        <div class="marquee-content">
-            🇦🇪 دام عزك يا وطن - اللهم اجعل هذا البلد آمناً مطمئناً 🇦🇪 أسعارنا تنافسية - جودة الأمانة 🇦🇪 توصيل لجميع إمارات الدولة: عجمان، دبي، أبوظبي، الشارقة، رأس الخيمة، أم القيوين، الفجيرة
-        </div>
+    <div class="marquee">
+        <div>🇦🇪 دام عزك يا وطن - اللهم اجعل هذا البلد آمناً - أسعارنا تنافسية - توصيل لجميع إمارات الدولة 🇦🇪</div>
     </div>
 
     <header>
-        <div class="logo">الأمانة <span>للخضار</span></div>
-        <div style="display:flex; gap:10px;">
-            <button class="btn-luxury" onclick="toggleLanguage()">English</button>
-            <button class="btn-luxury" onclick="toggleCart()">
-                <i class="fas fa-shopping-basket"></i> (<span id="count">0</span>)
-            </button>
-        </div>
+        <div class="logo">الأمانة للخضار</div>
+        <button class="btn" onclick="document.getElementById('cartPanel').classList.add('open')">
+            <i class="fas fa-shopping-cart"></i> (<span id="cartCount">0</span>)
+        </button>
     </header>
 
     <section class="hero">
-        <h1 id="h-title">خضروات وفواكه طازجة</h1>
-        <p id="h-sub">نختار لك الأفضل بعناية وأسعارنا تنافسية</p>
+        <h1>خضار وفواكه طازجة</h1>
+        <p>جودة الأمانة .. أسعارنا تنافسية</p>
     </section>
 
     <div class="container">
         <!-- الخضروات -->
-        <div class="section-title">
-            <h2 id="t-veg">الخضروات الطازجة</h2>
-            <hr>
-        </div>
-        <div class="grid" id="vegContainer"></div>
+        <h2 class="sec-title">الخضروات الطازجة</h2>
+        <div class="grid" id="veg-list"></div>
 
         <!-- الفواكه -->
-        <div class="section-title">
-            <h2 id="t-fruit">الفواكه المختارة</h2>
-            <hr>
-        </div>
-        <div class="grid" id="fruitContainer"></div>
+        <h2 class="sec-title">الفواكه اللذيذة</h2>
+        <div class="grid" id="fruit-list"></div>
 
         <!-- الورقيات -->
-        <div class="section-title">
-            <h2 id="t-leaf">الورقيات والربطات</h2>
-            <hr>
-        </div>
-        <div class="grid" id="leafContainer"></div>
+        <h2 class="sec-title">الورقيات الطازجة</h2>
+        <div class="grid" id="leaf-list"></div>
     </div>
 
-    <!-- السلة -->
-    <div class="cart-sidebar" id="cartSide">
-        <h2 id="t-cart">سلة الطلبات</h2>
-        <div id="cartList" style="margin: 20px 0; border-bottom: 1px solid #eee; padding-bottom: 10px;"></div>
-        
-        <label id="l-emirate">منطقة التوصيل:</label>
-        <select id="emirate" style="width: 100%; margin-bottom: 10px;">
-            <option value="عجمان">عجمان</option>
-            <option value="دبي">دبي</option>
-            <option value="أبوظبي">أبوظبي</option>
-            <option value="الشارقة">الشارقة</option>
-            <option value="رأس الخيمة">رأس الخيمة</option>
-            <option value="أم القيوين">أم القيوين</option>
-            <option value="الفجيرة">الفجيرة</option>
-        </select>
-        <input type="text" id="address" placeholder="العنوان بالتفصيل" style="width: 100%;">
-        
-        <button class="whatsapp-btn" onclick="sendOrder()">إرسال الطلب عبر واتساب</button>
-        <button onclick="toggleCart()" style="width:100%; margin-top:10px; border:none; background:#eee; padding:10px; cursor:pointer;">إغلاق</button>
+    <!-- السلة الجانبية -->
+    <div class="cart-panel" id="cartPanel">
+        <h2>سلة طلباتك</h2>
+        <div id="cartContent" style="margin: 20px 0;">السلة فارغة</div>
+        <hr>
+        <div style="margin-top:20px">
+            <p>منطقة التوصيل:</p>
+            <select id="emirate" style="width:100%; padding:8px; margin: 10px 0;">
+                <option>عجمان</option><option>دبي</option><option>أبوظبي</option>
+                <option>الشارقة</option><option>رأس الخيمة</option><option>أم القيوين</option>
+                <option>الفجيرة</option>
+            </select>
+            <input type="text" id="address" placeholder="العنوان بالتفصيل" style="width:100%; padding:8px;">
+            <button class="whatsapp-btn" onclick="sendOrder()">إرسال واتساب 📲</button>
+            <button onclick="document.getElementById('cartPanel').classList.remove('open')" style="width:100%; margin-top:10px;">إغلاق</button>
+        </div>
     </div>
 
     <script>
-        const products = {
-            veg: [
-                { id: 1, n: 'طماطم', e: 'Tomato', img: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=200', u: ['كيلو', 'صندوق'] },
-                { id: 2, n: 'خيار', e: 'Cucumber', img: 'https://images.unsplash.com/photo-1449300079323-02e209d9d02e?w=200', u: ['كيلو', 'صندوق'] },
-                { id: 3, n: 'بطاطس', e: 'Potato', img: 'https://images.unsplash.com/photo-1518977676601-b53f02ac6d5d?w=200', u: ['كيلو', 'صندوق'] },
-                { id: 4, n: 'بصل', e: 'Onion', img: 'https://images.unsplash.com/photo-1618512496248-a07fe8376321?w=200', u: ['كيلو', 'صندوق'] },
-                { id: 5, n: 'باذنجان', e: 'Eggplant', img: 'https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?w=200', u: ['كيلو', 'صندوق'] },
-                { id: 6, n: 'فلفل بارد', e: 'Capsicum', img: 'https://images.unsplash.com/photo-1563565312874-84399f475ee3?w=200', u: ['كيلو', 'صندوق'] }
-            ],
-            fruit: [
-                { id: 7, n: 'تفاح', e: 'Apple', img: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6bcd6?w=200', u: ['كيلو', 'صندوق'] },
-                { id: 8, n: 'موز', e: 'Banana', img: 'https://images.unsplash.com/photo-1571771894821-ad9902d83f4e?w=200', u: ['كيلو', 'صندوق'] },
-                { id: 9, n: 'برتقال', e: 'Orange', img: 'https://images.unsplash.com/photo-1547514701-42782101795e?w=200', u: ['كيلو', 'صندوق'] },
-                { id: 10, n: 'عنب', e: 'Grapes', img: 'https://images.unsplash.com/photo-1533616688419-b7a585564566?w=200', u: ['كيلو', 'صندوق'] },
-                { id: 11, n: 'مانجو', e: 'Mango', img: 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=200', u: ['كيلو', 'صندوق'] }
-            ],
-            leaf: [
-                { id: 12, n: 'كزبرة', e: 'Coriander', img: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=200', u: ['بالحبة'] },
-                { id: 13, n: 'جرجير', e: 'Arugula', img: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=200', u: ['بالحبة'] },
-                { id: 14, n: 'بقدونس', e: 'Parsley', img: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=200', u: ['بالحبة'] },
-                { id: 15, n: 'نعناع', e: 'Mint', img: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=200', u: ['بالحبة'] }
-            ]
-        };
+        // قائمة المنتجات مباشرة
+        const veggies = [
+            {n: 'طماطم', img: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=200', u:['كيلو','صندوق']},
+            {n: 'خيار', img: 'https://images.unsplash.com/photo-1449300079323-02e209d9d02e?w=200', u:['كيلو','صندوق']},
+            {n: 'بطاطس', img: 'https://images.unsplash.com/photo-1518977676601-b53f02ac6d5d?w=200', u:['كيلو','صندوق']},
+            {n: 'بصل أحمر', img: 'https://images.unsplash.com/photo-1618512496248-a07fe8376321?w=200', u:['كيلو','صندوق']},
+            {n: 'بصل أبيض', img: 'https://images.unsplash.com/photo-1580201092675-a0a6a6cafbb1?w=200', u:['كيلو','صندوق']},
+            {n: 'باذنجان', img: 'https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?w=200', u:['كيلو','صندوق']},
+            {n: 'كوسا', img: 'https://images.unsplash.com/photo-1599307767316-776533da941c?w=200', u:['كيلو','صندوق']},
+            {n: 'جزر', img: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=200', u:['كيلو','صندوق']}
+        ];
+        const fruits = [
+            {n: 'تفاح أحمر', img: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6bcd6?w=200', u:['كيلو','صندوق']},
+            {n: 'موز', img: 'https://images.unsplash.com/photo-1571771894821-ad9902d83f4e?w=200', u:['كيلو','صندوق']},
+            {n: 'برتقال', img: 'https://images.unsplash.com/photo-1547514701-42782101795e?w=200', u:['كيلو','صندوق']},
+            {n: 'مانجو', img: 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=200', u:['كيلو','صندوق']},
+            {n: 'عنب', img: 'https://images.unsplash.com/photo-1533616688419-b7a585564566?w=200', u:['كيلو','صندوق']},
+            {n: 'أناناس', img: 'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=200', u:['حبة','صندوق']}
+        ];
+        const leaves = [
+            {n: 'كزبرة', img: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=200', u:['بالحبة']},
+            {n: 'جرجير', img: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=200', u:['بالحبة']},
+            {n: 'بقدونس', img: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=200', u:['بالحبة']},
+            {n: 'نعناع', img: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=200', u:['بالحبة']}
+        ];
 
         let cart = [];
-        let lang = 'ar';
 
-        function init() {
-            render('vegContainer', products.veg);
-            render('fruitContainer', products.fruit);
-            render('leafContainer', products.leaf);
-        }
-
-        function render(divId, list) {
-            const container = document.getElementById(divId);
-            container.innerHTML = '';
-            list.forEach(p => {
+        function displayProducts(list, containerId) {
+            const container = document.getElementById(containerId);
+            list.forEach((p, index) => {
                 container.innerHTML += `
                     <div class="card">
-                        <img src="${p.img}" loading="lazy">
-                        <div class="card-body">
-                            <h3>${lang === 'ar' ? p.n : p.e}</h3>
-                            <div class="selectors">
-                                <select id="u-${p.id}">${p.u.map(x => `<option value="${x}">${x}</option>`).join('')}</select>
-                                <input type="number" id="q-${p.id}" value="1" min="1">
-                            </div>
-                            <button class="add-btn" onclick="addToCart(${p.id}, '${divId}')">${lang === 'ar' ? 'أضف للسلة' : 'Add'}</button>
-                        </div>
+                        <img src="${p.img}">
+                        <h3>${p.n}</h3>
+                        <select id="u-${containerId}-${index}">${p.u.map(unit => `<option>${unit}</option>`).join('')}</select>
+                        <input type="number" id="q-${containerId}-${index}" value="1" min="1">
+                        <button class="add-btn" onclick="addToCart('${p.n}', '${containerId}-${index}')">أضف للسلة</button>
                     </div>
                 `;
             });
         }
 
-        function addToCart(id, type) {
-            const list = type === 'vegContainer' ? products.veg : (type === 'fruitContainer' ? products.fruit : products.leaf);
-            const p = list.find(x => x.id === id);
-            const unit = document.getElementById(`u-${id}`).value;
-            const qty = document.getElementById(`q-${id}`).value;
-            
-            cart.push({ name: (lang === 'ar' ? p.n : p.e), unit, qty });
-            document.getElementById('count').innerText = cart.length;
-            updateCartUI();
+        function addToCart(name, id) {
+            const unit = document.getElementById('u-'+id).value;
+            const qty = document.getElementById('q-'+id).value;
+            cart.push({name, unit, qty});
+            document.getElementById('cartCount').innerText = cart.length;
+            renderCart();
         }
 
-        function updateCartUI() {
-            const list = document.getElementById('cartList');
-            list.innerHTML = cart.map(item => `<div>${item.name} - ${item.qty} ${item.unit}</div>`).join('');
+        function renderCart() {
+            const content = document.getElementById('cartContent');
+            if(cart.length == 0) { content.innerText = "السلة فارغة"; return; }
+            content.innerHTML = cart.map(item => `<p>✅ ${item.name} (${item.qty} ${item.unit})</p>`).join('');
         }
 
-        
+        function sendOrder() {
+            const emirate = document.getElementById('emirate').value;
+            const address = document.getElementById('address').value;
+            let text = `طلب جديد من متجر الأمانة:\n`;
+            cart.forEach(item => { text += `- ${item.name}: ${item.qty} ${item.unit}\n`; });
+            text += `\n📍 التوصيل إلى: ${emirate}\n🏠 العنوان: ${address}`;
+            window.open(`https://wa.me/971501577629?text=${encodeURIComponent(text)}`);
+        }
+
+        // تشغيل العرض عند فتح الصفحة
+        window.onload = () => {
+            displayProducts(veggies, 'veg-list');
+            displayProducts(fruits, 'fruit-list');
+            displayProducts(leaves, 'leaf-list');
+        };
+    </script>
+</body>
+</html>
