@@ -76,37 +76,96 @@
         .section-title { font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: clamp(2.2rem, 4vw, 3.5rem); color: #fff; text-align: center; margin-bottom: 10px; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
         .section-subtitle { color: #D4AF37; font-family: 'Poppins', sans-serif; text-align: center; font-size: clamp(1rem, 1.5vw, 1.5rem); margin-bottom: 40px; letter-spacing: 1px; }
 
-        .waiters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; justify-content: center; margin-bottom: 40px; }
+        .waiters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; justify-content: center; margin-bottom: 40px; }
 
-        .waiter-card { background: rgba(255, 255, 255, 0.02); border-radius: 30px; padding: 25px 15px; text-align: center; border: 1px solid rgba(212, 175, 55, 0.1); transition: all 0.3s ease; }
+        .waiter-card { 
+            background: rgba(255, 255, 255, 0.02); border-radius: 30px; padding: 25px 20px; 
+            text-align: center; border: 1px solid rgba(212, 175, 55, 0.1); transition: all 0.3s ease; 
+            position: relative; display: flex; flex-direction: column; align-items: center;
+        }
         .waiter-card:hover { transform: translateY(-5px); border-color: #D4AF37; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1); }
 
-        .waiter-img-wrap { width: clamp(100px, 15vw, 150px); height: clamp(100px, 15vw, 150px); border-radius: 50%; overflow: hidden; margin: 0 auto 15px; border: 4px solid #D4AF37; box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); }
+        .waiter-img-wrap { 
+            width: clamp(100px, 15vw, 140px); height: clamp(100px, 15vw, 140px); 
+            border-radius: 50%; overflow: hidden; margin: 0 auto 15px; 
+            border: 4px solid #D4AF37; box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); 
+            background-color: #D4AF37; display: flex; align-items: center; justify-content: center;
+        }
         .waiter-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
         
-        .waiter-name { font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: clamp(1.4rem, 2vw, 2rem); color: #fff; margin-bottom: 15px; }
+        .waiter-header { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .waiter-name { font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: clamp(1.4rem, 2vw, 2rem); color: #fff; }
         .waiter-name small { display: block; font-family: 'Poppins', sans-serif; font-weight: 300; color: #a08b72; font-size: 0.8rem; }
+        
+        .clear-waiter-btn {
+            background: rgba(255, 255, 255, 0.05); color: #ff4d4d; border: 1px solid #ff4d4d;
+            border-radius: 50px; padding: 5px 15px; font-size: 0.8rem; cursor: pointer; transition: 0.3s;
+            font-family: 'Tajawal', sans-serif;
+        }
+        .clear-waiter-btn:hover { background: #ff4d4d; color: #fff; }
 
-        .stars { display: flex; justify-content: center; gap: 10px; }
+        .stars { display: flex; justify-content: center; gap: 8px; margin-bottom: 15px; }
         .star { font-size: clamp(2rem, 3vw, 3.5rem); color: #5a5a5a; cursor: pointer; transition: all 0.2s ease; }
         .star.active { color: #D4AF37; text-shadow: 0 0 20px #D4AF37; transform: scale(1.1); }
         .star:hover { transform: scale(1.2); color: #D4AF37; }
 
-        .waiter-submit-btn {
-            display: block; margin: 0 auto; padding: 20px 40px;
-            background: linear-gradient(135deg, #D4AF37, #b58d25); color: #1a1a1a;
-            font-family: 'Tajawal', 'Poppins', sans-serif; font-weight: 700; font-size: clamp(1.4rem, 2vw, 2rem);
-            border: none; border-radius: 80px; cursor: pointer;
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4); transition: all 0.3s ease; width: 100%; max-width: 600px;
+        .note-input {
+            width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px; padding: 12px; font-family: 'Tajawal', sans-serif; font-size: 1rem;
+            color: #fff; resize: vertical; min-height: 60px; text-align: right; margin-bottom: 15px;
+            outline: none; transition: 0.3s;
         }
-        .waiter-submit-btn:hover { transform: scale(1.03); box-shadow: 0 15px 50px rgba(212, 175, 55, 0.6); }
-        .waiter-submit-btn:active { transform: scale(0.95); }
+        .note-input:focus { border-color: #D4AF37; box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
+        .note-input::placeholder { color: #a08b72; }
+
+        .waiter-actions-inline {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; width: 100%; margin-bottom: 20px;
+        }
+        .action-btn {
+            padding: 10px 20px; border-radius: 50px; font-family: 'Tajawal', sans-serif; font-weight: 600;
+            font-size: 0.9rem; cursor: pointer; transition: 0.3s; border: none;
+            flex: 1; min-width: 100px;
+        }
+        .save-btn { background: linear-gradient(135deg, #D4AF37, #b58d25); color: #1a1a1a; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
+        .save-btn:hover { transform: scale(1.05); }
+        .send-ind-btn { background: transparent; color: #D4AF37; border: 1px solid #D4AF37; }
+        .send-ind-btn:hover { background: #D4AF37; color: #1a1a1a; }
+
+        .history-container {
+            width: 100%; margin-top: 10px; border-top: 1px solid rgba(212, 175, 55, 0.1); padding-top: 15px;
+            max-height: 250px; overflow-y: auto;
+        }
+        .history-title { color: #D4AF37; font-size: 0.9rem; margin-bottom: 10px; text-align: right; }
+        .history-item {
+            background: rgba(255, 255, 255, 0.03); padding: 10px; border-radius: 10px; margin-bottom: 8px;
+            text-align: right; border-left: 3px solid #D4AF37;
+        }
+        .h-stars { color: #D4AF37; font-size: 1.2rem; display: block; margin-bottom: 3px; }
+        .h-note { color: #ccc; font-size: 0.9rem; margin-bottom: 3px; }
+        .h-time { color: #666; font-size: 0.7rem; }
+
+        .history-container::-webkit-scrollbar { width: 6px; }
+        .history-container::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 10px; }
+        .history-container::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
+
+        /* أزرار التحكم العامة */
+        .global-actions { display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 30px; }
+        .global-btn {
+            display: block; margin: 0 auto; padding: 20px 40px;
+            font-family: 'Tajawal', sans-serif; font-weight: 700; 
+            font-size: clamp(1.4rem, 2vw, 2rem); border: none; border-radius: 80px; cursor: pointer;
+            transition: all 0.3s ease; width: 100%; max-width: 600px;
+        }
+        .btn-gold { background: linear-gradient(135deg, #D4AF37, #b58d25); color: #1a1a1a; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4); }
+        .btn-gold:hover { transform: scale(1.03); box-shadow: 0 15px 50px rgba(212, 175, 55, 0.6); }
+        .btn-print { background: transparent; color: #D4AF37; border: 2px solid #D4AF37; }
+        .btn-print:hover { background: #D4AF37; color: #1a1a1a; transform: scale(1.03); }
 
         @media (max-width: 600px) {
             .container { height: auto; padding: 20px; min-height: 85dvh; }
-            .waiter-submit-btn { font-size: 1.2rem; padding: 15px 25px; }
-            .waiters-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; }
-            .waiter-card { padding: 15px 10px; }
+            .waiters-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+            .global-btn { font-size: 1.2rem; padding: 15px 25px; }
+            .action-btn { min-width: 80px; font-size: 0.8rem; padding: 8px 12px; }
         }
     </style>
 </head>
@@ -138,22 +197,26 @@
         </div>
     </div>
 
-    <!-- القسم الثاني: تقييم النوادل -->
+    <!-- القسم الثاني: نظام تقييم النوادل المتقدم -->
     <section id="waiter-section">
         <div class="section-title">تقييم طاقم الخدمة</div>
-        <div class="section-subtitle">Evaluate Our Service Staff</div>
+        <div class="section-subtitle">Service Evaluation System</div>
 
         <div class="waiters-grid">
             
             <!-- ====== بطاقة النادل: Jabari ====== -->
-            <div class="waiter-card">
+            <div class="waiter-card" id="card-Jabari">
                 <div class="waiter-img-wrap">
                     <img src="https://i.ibb.co/LfG1mB0/image.jpg" alt="Jabari" onerror="this.src='https://ui-avatars.com/api/?name=Jabari&background=D4AF37&color=2f0c15&size=128'">
                 </div>
-                <div class="waiter-name">
-                    جاباري
-                    <small>Jabari</small>
+                <div class="waiter-header">
+                    <div class="waiter-name">
+                        جاباري
+                        <small>Jabari</small>
+                    </div>
+                    <button class="clear-waiter-btn" onclick="clearWaiter('Jabari')">✖ مسح الكل</button>
                 </div>
+                
                 <div class="stars" data-waiter-id="Jabari">
                     <span class="star" data-value="1">★</span>
                     <span class="star" data-value="2">★</span>
@@ -161,17 +224,33 @@
                     <span class="star" data-value="4">★</span>
                     <span class="star" data-value="5">★</span>
                 </div>
+
+                <textarea class="note-input" id="note-Jabari" placeholder="اكتب ملاحظة للزبون عن النادل..."></textarea>
+
+                <div class="waiter-actions-inline">
+                    <button class="action-btn save-btn" onclick="saveRating('Jabari')">💾 حفظ التقييم</button>
+                    <button class="action-btn send-ind-btn" onclick="sendIndividual('Jabari')">📤 إرسال فردي</button>
+                </div>
+
+                <div class="history-container" id="history-Jabari">
+                    <div class="history-title">📋 سجل التقييمات</div>
+                    <div id="list-Jabari"></div>
+                </div>
             </div>
 
             <!-- ====== بطاقة النادل: Ali ====== -->
-            <div class="waiter-card">
+            <div class="waiter-card" id="card-Ali">
                 <div class="waiter-img-wrap">
                     <img src="https://i.ibb.co/M56XPTwk/image.jpg" alt="Ali" onerror="this.src='https://ui-avatars.com/api/?name=Ali&background=D4AF37&color=2f0c15&size=128'">
                 </div>
-                <div class="waiter-name">
-                    علي
-                    <small>Ali</small>
+                <div class="waiter-header">
+                    <div class="waiter-name">
+                        علي
+                        <small>Ali</small>
+                    </div>
+                    <button class="clear-waiter-btn" onclick="clearWaiter('Ali')">✖ مسح الكل</button>
                 </div>
+                
                 <div class="stars" data-waiter-id="Ali">
                     <span class="star" data-value="1">★</span>
                     <span class="star" data-value="2">★</span>
@@ -179,17 +258,33 @@
                     <span class="star" data-value="4">★</span>
                     <span class="star" data-value="5">★</span>
                 </div>
+
+                <textarea class="note-input" id="note-Ali" placeholder="اكتب ملاحظة للزبون عن النادل..."></textarea>
+
+                <div class="waiter-actions-inline">
+                    <button class="action-btn save-btn" onclick="saveRating('Ali')">💾 حفظ التقييم</button>
+                    <button class="action-btn send-ind-btn" onclick="sendIndividual('Ali')">📤 إرسال فردي</button>
+                </div>
+
+                <div class="history-container" id="history-Ali">
+                    <div class="history-title">📋 سجل التقييمات</div>
+                    <div id="list-Ali"></div>
+                </div>
             </div>
 
             <!-- ====== بطاقة النادل: ALAM.JR ====== -->
-            <div class="waiter-card">
+            <div class="waiter-card" id="card-ALAMJR">
                 <div class="waiter-img-wrap">
                     <img src="https://i.ibb.co/LXRyGfGf/image.jpg" alt="ALAM.JR" onerror="this.src='https://ui-avatars.com/api/?name=ALAM+JR&background=D4AF37&color=2f0c15&size=128'">
                 </div>
-                <div class="waiter-name">
-                    ALAM.JR
-                    <small>ALAM.JR</small>
+                <div class="waiter-header">
+                    <div class="waiter-name">
+                        ALAM.JR
+                        <small>ALAM.JR</small>
+                    </div>
+                    <button class="clear-waiter-btn" onclick="clearWaiter('ALAMJR')">✖ مسح الكل</button>
                 </div>
+                
                 <div class="stars" data-waiter-id="ALAMJR">
                     <span class="star" data-value="1">★</span>
                     <span class="star" data-value="2">★</span>
@@ -197,17 +292,33 @@
                     <span class="star" data-value="4">★</span>
                     <span class="star" data-value="5">★</span>
                 </div>
+
+                <textarea class="note-input" id="note-ALAMJR" placeholder="اكتب ملاحظة للزبون عن النادل..."></textarea>
+
+                <div class="waiter-actions-inline">
+                    <button class="action-btn save-btn" onclick="saveRating('ALAMJR')">💾 حفظ التقييم</button>
+                    <button class="action-btn send-ind-btn" onclick="sendIndividual('ALAMJR')">📤 إرسال فردي</button>
+                </div>
+
+                <div class="history-container" id="history-ALAMJR">
+                    <div class="history-title">📋 سجل التقييمات</div>
+                    <div id="list-ALAMJR"></div>
+                </div>
             </div>
 
             <!-- ====== بطاقة النادل: AHMED ====== -->
-            <div class="waiter-card">
+            <div class="waiter-card" id="card-AHMED">
                 <div class="waiter-img-wrap">
                     <img src="https://i.ibb.co/20qq0BFn/image.jpg" alt="AHMED" onerror="this.src='https://ui-avatars.com/api/?name=Ahmed&background=D4AF37&color=2f0c15&size=128'">
                 </div>
-                <div class="waiter-name">
-                    AHMED
-                    <small>AHMED</small>
+                <div class="waiter-header">
+                    <div class="waiter-name">
+                        AHMED
+                        <small>AHMED</small>
+                    </div>
+                    <button class="clear-waiter-btn" onclick="clearWaiter('AHMED')">✖ مسح الكل</button>
                 </div>
+                
                 <div class="stars" data-waiter-id="AHMED">
                     <span class="star" data-value="1">★</span>
                     <span class="star" data-value="2">★</span>
@@ -215,17 +326,33 @@
                     <span class="star" data-value="4">★</span>
                     <span class="star" data-value="5">★</span>
                 </div>
+
+                <textarea class="note-input" id="note-AHMED" placeholder="اكتب ملاحظة للزبون عن النادل..."></textarea>
+
+                <div class="waiter-actions-inline">
+                    <button class="action-btn save-btn" onclick="saveRating('AHMED')">💾 حفظ التقييم</button>
+                    <button class="action-btn send-ind-btn" onclick="sendIndividual('AHMED')">📤 إرسال فردي</button>
+                </div>
+
+                <div class="history-container" id="history-AHMED">
+                    <div class="history-title">📋 سجل التقييمات</div>
+                    <div id="list-AHMED"></div>
+                </div>
             </div>
 
             <!-- ====== بطاقة النادل: M.SRAGE ====== -->
-            <div class="waiter-card">
+            <div class="waiter-card" id="card-MSRAGE">
                 <div class="waiter-img-wrap">
                     <img src="https://i.ibb.co/YBYRcy91/image.jpg" alt="M.SRAGE" onerror="this.src='https://ui-avatars.com/api/?name=M+SRAGE&background=D4AF37&color=2f0c15&size=128'">
                 </div>
-                <div class="waiter-name">
-                    M.SRAGE
-                    <small>M.SRAGE</small>
+                <div class="waiter-header">
+                    <div class="waiter-name">
+                        M.SRAGE
+                        <small>M.SRAGE</small>
+                    </div>
+                    <button class="clear-waiter-btn" onclick="clearWaiter('MSRAGE')">✖ مسح الكل</button>
                 </div>
+                
                 <div class="stars" data-waiter-id="MSRAGE">
                     <span class="star" data-value="1">★</span>
                     <span class="star" data-value="2">★</span>
@@ -233,14 +360,27 @@
                     <span class="star" data-value="4">★</span>
                     <span class="star" data-value="5">★</span>
                 </div>
+
+                <textarea class="note-input" id="note-MSRAGE" placeholder="اكتب ملاحظة للزبون عن النادل..."></textarea>
+
+                <div class="waiter-actions-inline">
+                    <button class="action-btn save-btn" onclick="saveRating('MSRAGE')">💾 حفظ التقييم</button>
+                    <button class="action-btn send-ind-btn" onclick="sendIndividual('MSRAGE')">📤 إرسال فردي</button>
+                </div>
+
+                <div class="history-container" id="history-MSRAGE">
+                    <div class="history-title">📋 سجل التقييمات</div>
+                    <div id="list-MSRAGE"></div>
+                </div>
             </div>
 
         </div>
 
-        <!-- زر إرسال التقرير عبر واتساب -->
-        <button class="waiter-submit-btn" onclick="sendWaiterRatings()">
-            📋 إنهاء الدوام وإرسال التقييم
-        </button>
+        <!-- أزرار الإجراءات العامة (نهاية الدوام) -->
+        <div class="global-actions">
+            <button class="global-btn btn-gold" onclick="sendAllWaiters()">📋 إرسال تقرير نهاية الدوام للكل</button>
+            <button class="global-btn btn-print" onclick="printAllRatings()">🖨️ طباعة جميع التقييمات (ورقي)</button>
+        </div>
     </section>
 
     <script>
@@ -253,11 +393,13 @@
         });
 
         // -------------------------------------------------------
-        // 2. نظام تقييم النوادل (نجوم واتساب)
+        // 2. نظام التقييم المتقدم (البيانات والوظائف)
         // -------------------------------------------------------
-        const waiterRatings = {};
+        
+        // تخزين كل التقييمات (غير محدود - أكثر من 20 تقييم ممكن)
+        const allRatingsData = {};
 
-        // تفعيل النجوم عند الضغط عليها
+        // تفعيل اختيار النجوم
         document.querySelectorAll('.stars').forEach(starsContainer => {
             const waiterId = starsContainer.getAttribute('data-waiter-id');
             const stars = starsContainer.querySelectorAll('.star');
@@ -265,65 +407,248 @@
             stars.forEach(star => {
                 star.addEventListener('click', function() {
                     const value = parseInt(this.getAttribute('data-value'));
-
-                    // تحديث التخزين
-                    waiterRatings[waiterId] = value;
-
-                    // تحديث واجهة المستخدم (تلوين النجوم)
                     stars.forEach(s => {
                         const val = parseInt(s.getAttribute('data-value'));
-                        if(val <= value) {
-                            s.classList.add('active');
-                        } else {
-                            s.classList.remove('active');
-                        }
+                        if(val <= value) s.classList.add('active');
+                        else s.classList.remove('active');
                     });
                 });
             });
         });
 
-        // -------------------------------------------------------
-        // 3. إرسال التقييم عبر واتساب عند الضغط على الزر
-        // -------------------------------------------------------
-        function sendWaiterRatings() {
-            const waiterCards = document.querySelectorAll('.waiter-card');
-            let message = "📋 *تقرير تقييم طاقم الخدمة - مطعم ريدان للمندي*\n";
-            message += `📅 التاريخ: ${new Date().toLocaleDateString('ar-SA')}\n`;
-            message += `⏰ الوقت: ${new Date().toLocaleTimeString('ar-SA')}\n`;
-            message += "------------------------------------\n";
+        // حفظ التقييم (حفظ في المصفوفة + عرض في السجل)
+        function saveRating(waiterId) {
+            const starsContainer = document.querySelector(`.stars[data-waiter-id="${waiterId}"]`);
+            const activeStars = starsContainer.querySelectorAll('.star.active');
+            const ratingValue = activeStars.length;
+            const note = document.getElementById(`note-${waiterId}`).value;
 
-            let allRated = true;
+            if(ratingValue === 0) {
+                alert("الرجاء اختيار تقييم (نجوم) قبل الحفظ!");
+                return;
+            }
+
+            if(!allRatingsData[waiterId]) {
+                allRatingsData[waiterId] = [];
+            }
+
+            // إضافة تقييم جديد (دفع إلى المصفوفة)
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ar-SA');
+            const dateString = now.toLocaleDateString('ar-SA');
+            
+            allRatingsData[waiterId].push({
+                rating: ratingValue,
+                note: note,
+                time: timeString,
+                date: dateString
+            });
+
+            // تحديث واجهة سجل التقييمات
+            updateHistoryUI(waiterId);
+
+            // تصفير النموذج للزبون التالي
+            starsContainer.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
+            document.getElementById(`note-${waiterId}`).value = '';
+            
+            alert("✅ تم حفظ تقييم العميل بنجاح!");
+        }
+
+        // تحديث واجهة السجل (أكثر من 20 تقييم ستظهر هنا)
+        function updateHistoryUI(waiterId) {
+            const listContainer = document.getElementById(`list-${waiterId}`);
+            listContainer.innerHTML = '';
+
+            if(!allRatingsData[waiterId] || allRatingsData[waiterId].length === 0) {
+                listContainer.innerHTML = '<div style="color:#666; text-align:center; font-size:0.9rem; padding:10px;">لا توجد تقييمات بعد...</div>';
+                return;
+            }
+
+            // عرض التقييمات من الأحدث للأقدم (عكس المصفوفة)
+            const reversed = [...allRatingsData[waiterId]].reverse();
+            reversed.forEach(item => {
+                let starsStr = '';
+                for(let i=0; i<5; i++) {
+                    starsStr += (i < item.rating) ? '⭐' : '☆';
+                }
+                
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                div.innerHTML = `
+                    <span class="h-stars">${starsStr}</span>
+                    <div class="h-note">${item.note ? item.note : 'بدون ملاحظات'}</div>
+                    <div class="h-time">${item.date} - ${item.time}</div>
+                `;
+                listContainer.appendChild(div);
+            });
+        }
+
+        // مسح كل التقييمات والملاحظات لنادل واحد
+        function clearWaiter(waiterId) {
+            if(!confirm(`هل أنت متأكد من مسح جميع تقييمات وملاحظات هذا النادل؟`)) return;
+            
+            allRatingsData[waiterId] = [];
+            document.querySelector(`.stars[data-waiter-id="${waiterId}"]`).querySelectorAll('.star').forEach(s => s.classList.remove('active'));
+            document.getElementById(`note-${waiterId}`).value = '';
+            updateHistoryUI(waiterId);
+        }
+
+        // -------------------------------------------------------
+        // 3. إرسال فردي لكل شخص (واتساب)
+        // -------------------------------------------------------
+        function sendIndividual(waiterId) {
+            const nameElement = document.querySelector(`#card-${waiterId} .waiter-name`);
+            const name = nameElement.innerText.trim();
+            const data = allRatingsData[waiterId] || [];
+
+            let message = `📤 *تقرير تقييم النادل: ${name}*\n`;
+            message += `📅 التاريخ: ${new Date().toLocaleDateString('ar-SA')}\n`;
+            message += `------------------------------------------------\n`;
+
+            if(data.length === 0) {
+                message += `❌ لا توجد تقييمات لهذا النادل حتى الآن.\n`;
+            } else {
+                data.forEach((item, index) => {
+                    let starsStr = '';
+                    for(let i=0; i<5; i++) starsStr += (i < item.rating) ? '⭐' : '☆';
+                    message += `\nالتقييم #${index + 1}: ${starsStr}\n`;
+                    message += `ملاحظة: ${item.note ? item.note : 'بدون ملاحظات'}\n`;
+                    message += `الوقت: ${item.date} - ${item.time}\n`;
+                });
+            }
+
+            message += `\n------------------------------------------------\n`;
+            message += `شكراً لتقييمكم! 🙏`;
+
+            const phoneNumber = "971581505066";
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // -------------------------------------------------------
+        // 4. إرسال جماعي للكل (نهاية الدوام)
+        // -------------------------------------------------------
+        function sendAllWaiters() {
+            let message = `📋 *تقرير نهاية الدوام الشامل - ريدان للمندي*\n`;
+            message += `📅 تاريخ التقرير: ${new Date().toLocaleDateString('ar-SA')}\n`;
+            message += `⏰ وقت الإرسال: ${new Date().toLocaleTimeString('ar-SA')}\n`;
+            message += `================================================\n`;
+
+            const waiterCards = document.querySelectorAll('.waiter-card');
+            let hasAnyData = false;
+
             waiterCards.forEach(card => {
                 const nameElement = card.querySelector('.waiter-name');
                 const name = nameElement.innerText.trim();
-                const waiterId = card.querySelector('.stars').getAttribute('data-waiter-id');
-                const rating = waiterRatings[waiterId] || 0;
-                
-                let starsStr = "";
-                for(let i=0; i<5; i++) {
-                    starsStr += (i < rating) ? "⭐" : "☆";
+                const waiterId = card.id.replace('card-', '');
+                const data = allRatingsData[waiterId] || [];
+
+                message += `\n👨‍🍳 *النادل: ${name}*\n`;
+                message += `--------------------------------\n`;
+
+                if(data.length === 0) {
+                    message += `❌ لا توجد تقييمات مسجلة.\n`;
+                } else {
+                    hasAnyData = true;
+                    data.forEach((item, index) => {
+                        let starsStr = '';
+                        for(let i=0; i<5; i++) starsStr += (i < item.rating) ? '⭐' : '☆';
+                        message += `[${index + 1}] ${starsStr}\n`;
+                        message += `📝 ملاحظة: ${item.note ? item.note : 'بدون'}\n`;
+                    });
                 }
-
-                if(rating === 0) allRated = false;
-
-                message += `\n👨‍🍳 *${name}*: ${starsStr} (${rating}/5)\n`;
+                message += `--------------------------------\n`;
             });
 
-            message += "\n------------------------------------\n";
-            message += "شكراً لتعاونكم معنا! 🙏";
+            message += `\n================================================\n`;
+            message += `تم إعداد هذا التقرير بواسطة نظام ريدان للمندي.\nشكراً لجهودكم! 🙏`;
 
-            if(!allRated) {
-                if(!confirm("يوجد نوادل لم يتم تقييمهم بعد. هل أنت متأكد من إرسال التقرير؟")) {
-                    return;
-                }
+            if(!hasAnyData) {
+                if(!confirm("يبدو أنه لا توجد أي تقييمات مسجلة. هل تريد إرسال التقرير الفارغ؟")) return;
             }
 
-            // تشفير الرسالة وإنشاء رابط واتساب
             const phoneNumber = "971581505066";
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-            
-            // فتح الواتساب
             window.open(whatsappUrl, '_blank');
+        }
+
+        // -------------------------------------------------------
+        // 5. طباعة جميع التقييمات (بصيغة ورقية)
+        // -------------------------------------------------------
+        function printAllRatings() {
+            const waiterCards = document.querySelectorAll('.waiter-card');
+            let content = `
+            <!DOCTYPE html>
+            <html dir="rtl">
+            <head>
+                <title>تقرير تقييم الموظفين</title>
+                <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+                <style>
+                    body { font-family: 'Tajawal', sans-serif; text-align: center; padding: 40px; background: #ffffff; color: #2f0c15; margin: 0; }
+                    .print-header { border-bottom: 3px solid #D4AF37; padding-bottom: 15px; margin-bottom: 30px; }
+                    h1 { color: #2f0c15; font-size: 2.5rem; margin: 0; }
+                    p { color: #666; margin: 5px 0; }
+                    .print-section { margin-bottom: 40px; page-break-inside: avoid; border: 1px solid #eee; padding: 20px; border-radius: 15px; }
+                    .w-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #D4AF37; margin: 10px auto; display: block; }
+                    .w-name { font-size: 2rem; font-weight: 700; margin: 10px 0; color: #D4AF37; }
+                    .h-item { background: #f9f9f9; padding: 10px; border-radius: 8px; margin-bottom: 8px; border-right: 4px solid #D4AF37; text-align: right; }
+                    .h-item div { margin-bottom: 3px; }
+                    .h-stars { color: #D4AF37; font-size: 1.2rem; display: block; }
+                    .h-note { color: #333; }
+                    .h-time { color: #999; font-size: 0.8rem; }
+                    .empty-msg { color: #ccc; padding: 10px; }
+                    .print-footer { margin-top: 50px; border-top: 1px solid #eee; padding-top: 20px; color: #aaa; font-size: 0.8rem; }
+                </style>
+            </head>
+            <body>
+                <div class="print-header">
+                    <h1>📋 تقرير تقييم موظفي ريدان للمندي</h1>
+                    <p>تاريخ الطباعة: ${new Date().toLocaleDateString('ar-SA')} | الوقت: ${new Date().toLocaleTimeString('ar-SA')}</p>
+                </div>
+            `;
+
+            waiterCards.forEach(card => {
+                const nameElement = card.querySelector('.waiter-name');
+                const name = nameElement.innerText.trim();
+                const imgSrc = card.querySelector('img').src;
+                const waiterId = card.id.replace('card-', '');
+                const data = allRatingsData[waiterId] || [];
+
+                content += `
+                <div class="print-section">
+                    <img src="${imgSrc}" class="w-img" onerror="this.style.display='none'">
+                    <div class="w-name">${name}</div>
+                `;
+
+                if(data.length === 0) {
+                    content += `<div class="empty-msg">لا توجد تقييمات مسجلة لهذا الموظف.</div>`;
+                } else {
+                    data.forEach((item) => {
+                        let starsStr = '';
+                        for(let i=0; i<5; i++) starsStr += (i < item.rating) ? '⭐' : '☆';
+                        content += `
+                            <div class="h-item">
+                                <div class="h-stars">${starsStr}</div>
+                                <div class="h-note">📝 ${item.note ? item.note : 'بدون ملاحظات'}</div>
+                                <div class="h-time">${item.date} - ${item.time}</div>
+                            </div>
+                        `;
+                    });
+                }
+                content += `</div>`;
+            });
+
+            content += `
+                <div class="print-footer">تم طباعة هذا التقرير من نظام إدارة التقييم - مطعم ريدان للمندي.</div>
+            </body>
+            </html>
+            `;
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(content);
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
         }
     </script>
 </body>
