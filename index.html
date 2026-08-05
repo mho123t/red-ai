@@ -2,17 +2,17 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ريدان للمندي - Raidan Mandi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تقييم ريدان للمندي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: #2f0c15; /* لون عنابي أعمق ليكون فخماً */
-            height: 100dvh; /* استخدام dvh لضمان ملء الشاشة بالكامل على iPad */
+            background-color: #3a101b; /* لون عنابي داكن فخم */
+            height: 100vh;
             width: 100vw;
             display: flex;
             justify-content: center;
@@ -20,13 +20,14 @@
             overflow: hidden;
             font-family: 'Tajawal', 'Poppins', sans-serif;
             position: relative;
-            cursor: pointer;
+            cursor: pointer; /* إشارة للتفاعل */
         }
 
-        /* إضاءات خلفية ذهبية ناعمة ومتحركة */
+        /* إضاءات وأضواء متحركة فخمة جداً في الخلفية */
         .bg-lights {
             position: absolute;
-            inset: 0;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
             z-index: 0;
             pointer-events: none;
@@ -35,126 +36,154 @@
         .light {
             position: absolute;
             border-radius: 50%;
-            filter: blur(10vmax);
-            opacity: 0.5;
-            animation: moveLight 12s infinite alternate ease-in-out;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: moveLight 8s infinite alternate ease-in-out;
         }
 
         .light-1 {
-            width: 70vmax;
-            height: 70vmax;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.25), transparent 70%);
-            top: -30%;
-            left: -20%;
-            animation-duration: 15s;
+            width: 60vmax;
+            height: 60vmax;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.3), transparent 70%);
+            top: -20%;
+            left: -10%;
+            animation-duration: 12s;
         }
 
         .light-2 {
-            width: 60vmax;
-            height: 60vmax;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.15), transparent 70%);
-            bottom: -30%;
-            right: -20%;
-            animation-duration: 18s;
-            animation-delay: 3s;
+            width: 50vmax;
+            height: 50vmax;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.2), transparent 70%);
+            bottom: -20%;
+            right: -10%;
+            animation-duration: 15s;
+            animation-delay: 2s;
+        }
+
+        .light-3 {
+            width: 40vmax;
+            height: 40vmax;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.15), transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulseLight 4s infinite alternate;
         }
 
         @keyframes moveLight {
             0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(15%, 15%) scale(1.3); }
+            100% { transform: translate(15%, 15%) scale(1.2); }
         }
 
-        /* حاوية التصميم الرئيسية المتناسقة */
+        @keyframes pulseLight {
+            0% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.3); }
+        }
+
+        /* الحاوية الأساسية */
         .container {
             position: relative;
             z-index: 1;
-            width: min(90%, 900px);
-            height: 85dvh;
-            max-height: 850px;
-            padding: min(4vh, 40px) min(3vw, 50px);
+            width: 90%;
+            max-width: 800px;
+            height: 80vh;
+            max-height: 750px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-around; /* توزيع المسافات بشكل متناسق */
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            justify-content: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 60px;
             border: 1px solid rgba(212, 175, 55, 0.2);
-            box-shadow: 0 25px 80px rgba(0,0,0,0.7), inset 0 0 50px rgba(212, 175, 55, 0.05);
+            box-shadow: inset 0 0 80px rgba(212, 175, 55, 0.05), 0 20px 60px rgba(0,0,0,0.6);
+            transition: box-shadow 0.5s ease;
         }
 
-        /* النصوص الفاخرة */
+        .container:hover {
+            box-shadow: inset 0 0 100px rgba(212, 175, 55, 0.1), 0 25px 80px rgba(0,0,0,0.8), 0 0 40px rgba(212, 175, 55, 0.3);
+        }
+
+        /* النصوص المتحركة الفخمة */
         .text-container {
             text-align: center;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            max-height: 40%;
+            margin-top: -30px;
         }
 
         .arabic-title {
             font-family: 'Tajawal', sans-serif;
             font-weight: 900;
-            font-size: clamp(3rem, 7vw, 5.5rem); /* حجم يتكيف مع عرض الشاشة */
+            font-size: 4.5rem;
             background: linear-gradient(135deg, #fff 0%, #D4AF37 30%, #fff 50%, #D4AF37 70%, #fff 100%);
             background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: shimmerText 4s ease-in-out infinite;
             text-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
-            line-height: 1.1;
+            margin-bottom: 5px;
         }
 
         .english-title {
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            font-size: clamp(1.2rem, 2.5vw, 2.2rem);
+            font-size: 2.2rem;
             color: #f5f5f5;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             animation: fadeUp 1s ease-out forwards;
             opacity: 0;
-            transform: translateY(15px);
-            margin-top: 5px;
+            transform: translateY(20px);
         }
 
         .sub-title {
-            margin-top: clamp(5px, 2vh, 15px);
-            animation: fadeUp 1.2s ease-out forwards;
-            opacity: 0;
-            transform: translateY(15px);
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 5px;
+            margin-top: 15px;
+            animation: fadeUp 1.2s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
-        .sub-title .ar { font-size: clamp(1rem, 2vw, 1.6rem); color: #ccb699; }
-        .sub-title .en { font-size: clamp(0.8rem, 1.2vw, 1.2rem); color: #aa9b84; }
+        .sub-title .ar {
+            font-family: 'Tajawal', sans-serif;
+            color: #ccb699;
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+        }
+
+        .sub-title .en {
+            font-family: 'Poppins', sans-serif;
+            color: #aa9b84;
+            font-size: 1.2rem;
+        }
 
         @keyframes shimmerText {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
         }
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-        /* صندوق الـ QR المتناسق */
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* صندوق QR Code فخم */
         .qr-wrapper {
             background: #ffffff;
-            padding: clamp(12px, 2.5vw, 25px);
-            border-radius: clamp(25px, 4vw, 45px);
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.5), 0 0 100px rgba(212, 175, 55, 0.2);
+            padding: 25px;
+            border-radius: 40px;
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.4), 0 0 120px rgba(212, 175, 55, 0.2);
             animation: floatBox 3s ease-in-out infinite;
             position: relative;
-            flex-shrink: 0;
         }
 
         .qr-wrapper::after {
             content: '';
             position: absolute;
             inset: -4px;
-            border-radius: inherit;
+            border-radius: 44px;
             background: linear-gradient(135deg, #D4AF37, #f9d976, #b58d25);
             z-index: -1;
             background-size: 300% 300%;
@@ -163,30 +192,25 @@
 
         @keyframes floatBox {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-10px); }
         }
+
         @keyframes shimmerBorder {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* حجم QR Code ديناميكي متناسق مع أي شاشة تابليت */
         #qrcode img {
             display: block;
-            width: clamp(180px, 30vmin, 350px) !important;
-            height: clamp(180px, 30vmin, 350px) !important;
+            width: 250px;
+            height: 250px;
         }
 
-        /* النص السفلي (التعليمات) */
+        /* التعليمات أسفل الكود */
         .tap-hint {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            margin-bottom: clamp(5px, 1.5vh, 20px);
-            font-size: clamp(1rem, 2vw, 1.6rem);
+            margin-top: 5px;
+            font-size: 1.4rem;
             color: #D4AF37;
             font-weight: 300;
             animation: blinkText 2s infinite;
@@ -195,7 +219,7 @@
         .tap-hint small {
             display: block;
             color: #a08b72;
-            font-size: clamp(0.8rem, 1.2vw, 1.2rem);
+            font-size: 1rem;
             font-family: 'Poppins', sans-serif;
             margin-top: 5px;
         }
@@ -205,22 +229,27 @@
             50% { opacity: 0.4; }
         }
 
-        @media (max-width: 600px) {
-            /* في حال تشغيل الصفحة على هاتف صغير، ستكون متناسقة أيضاً */
-            .container { border-radius: 30px; padding: 20px; }
-            .arabic-title { font-size: clamp(2.2rem, 10vw, 3rem); }
+        @media (max-width: 768px) {
+            .arabic-title { font-size: 2.8rem; }
+            .english-title { font-size: 1.5rem; }
+            .container { height: auto; padding: 40px 20px; border-radius: 30px; }
+            #qrcode img { width: 180px; height: 180px; }
+            .qr-wrapper { padding: 15px; }
+            .sub-title .ar { font-size: 1.2rem; }
+            .sub-title .en { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- أضواء خلفية -->
+    <!-- إضاءة خلفية متحركة -->
     <div class="bg-lights">
         <div class="light light-1"></div>
         <div class="light light-2"></div>
+        <div class="light light-3"></div>
     </div>
 
-    <!-- الحاوية المتناسقة -->
+    <!-- المحتوى الفاخر -->
     <div class="container" id="mainContainer">
         
         <div class="text-container">
@@ -232,12 +261,11 @@
             </div>
         </div>
 
-        <!-- صندوق QR -->
+        <!-- كود QR فاخر -->
         <div class="qr-wrapper" id="qrWrapper">
             <div id="qrcode"></div>
         </div>
         
-        <!-- تعليمات المسح -->
         <div class="tap-hint">
             ✦ امسح الكود لبدء التقييم ✦
             <small>Scan the code to rate us</small>
@@ -246,34 +274,48 @@
     </div>
 
     <script>
-        // 1. توليد كود QR (الحجم الآن يتم التحكم فيه عبر CSS)
-        new QRCode(document.getElementById("qrcode"), {
+        // 1. توليد كود QR
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
             text: "https://share.google/I5qRSbag9rFWj1iw1",
-            width: 300, // قيمة افتراضية، الـ CSS سيتحكم في الحجم النهائي
-            height: 300,
-            colorDark: "#2f0c15",
+            width: 250,
+            height: 250,
+            colorDark: "#3a101b",
             colorLight: "#ffffff",
             correctLevel: QRCode.CorrectLevel.H
         });
 
-        // 2. تفعيل الصوت الفخم
+        // 2. تفعيل الصوت (شكراً لكم) عند الضغط على الشاشة
+        // ملاحظة: المتصفحات تمنع تشغيل الصوت التلقائي عند التحميل، لذلك يجب أن يتم تشغيله عبر تفاعل المستخدم.
         function playThankYou() {
-            if (window.speechSynthesis) {
+            if ('speechSynthesis' in window) {
+                // إيقاف أي كلام سابق لمنع التداخل
                 window.speechSynthesis.cancel();
+                
                 let utterance = new SpeechSynthesisUtterance('شكراً لكم');
-                utterance.lang = 'ar-SA';
-                utterance.rate = 0.85; // صوت مهيب وواضح
-                utterance.pitch = 1.1;
-                utterance.volume = 1;
+                utterance.lang = 'ar-SA'; // تحديد اللغة العربية
+                utterance.rate = 0.9; // سرعة الكلام (أقل قليلاً للفخامة)
+                utterance.pitch = 1.1; // نبرة الصوت
+                utterance.volume = 1; // مستوى الصوت
+                
                 window.speechSynthesis.speak(utterance);
+            } else {
+                console.log("المتصفح لا يدعم خاصية النطق الصوتي.");
             }
         }
 
-        // تشغيل الصوت عند الضغط على أي مكان في الشاشة أو الـ QR
-        document.body.addEventListener('click', playThankYou);
-        document.body.addEventListener('touchstart', playThankYou);
+        // تشغيل الصوت عند أول نقرة/لمسة على الشاشة
+        document.body.addEventListener('click', function() {
+            playThankYou();
+        }, { once: false }); // { once: false } يعني تشغيله في كل ضغطة للاحتياط، أو يمكن تركه بدون once.
+
+        // تشغيله أيضاً عند الضغط على مربع الـ QR تحديداً
         document.getElementById('qrWrapper').addEventListener('click', function(e) {
-            e.stopPropagation(); // منع تكرار الصوت
+            e.stopPropagation(); // منع التكرار
+            playThankYou();
+        });
+        
+        // تشغيل الصوت أيضاً عند اللمس (للحواسيب اللوحية)
+        document.body.addEventListener('touchstart', function() {
             playThankYou();
         });
     </script>
