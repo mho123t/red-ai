@@ -2,212 +2,279 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>تقييم ريدان للمندي | Raidan Mandi</title>
-    <!-- خطوط عربية وإنجليزية فاخرة -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>ريدان للمندي - Raidan Mandi</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- مكتبة توليد QR Code -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #4e1721; /* لون عنابي مطابق للشعار */
-            height: 100vh;
+            background: #2f0c15; /* لون عنابي أعمق ليكون فخماً */
+            height: 100dvh; /* استخدام dvh لضمان ملء الشاشة بالكامل على iPad */
             width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* تثبيت الصفحة لمنع التمرير */
+            overflow: hidden;
             font-family: 'Tajawal', 'Poppins', sans-serif;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 900px;
-            height: 90vh;
-            max-height: 850px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 50px;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-evenly;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(212, 175, 55, 0.05);
             position: relative;
+            cursor: pointer;
         }
 
-        /* تأثير توهج ذهبي خلفي */
-        .container::before {
-            content: '';
+        /* إضاءات خلفية ذهبية ناعمة ومتحركة */
+        .bg-lights {
             position: absolute;
-            width: 60%;
-            height: 80%;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
-            top: 10%;
-            left: 20%;
-            z-index: -1;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
             pointer-events: none;
         }
 
-        /* قسم الشعار */
-        .header-section {
+        .light {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(10vmax);
+            opacity: 0.5;
+            animation: moveLight 12s infinite alternate ease-in-out;
+        }
+
+        .light-1 {
+            width: 70vmax;
+            height: 70vmax;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.25), transparent 70%);
+            top: -30%;
+            left: -20%;
+            animation-duration: 15s;
+        }
+
+        .light-2 {
+            width: 60vmax;
+            height: 60vmax;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.15), transparent 70%);
+            bottom: -30%;
+            right: -20%;
+            animation-duration: 18s;
+            animation-delay: 3s;
+        }
+
+        @keyframes moveLight {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(15%, 15%) scale(1.3); }
+        }
+
+        /* حاوية التصميم الرئيسية المتناسقة */
+        .container {
+            position: relative;
+            z-index: 1;
+            width: min(90%, 900px);
+            height: 85dvh;
+            max-height: 850px;
+            padding: min(4vh, 40px) min(3vw, 50px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around; /* توزيع المسافات بشكل متناسق */
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 60px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.7), inset 0 0 50px rgba(212, 175, 55, 0.05);
+        }
+
+        /* النصوص الفاخرة */
+        .text-container {
             text-align: center;
-            margin-bottom: 10px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 40%;
         }
 
         .arabic-title {
             font-family: 'Tajawal', sans-serif;
             font-weight: 900;
-            font-size: 4rem;
-            color: #ffffff;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            margin-bottom: 5px;
+            font-size: clamp(3rem, 7vw, 5.5rem); /* حجم يتكيف مع عرض الشاشة */
+            background: linear-gradient(135deg, #fff 0%, #D4AF37 30%, #fff 50%, #D4AF37 70%, #fff 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmerText 4s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+            line-height: 1.1;
         }
 
         .english-title {
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            font-size: 2rem;
-            color: #D4AF37;
+            font-size: clamp(1.2rem, 2.5vw, 2.2rem);
+            color: #f5f5f5;
             letter-spacing: 2px;
             text-transform: uppercase;
+            animation: fadeUp 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(15px);
+            margin-top: 5px;
         }
 
         .sub-title {
-            color: #ccb699;
-            font-size: 1.4rem;
-            margin-top: 10px;
-            font-weight: 300;
-            display: flex;
-            gap: 25px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .sub-title span {
-            display: inline-block;
-        }
-        
-        .sub-title .ar { font-family: 'Tajawal', sans-serif; }
-        .sub-title .en { font-family: 'Poppins', sans-serif; font-size: 1.2rem; }
-
-        /* صندوق الـ QR Code */
-        .qr-wrapper {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 30px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 0 4px rgba(212, 175, 55, 0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        /* النص أسفل الـ QR Code */
-        .qr-instructions {
+            margin-top: clamp(5px, 2vh, 15px);
+            animation: fadeUp 1.2s ease-out forwards;
+            opacity: 0;
+            transform: translateY(15px);
             display: flex;
             flex-direction: column;
+            gap: 2px;
+        }
+
+        .sub-title .ar { font-size: clamp(1rem, 2vw, 1.6rem); color: #ccb699; }
+        .sub-title .en { font-size: clamp(0.8rem, 1.2vw, 1.2rem); color: #aa9b84; }
+
+        @keyframes shimmerText {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* صندوق الـ QR المتناسق */
+        .qr-wrapper {
+            background: #ffffff;
+            padding: clamp(12px, 2.5vw, 25px);
+            border-radius: clamp(25px, 4vw, 45px);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.5), 0 0 100px rgba(212, 175, 55, 0.2);
+            animation: floatBox 3s ease-in-out infinite;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .qr-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, #D4AF37, #f9d976, #b58d25);
+            z-index: -1;
+            background-size: 300% 300%;
+            animation: shimmerBorder 3s infinite linear;
+        }
+
+        @keyframes floatBox {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes shimmerBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* حجم QR Code ديناميكي متناسق مع أي شاشة تابليت */
+        #qrcode img {
+            display: block;
+            width: clamp(180px, 30vmin, 350px) !important;
+            height: clamp(180px, 30vmin, 350px) !important;
+        }
+
+        /* النص السفلي (التعليمات) */
+        .tap-hint {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
             align-items: center;
-            gap: 5px;
-            color: #e0d7c5;
-            font-size: 1.5rem;
-            margin-top: 10px;
-            font-family: 'Tajawal', 'Poppins', sans-serif;
-        }
-        .qr-instructions small {
-            font-size: 1rem;
-            opacity: 0.7;
+            margin-bottom: clamp(5px, 1.5vh, 20px);
+            font-size: clamp(1rem, 2vw, 1.6rem);
+            color: #D4AF37;
+            font-weight: 300;
+            animation: blinkText 2s infinite;
         }
 
-        /* زر بديل للضغط على الآيباد */
-        .tap-btn {
-            background: linear-gradient(135deg, #D4AF37, #b58d25);
-            color: #1a1a1a;
-            font-family: 'Tajawal', 'Poppins', sans-serif;
-            padding: 20px 50px;
-            border-radius: 60px;
-            font-size: 1.8rem;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
-            margin-top: 10px;
-            width: 100%;
-            max-width: 500px;
-            text-decoration: none;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
+        .tap-hint small {
+            display: block;
+            color: #a08b72;
+            font-size: clamp(0.8rem, 1.2vw, 1.2rem);
+            font-family: 'Poppins', sans-serif;
+            margin-top: 5px;
         }
 
-        .tap-btn:hover {
-            transform: scale(1.03);
-            box-shadow: 0 15px 50px rgba(212, 175, 55, 0.6);
-            background: linear-gradient(135deg, #f9d976, #D4AF37);
+        @keyframes blinkText {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
-        .tap-btn:active { transform: scale(0.95); }
 
-        @media (max-width: 768px) {
-            .arabic-title { font-size: 2.5rem; }
-            .english-title { font-size: 1.2rem; }
-            .sub-title { font-size: 1rem; flex-direction: column; gap: 5px; }
-            .sub-title .en { font-size: 1rem; }
-            .container { height: auto; padding: 30px 20px; max-height: none; border-radius: 30px; }
-            .tap-btn { font-size: 1.2rem; padding: 15px 25px; }
+        @media (max-width: 600px) {
+            /* في حال تشغيل الصفحة على هاتف صغير، ستكون متناسقة أيضاً */
+            .container { border-radius: 30px; padding: 20px; }
+            .arabic-title { font-size: clamp(2.2rem, 10vw, 3rem); }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <!-- أضواء خلفية -->
+    <div class="bg-lights">
+        <div class="light light-1"></div>
+        <div class="light light-2"></div>
+    </div>
+
+    <!-- الحاوية المتناسقة -->
+    <div class="container" id="mainContainer">
         
-        <!-- قسم العنوان بالعربي والإنجليزي -->
-        <div class="header-section">
+        <div class="text-container">
             <div class="arabic-title">ريدان للمندي</div>
             <div class="english-title">Raidan Mandi Restaurant</div>
             <div class="sub-title">
-                <span class="ar">قيم تجربتك معنا</span>
-                <span style="color:#D4AF37;">✦</span>
-                <span class="en">Rate your experience</span>
+                <span class="ar">شاركنا تجربتك لنكون الأفضل</span>
+                <span class="en">Share your feedback with us</span>
             </div>
         </div>
 
-        <!-- صندوق رمز الاستجابة السريعة (QR Code) -->
-        <div class="qr-wrapper">
+        <!-- صندوق QR -->
+        <div class="qr-wrapper" id="qrWrapper">
             <div id="qrcode"></div>
         </div>
         
-        <!-- نص إضافي -->
-        <div class="qr-instructions">
-            <span style="font-family: 'Tajawal', sans-serif;">امسح الكود أو اضغط على الزر</span>
-            <small style="font-family: 'Poppins', sans-serif;">Scan the code or tap below</small>
+        <!-- تعليمات المسح -->
+        <div class="tap-hint">
+            ✦ امسح الكود لبدء التقييم ✦
+            <small>Scan the code to rate us</small>
         </div>
-
-        <!-- زر ضخم للزبائن ليسهل عليهم التقييم من الآيباد (ضغطة واحدة) -->
-        <a href="https://share.google/I5qRSbag9rFWj1iw1" target="_blank" rel="noopener noreferrer" class="tap-btn">
-            🌟 قيمنا الآن / Rate Now
-        </a>
 
     </div>
 
-    <!-- سكريبت جافا سكريبت لتوليد QR Code -->
     <script>
-        // يستخدم الرابط الذي أرسلته لتوليد الكود
-        var qrcode = new QRCode(document.getElementById("qrcode"), {
+        // 1. توليد كود QR (الحجم الآن يتم التحكم فيه عبر CSS)
+        new QRCode(document.getElementById("qrcode"), {
             text: "https://share.google/I5qRSbag9rFWj1iw1",
-            width: 240,  // الحجم مناسب للايباد
-            height: 240,
-            colorDark: "#4e1721", // لون العنابي للمطعم
-            colorLight: "#ffffff", // خلفية بيضاء
-            correctLevel: QRCode.CorrectLevel.H // أعلى مستوى للتصحيح لتجنب الأخطاء
+            width: 300, // قيمة افتراضية، الـ CSS سيتحكم في الحجم النهائي
+            height: 300,
+            colorDark: "#2f0c15",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // 2. تفعيل الصوت الفخم
+        function playThankYou() {
+            if (window.speechSynthesis) {
+                window.speechSynthesis.cancel();
+                let utterance = new SpeechSynthesisUtterance('شكراً لكم');
+                utterance.lang = 'ar-SA';
+                utterance.rate = 0.85; // صوت مهيب وواضح
+                utterance.pitch = 1.1;
+                utterance.volume = 1;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // تشغيل الصوت عند الضغط على أي مكان في الشاشة أو الـ QR
+        document.body.addEventListener('click', playThankYou);
+        document.body.addEventListener('touchstart', playThankYou);
+        document.getElementById('qrWrapper').addEventListener('click', function(e) {
+            e.stopPropagation(); // منع تكرار الصوت
+            playThankYou();
         });
     </script>
 
