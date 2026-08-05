@@ -12,27 +12,21 @@
 
         body {
             background: #2f0c15;
-            height: 100dvh; width: 100vw;
-            display: flex; justify-content: center; align-items: center;
-            overflow: hidden;
+            min-height: 100dvh; width: 100vw;
+            display: flex; flex-direction: column; align-items: center;
+            overflow-x: hidden;
             font-family: 'Tajawal', 'Poppins', sans-serif;
             position: relative;
-            cursor: pointer;
         }
 
         /* إضاءات خلفية فخمة */
-        .bg-lights {
-            position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none;
-        }
-        .light {
-            position: absolute; border-radius: 50%; filter: blur(10vmax); opacity: 0.5;
-            animation: moveLight 12s infinite alternate ease-in-out;
-        }
+        .bg-lights { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+        .light { position: absolute; border-radius: 50%; filter: blur(10vmax); opacity: 0.5; animation: moveLight 12s infinite alternate ease-in-out; }
         .light-1 { width: 70vmax; height: 70vmax; background: radial-gradient(circle, rgba(212, 175, 55, 0.25), transparent 70%); top: -30%; left: -20%; animation-duration: 15s; }
         .light-2 { width: 60vmax; height: 60vmax; background: radial-gradient(circle, rgba(255, 215, 0, 0.15), transparent 70%); bottom: -30%; right: -20%; animation-duration: 18s; animation-delay: 3s; }
         @keyframes moveLight { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(15%, 15%) scale(1.3); } }
 
-        /* الحاوية الرئيسية */
+        /* --- الحاوية الرئيسية (صفحة QR) --- */
         .container {
             position: relative; z-index: 1;
             width: min(90%, 900px); height: 85dvh; max-height: 850px;
@@ -41,9 +35,9 @@
             background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-radius: 60px; border: 1px solid rgba(212, 175, 55, 0.2);
             box-shadow: 0 25px 80px rgba(0,0,0,0.7), inset 0 0 50px rgba(212, 175, 55, 0.05);
+            margin-top: 20px;
         }
 
-        /* النصوص الفاخرة */
         .text-container { text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center; max-height: 40%; }
         .arabic-title {
             font-family: 'Tajawal', sans-serif; font-weight: 900;
@@ -52,63 +46,67 @@
             background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             animation: shimmerText 4s ease-in-out infinite; text-shadow: 0 0 30px rgba(212, 175, 55, 0.2); line-height: 1.1;
         }
-        .english-title {
-            font-family: 'Poppins', sans-serif; font-weight: 600;
-            font-size: clamp(1.2rem, 2.5vw, 2.2rem); color: #f5f5f5; letter-spacing: 2px; text-transform: uppercase;
-            animation: fadeUp 1s ease-out forwards; opacity: 0; transform: translateY(15px); margin-top: 5px;
-        }
+        .english-title { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: clamp(1.2rem, 2.5vw, 2.2rem); color: #f5f5f5; letter-spacing: 2px; text-transform: uppercase; animation: fadeUp 1s ease-out forwards; opacity: 0; transform: translateY(15px); margin-top: 5px; }
         .sub-title { margin-top: clamp(5px, 2vh, 15px); animation: fadeUp 1.2s ease-out forwards; opacity: 0; transform: translateY(15px); display: flex; flex-direction: column; gap: 2px; }
         .sub-title .ar { font-size: clamp(1rem, 2vw, 1.6rem); color: #ccb699; }
         .sub-title .en { font-size: clamp(0.8rem, 1.2vw, 1.2rem); color: #aa9b84; }
         @keyframes shimmerText { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-        /* صندوق الـ QR */
-        .qr-wrapper {
-            background: #ffffff; padding: clamp(12px, 2.5vw, 25px);
-            border-radius: clamp(25px, 4vw, 45px);
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.5), 0 0 100px rgba(212, 175, 55, 0.2);
-            animation: floatBox 3s ease-in-out infinite; position: relative; flex-shrink: 0;
-        }
-        .qr-wrapper::after {
-            content: ''; position: absolute; inset: -4px; border-radius: inherit;
-            background: linear-gradient(135deg, #D4AF37, #f9d976, #b58d25); z-index: -1;
-            background-size: 300% 300%; animation: shimmerBorder 3s infinite linear;
-        }
+        .qr-wrapper { background: #ffffff; padding: clamp(12px, 2.5vw, 25px); border-radius: clamp(25px, 4vw, 45px); box-shadow: 0 0 50px rgba(212, 175, 55, 0.5), 0 0 100px rgba(212, 175, 55, 0.2); animation: floatBox 3s ease-in-out infinite; position: relative; flex-shrink: 0; }
+        .qr-wrapper::after { content: ''; position: absolute; inset: -4px; border-radius: inherit; background: linear-gradient(135deg, #D4AF37, #f9d976, #b58d25); z-index: -1; background-size: 300% 300%; animation: shimmerBorder 3s infinite linear; }
         @keyframes floatBox { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
         @keyframes shimmerBorder { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         #qrcode img { display: block; width: clamp(180px, 30vmin, 350px) !important; height: clamp(180px, 30vmin, 350px) !important; }
 
-        /* النص السفلي */
         .tap-hint { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; margin-bottom: clamp(5px, 1.5vh, 20px); font-size: clamp(1rem, 2vw, 1.6rem); color: #D4AF37; font-weight: 300; animation: blinkText 2s infinite; }
         .tap-hint small { display: block; color: #a08b72; font-size: clamp(0.8rem, 1.2vw, 1.2rem); font-family: 'Poppins', sans-serif; margin-top: 5px; }
         @keyframes blinkText { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-        /* --- تأثير الفخامة الجديد (نص Thank you يملأ الشاشة) --- */
-        #thank-you-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh;
-            display: flex; justify-content: center; align-items: center;
-            background: rgba(47, 12, 21, 0.85); /* خلفية عنابية معتمة */
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            z-index: 9999; pointer-events: none;
-            opacity: 0; transform: scale(0.8);
-            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        /* --- قسم تقييم النوادل الفخم --- */
+        #waiter-section {
+            position: relative; z-index: 1;
+            width: min(90%, 900px);
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-radius: 40px; border: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 40px 30px; margin: 40px auto 80px;
+            box-shadow: inset 0 0 60px rgba(212, 175, 55, 0.05);
         }
-        #thank-you-overlay.active {
-            opacity: 1; transform: scale(1);
+
+        .section-title { font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: clamp(2.2rem, 4vw, 3.5rem); color: #fff; text-align: center; margin-bottom: 10px; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .section-subtitle { color: #D4AF37; font-family: 'Poppins', sans-serif; text-align: center; font-size: clamp(1rem, 1.5vw, 1.5rem); margin-bottom: 40px; letter-spacing: 1px; }
+
+        .waiters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; justify-content: center; margin-bottom: 40px; }
+
+        .waiter-card { background: rgba(255, 255, 255, 0.02); border-radius: 30px; padding: 25px 15px; text-align: center; border: 1px solid rgba(212, 175, 55, 0.1); transition: all 0.3s ease; }
+        .waiter-card:hover { transform: translateY(-5px); border-color: #D4AF37; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1); }
+
+        .waiter-img-wrap { width: clamp(100px, 15vw, 150px); height: clamp(100px, 15vw, 150px); border-radius: 50%; overflow: hidden; margin: 0 auto 15px; border: 4px solid #D4AF37; box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); }
+        .waiter-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .waiter-name { font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: clamp(1.4rem, 2vw, 2rem); color: #fff; margin-bottom: 15px; }
+        .waiter-name small { display: block; font-family: 'Poppins', sans-serif; font-weight: 300; color: #a08b72; font-size: 0.8rem; }
+
+        .stars { display: flex; justify-content: center; gap: 10px; }
+        .star { font-size: clamp(2rem, 3vw, 3.5rem); color: #5a5a5a; cursor: pointer; transition: all 0.2s ease; }
+        .star.active { color: #D4AF37; text-shadow: 0 0 20px #D4AF37; transform: scale(1.1); }
+        .star:hover { transform: scale(1.2); color: #D4AF37; }
+
+        .waiter-submit-btn {
+            display: block; margin: 0 auto; padding: 20px 40px;
+            background: linear-gradient(135deg, #D4AF37, #b58d25); color: #1a1a1a;
+            font-family: 'Tajawal', 'Poppins', sans-serif; font-weight: 700; font-size: clamp(1.4rem, 2vw, 2rem);
+            border: none; border-radius: 80px; cursor: pointer;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4); transition: all 0.3s ease; width: 100%; max-width: 600px;
         }
-        .thank-you-text {
-            font-family: 'Poppins', sans-serif; font-weight: 700;
-            font-size: clamp(4rem, 15vw, 12rem); /* حجم ضخم جداً يغطي الشاشة */
-            background: linear-gradient(135deg, #D4AF37 0%, #fff 40%, #D4AF37 80%, #b58d25 100%);
-            background-size: 300% 300%;
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: goldGlow 2s ease-in-out infinite alternate;
-            text-shadow: 0 0 40px rgba(212, 175, 55, 0.6);
-        }
-        @keyframes goldGlow {
-            0% { filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.3)); }
-            100% { filter: drop-shadow(0 0 80px rgba(212, 175, 55, 0.8)); }
+        .waiter-submit-btn:hover { transform: scale(1.03); box-shadow: 0 15px 50px rgba(212, 175, 55, 0.6); }
+        .waiter-submit-btn:active { transform: scale(0.95); }
+
+        @media (max-width: 600px) {
+            .container { height: auto; padding: 20px; min-height: 85dvh; }
+            .waiter-submit-btn { font-size: 1.2rem; padding: 15px 25px; }
+            .waiters-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; }
+            .waiter-card { padding: 15px 10px; }
         }
     </style>
 </head>
@@ -119,11 +117,7 @@
         <div class="light light-2"></div>
     </div>
 
-    <!-- العنصر الفخم الذي يملأ الشاشة -->
-    <div id="thank-you-overlay">
-        <div class="thank-you-text">Thank you</div>
-    </div>
-
+    <!-- القسم الأول: تقييم جوجل -->
     <div class="container" id="mainContainer">
         <div class="text-container">
             <div class="arabic-title">ريدان للمندي</div>
@@ -144,6 +138,111 @@
         </div>
     </div>
 
+    <!-- القسم الثاني: تقييم النوادل -->
+    <section id="waiter-section">
+        <div class="section-title">تقييم طاقم الخدمة</div>
+        <div class="section-subtitle">Evaluate Our Service Staff</div>
+
+        <div class="waiters-grid">
+            
+            <!-- ====== بطاقة النادل: Jabari ====== -->
+            <div class="waiter-card">
+                <div class="waiter-img-wrap">
+                    <img src="https://i.ibb.co/rJWHYqQ" alt="Jabari">
+                </div>
+                <div class="waiter-name">
+                    جاباري
+                    <small>Jabari</small>
+                </div>
+                <div class="stars" data-waiter-id="Jabari">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+
+            <!-- ====== بطاقة النادل: Ali ====== -->
+            <div class="waiter-card">
+                <div class="waiter-img-wrap">
+                    <img src="https://i.ibb.co/vvYtL5y4" alt="Ali">
+                </div>
+                <div class="waiter-name">
+                    علي
+                    <small>Ali</small>
+                </div>
+                <div class="stars" data-waiter-id="Ali">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+
+            <!-- ====== بطاقة النادل: ALAM.JR ====== -->
+            <div class="waiter-card">
+                <div class="waiter-img-wrap">
+                    <img src="https://i.ibb.co/0R2Lw3w3" alt="ALAM.JR">
+                </div>
+                <div class="waiter-name">
+                    ALAM.JR
+                    <small>ALAM.JR</small>
+                </div>
+                <div class="stars" data-waiter-id="ALAMJR">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+
+            <!-- ====== بطاقة النادل: AHMED ====== -->
+            <div class="waiter-card">
+                <div class="waiter-img-wrap">
+                    <img src="https://i.ibb.co/5XTTXV1M" alt="AHMED">
+                </div>
+                <div class="waiter-name">
+                    AHMED
+                    <small>AHMED</small>
+                </div>
+                <div class="stars" data-waiter-id="AHMED">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+
+            <!-- ====== بطاقة النادل: M.SRAGE ====== -->
+            <div class="waiter-card">
+                <div class="waiter-img-wrap">
+                    <img src="https://i.ibb.co/s9kmK6SN" alt="M.SRAGE">
+                </div>
+                <div class="waiter-name">
+                    M.SRAGE
+                    <small>M.SRAGE</small>
+                </div>
+                <div class="stars" data-waiter-id="MSRAGE">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- زر إرسال التقرير عبر واتساب -->
+        <button class="waiter-submit-btn" onclick="sendWaiterRatings()">
+            📋 إنهاء الدوام وإرسال التقييم
+        </button>
+    </section>
+
     <script>
         // 1. توليد كود QR
         new QRCode(document.getElementById("qrcode"), {
@@ -153,39 +252,79 @@
             correctLevel: QRCode.CorrectLevel.H
         });
 
-        // العناصر
-        const overlay = document.getElementById('thank-you-overlay');
+        // -------------------------------------------------------
+        // 2. نظام تقييم النوادل (نجوم واتساب)
+        // -------------------------------------------------------
+        const waiterRatings = {};
 
-        // 2. دالة تشغيل الصوت والتأثير البصري الفخم
-        function triggerPremiumEffect() {
-            // أولاً: تشغيل الصوت "Thank you" بالإنجليزية
-            if (window.speechSynthesis) {
-                window.speechSynthesis.cancel();
-                let utterance = new SpeechSynthesisUtterance('Thank you');
-                utterance.lang = 'en-US'; // لغة إنجليزية واضحة
-                utterance.rate = 0.7; // سرعة أبطأ قليلاً ليكون مهيباً وفخماً
-                utterance.pitch = 1.2; // نبرة صوت جذابة
-                utterance.volume = 1;
-                window.speechSynthesis.speak(utterance);
+        // تفعيل النجوم عند الضغط عليها
+        document.querySelectorAll('.stars').forEach(starsContainer => {
+            const waiterId = starsContainer.getAttribute('data-waiter-id');
+            const stars = starsContainer.querySelectorAll('.star');
+
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const value = parseInt(this.getAttribute('data-value'));
+
+                    // تحديث التخزين
+                    waiterRatings[waiterId] = value;
+
+                    // تحديث واجهة المستخدم (تلوين النجوم)
+                    stars.forEach(s => {
+                        const val = parseInt(s.getAttribute('data-value'));
+                        if(val <= value) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        });
+
+        // -------------------------------------------------------
+        // 3. إرسال التقييم عبر واتساب عند الضغط على الزر
+        // -------------------------------------------------------
+        function sendWaiterRatings() {
+            const waiterCards = document.querySelectorAll('.waiter-card');
+            let message = "📋 *تقرير تقييم طاقم الخدمة - مطعم ريدان للمندي*\n";
+            message += `📅 التاريخ: ${new Date().toLocaleDateString('ar-SA')}\n`;
+            message += `⏰ الوقت: ${new Date().toLocaleTimeString('ar-SA')}\n`;
+            message += "------------------------------------\n";
+
+            let allRated = true;
+            waiterCards.forEach(card => {
+                const nameElement = card.querySelector('.waiter-name');
+                const name = nameElement.innerText.trim();
+                const waiterId = card.querySelector('.stars').getAttribute('data-waiter-id');
+                const rating = waiterRatings[waiterId] || 0;
+                
+                let starsStr = "";
+                for(let i=0; i<5; i++) {
+                    starsStr += (i < rating) ? "⭐" : "☆";
+                }
+
+                if(rating === 0) allRated = false;
+
+                message += `\n👨‍🍳 *${name}*: ${starsStr} (${rating}/5)\n`;
+            });
+
+            message += "\n------------------------------------\n";
+            message += "شكراً لتعاونكم معنا! 🙏";
+
+            if(!allRated) {
+                if(!confirm("يوجد نوادل لم يتم تقييمهم بعد. هل أنت متأكد من إرسال التقرير؟")) {
+                    return;
+                }
             }
 
-            // ثانياً: إظهار الـ Overlay الفخم
-            overlay.classList.add('active');
-
-            // ثالثاً: إخفائه تلقائياً بعد 2.5 ثانية
-            setTimeout(() => {
-                overlay.classList.remove('active');
-            }, 2500);
+            // تشفير الرسالة وإنشاء رابط واتساب
+            const phoneNumber = "971581505066";
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            
+            // فتح الواتساب
+            window.open(whatsappUrl, '_blank');
         }
-
-        // تشغيل التأثير عند الضغط على الشاشة أو الـ QR
-        document.body.addEventListener('click', triggerPremiumEffect);
-        document.body.addEventListener('touchstart', triggerPremiumEffect);
-        
-        // منع تشغيل الصوت مرتين عند الضغط على الكود تحديداً
-        document.getElementById('qrWrapper').addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
     </script>
 </body>
 </html>
