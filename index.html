@@ -63,7 +63,7 @@
         .tap-hint small { display: block; color: #a08b72; font-size: clamp(0.8rem, 1.2vw, 1.2rem); font-family: 'Poppins', sans-serif; margin-top: 5px; }
         @keyframes blinkText { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-        /* --- قسم تقييم النوادل الفخم --- */
+        /* --- قسم تقييم النوادل المتقدم --- */
         #waiter-section {
             position: relative; z-index: 1;
             width: min(90%, 900px);
@@ -85,6 +85,17 @@
         }
         .waiter-card:hover { transform: translateY(-5px); border-color: #D4AF37; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1); }
 
+        /* QR Code فردي لكل نادل */
+        .individual-qr-wrap {
+            background: #ffffff; padding: 8px; border-radius: 20px; 
+            margin-bottom: 10px; display: inline-block;
+            border: 2px solid #D4AF37; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+        .individual-qr-wrap canvas, .individual-qr-wrap img {
+            width: 80px !important; height: 80px !important; display: block;
+        }
+        .mini-label { color: #a08b72; font-size: 0.65rem; margin-bottom: 15px; display: block; }
+
         .waiter-img-wrap { 
             width: clamp(100px, 15vw, 140px); height: clamp(100px, 15vw, 140px); 
             border-radius: 50%; overflow: hidden; margin: 0 auto 15px; 
@@ -96,13 +107,6 @@
         .waiter-header { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
         .waiter-name { font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: clamp(1.4rem, 2vw, 2rem); color: #fff; }
         .waiter-name small { display: block; font-family: 'Poppins', sans-serif; font-weight: 300; color: #a08b72; font-size: 0.8rem; }
-        
-        .clear-waiter-btn {
-            background: rgba(255, 255, 255, 0.05); color: #ff4d4d; border: 1px solid #ff4d4d;
-            border-radius: 50px; padding: 5px 15px; font-size: 0.8rem; cursor: pointer; transition: 0.3s;
-            font-family: 'Tajawal', sans-serif;
-        }
-        .clear-waiter-btn:hover { background: #ff4d4d; color: #fff; }
 
         .stars { display: flex; justify-content: center; gap: 8px; margin-bottom: 15px; }
         .star { font-size: clamp(2rem, 3vw, 3.5rem); color: #5a5a5a; cursor: pointer; transition: all 0.2s ease; }
@@ -179,7 +183,7 @@
     <!-- القسم الأول: تقييم جوجل -->
     <div class="container" id="mainContainer">
         <div class="text-container">
-            <div class="arabic-title">ريدان للمندي</div>
+            <div class="arabic-title" id="resetSecret">ريدان للمندي</div>
             <div class="english-title">Raidan Mandi Restaurant</div>
             <div class="sub-title">
                 <span class="ar">شاركنا تجربتك لنكون الأفضل</span>
@@ -197,7 +201,7 @@
         </div>
     </div>
 
-    <!-- القسم الثاني: نظام تقييم النوادل المتقدم -->
+    <!-- القسم الثاني: نظام تقييم النوادل المتقدم (فردي وحماية) -->
     <section id="waiter-section">
         <div class="section-title">تقييم طاقم الخدمة</div>
         <div class="section-subtitle">Service Evaluation System</div>
@@ -206,6 +210,9 @@
             
             <!-- ====== بطاقة النادل: Jabari ====== -->
             <div class="waiter-card" id="card-Jabari">
+                <div class="individual-qr-wrap" id="indQR-Jabari"></div>
+                <div class="mini-label">مسح كود النادل</div>
+                
                 <div class="waiter-img-wrap">
                     <img src="https://i.ibb.co/LfG1mB0/image.jpg" alt="Jabari" onerror="this.src='https://ui-avatars.com/api/?name=Jabari&background=D4AF37&color=2f0c15&size=128'">
                 </div>
@@ -214,7 +221,6 @@
                         جاباري
                         <small>Jabari</small>
                     </div>
-                    <button class="clear-waiter-btn" onclick="clearWaiter('Jabari')">✖ مسح الكل</button>
                 </div>
                 
                 <div class="stars" data-waiter-id="Jabari">
@@ -240,6 +246,9 @@
 
             <!-- ====== بطاقة النادل: Ali ====== -->
             <div class="waiter-card" id="card-Ali">
+                <div class="individual-qr-wrap" id="indQR-Ali"></div>
+                <div class="mini-label">مسح كود النادل</div>
+                
                 <div class="waiter-img-wrap">
                     <img src="https://i.ibb.co/M56XPTwk/image.jpg" alt="Ali" onerror="this.src='https://ui-avatars.com/api/?name=Ali&background=D4AF37&color=2f0c15&size=128'">
                 </div>
@@ -248,7 +257,6 @@
                         علي
                         <small>Ali</small>
                     </div>
-                    <button class="clear-waiter-btn" onclick="clearWaiter('Ali')">✖ مسح الكل</button>
                 </div>
                 
                 <div class="stars" data-waiter-id="Ali">
@@ -274,6 +282,9 @@
 
             <!-- ====== بطاقة النادل: ALAM.JR ====== -->
             <div class="waiter-card" id="card-ALAMJR">
+                <div class="individual-qr-wrap" id="indQR-ALAMJR"></div>
+                <div class="mini-label">مسح كود النادل</div>
+                
                 <div class="waiter-img-wrap">
                     <img src="https://i.ibb.co/LXRyGfGf/image.jpg" alt="ALAM.JR" onerror="this.src='https://ui-avatars.com/api/?name=ALAM+JR&background=D4AF37&color=2f0c15&size=128'">
                 </div>
@@ -282,7 +293,6 @@
                         ALAM.JR
                         <small>ALAM.JR</small>
                     </div>
-                    <button class="clear-waiter-btn" onclick="clearWaiter('ALAMJR')">✖ مسح الكل</button>
                 </div>
                 
                 <div class="stars" data-waiter-id="ALAMJR">
@@ -308,6 +318,9 @@
 
             <!-- ====== بطاقة النادل: AHMED ====== -->
             <div class="waiter-card" id="card-AHMED">
+                <div class="individual-qr-wrap" id="indQR-AHMED"></div>
+                <div class="mini-label">مسح كود النادل</div>
+                
                 <div class="waiter-img-wrap">
                     <img src="https://i.ibb.co/20qq0BFn/image.jpg" alt="AHMED" onerror="this.src='https://ui-avatars.com/api/?name=Ahmed&background=D4AF37&color=2f0c15&size=128'">
                 </div>
@@ -316,7 +329,6 @@
                         AHMED
                         <small>AHMED</small>
                     </div>
-                    <button class="clear-waiter-btn" onclick="clearWaiter('AHMED')">✖ مسح الكل</button>
                 </div>
                 
                 <div class="stars" data-waiter-id="AHMED">
@@ -342,6 +354,9 @@
 
             <!-- ====== بطاقة النادل: M.SRAGE ====== -->
             <div class="waiter-card" id="card-MSRAGE">
+                <div class="individual-qr-wrap" id="indQR-MSRAGE"></div>
+                <div class="mini-label">مسح كود النادل</div>
+                
                 <div class="waiter-img-wrap">
                     <img src="https://i.ibb.co/YBYRcy91/image.jpg" alt="M.SRAGE" onerror="this.src='https://ui-avatars.com/api/?name=M+SRAGE&background=D4AF37&color=2f0c15&size=128'">
                 </div>
@@ -350,7 +365,6 @@
                         M.SRAGE
                         <small>M.SRAGE</small>
                     </div>
-                    <button class="clear-waiter-btn" onclick="clearWaiter('MSRAGE')">✖ مسح الكل</button>
                 </div>
                 
                 <div class="stars" data-waiter-id="MSRAGE">
@@ -384,19 +398,33 @@
     </section>
 
     <script>
-        // 1. توليد كود QR
+        // 1. تحديث رابط تقييم المطعم الرئيسي بالرابط الجديد
+        const GOOGLE_REVIEW_LINK = "https://search.google.com/local/writereview?placeid=ChIJgayJw2FcXz4RNvQPfA0olZI&source=g.page.m.ia._&laa=nmx-review-solicitation-ia2";
+
+        // توليد كود QR الرئيسي للمطعم
         new QRCode(document.getElementById("qrcode"), {
-            text: "https://share.google/I5qRSbag9rFWj1iw1",
+            text: GOOGLE_REVIEW_LINK,
             width: 300, height: 300,
             colorDark: "#2f0c15", colorLight: "#ffffff",
             correctLevel: QRCode.CorrectLevel.H
         });
 
         // -------------------------------------------------------
-        // 2. نظام التقييم المتقدم (البيانات والوظائف)
+        // 2. توليد كود QR فردي لكل نادل (بحيث يشتغ كل شخص لحال)
         // -------------------------------------------------------
-        
-        // تخزين كل التقييمات (غير محدود - أكثر من 20 تقييم ممكن)
+        const waitersList = ['Jabari', 'Ali', 'ALAMJR', 'AHMED', 'MSRAGE'];
+        waitersList.forEach(w => {
+            new QRCode(document.getElementById(`indQR-${w}`), {
+                text: GOOGLE_REVIEW_LINK, // نفس رابط المطعم ولكن مع كود مخصص لكل بطاقة
+                width: 80, height: 80,
+                colorDark: "#2f0c15", colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        });
+
+        // -------------------------------------------------------
+        // 3. نظام الحماية: لا تقييم متكرر من نفس الجوال (localStorage)
+        // -------------------------------------------------------
         const allRatingsData = {};
 
         // تفعيل اختيار النجوم
@@ -416,8 +444,14 @@
             });
         });
 
-        // حفظ التقييم (حفظ في المصفوفة + عرض في السجل)
+        // حفظ التقييم مع الحماية (مرة واحدة فقط لكل جوال)
         function saveRating(waiterId) {
+            // التحقق من التخزين المحلي للجهاز (الجوال)
+            if (localStorage.getItem('rated_' + waiterId)) {
+                alert("⚠️ لقد قمت بتقييم هذا النادل مسبقاً من هذا الجهاز. لا يمكن التقييم مرة أخرى.");
+                return;
+            }
+
             const starsContainer = document.querySelector(`.stars[data-waiter-id="${waiterId}"]`);
             const activeStars = starsContainer.querySelectorAll('.star.active');
             const ratingValue = activeStars.length;
@@ -432,7 +466,7 @@
                 allRatingsData[waiterId] = [];
             }
 
-            // إضافة تقييم جديد (دفع إلى المصفوفة)
+            // إضافة تقييم جديد
             const now = new Date();
             const timeString = now.toLocaleTimeString('ar-SA');
             const dateString = now.toLocaleDateString('ar-SA');
@@ -444,17 +478,20 @@
                 date: dateString
             });
 
+            // منع الجوال من التقييم مرة أخرى
+            localStorage.setItem('rated_' + waiterId, 'true');
+
             // تحديث واجهة سجل التقييمات
             updateHistoryUI(waiterId);
 
-            // تصفير النموذج للزبون التالي
+            // تصفير النموذج
             starsContainer.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
             document.getElementById(`note-${waiterId}`).value = '';
             
-            alert("✅ تم حفظ تقييم العميل بنجاح!");
+            alert("✅ تم حفظ تقييم العميل بنجاح! لن تتمكن من التقييم مرة أخرى من هذا الجوال.");
         }
 
-        // تحديث واجهة السجل (أكثر من 20 تقييم ستظهر هنا)
+        // تحديث واجهة السجل
         function updateHistoryUI(waiterId) {
             const listContainer = document.getElementById(`list-${waiterId}`);
             listContainer.innerHTML = '';
@@ -464,7 +501,6 @@
                 return;
             }
 
-            // عرض التقييمات من الأحدث للأقدم (عكس المصفوفة)
             const reversed = [...allRatingsData[waiterId]].reverse();
             reversed.forEach(item => {
                 let starsStr = '';
@@ -483,18 +519,9 @@
             });
         }
 
-        // مسح كل التقييمات والملاحظات لنادل واحد
-        function clearWaiter(waiterId) {
-            if(!confirm(`هل أنت متأكد من مسح جميع تقييمات وملاحظات هذا النادل؟`)) return;
-            
-            allRatingsData[waiterId] = [];
-            document.querySelector(`.stars[data-waiter-id="${waiterId}"]`).querySelectorAll('.star').forEach(s => s.classList.remove('active'));
-            document.getElementById(`note-${waiterId}`).value = '';
-            updateHistoryUI(waiterId);
-        }
-
+        // (تم إلغاء زر المسح تماماً كما طلبت)
         // -------------------------------------------------------
-        // 3. إرسال فردي لكل شخص (واتساب)
+        // 4. إرسال فردي لكل شخص (واتساب)
         // -------------------------------------------------------
         function sendIndividual(waiterId) {
             const nameElement = document.querySelector(`#card-${waiterId} .waiter-name`);
@@ -526,7 +553,7 @@
         }
 
         // -------------------------------------------------------
-        // 4. إرسال جماعي للكل (نهاية الدوام)
+        // 5. إرسال جماعي للكل (نهاية الدوام)
         // -------------------------------------------------------
         function sendAllWaiters() {
             let message = `📋 *تقرير نهاية الدوام الشامل - ريدان للمندي*\n`;
@@ -573,7 +600,7 @@
         }
 
         // -------------------------------------------------------
-        // 5. طباعة جميع التقييمات (بصيغة ورقية)
+        // 6. طباعة جميع التقييمات (ورقي)
         // -------------------------------------------------------
         function printAllRatings() {
             const waiterCards = document.querySelectorAll('.waiter-card');
@@ -650,6 +677,31 @@
             printWindow.focus();
             printWindow.print();
         }
+
+        // -------------------------------------------------------
+        // *ميزة سرية للمدير فقط*: مسح النظام بأكمله (إذا احتجت ذلك).
+        // اضغط على شعار "ريدان للمندي" في الأعلى 5 مرات.
+        // -------------------------------------------------------
+        let resetClickCount = 0;
+        document.getElementById('resetSecret').addEventListener('click', function() {
+            resetClickCount++;
+            if(resetClickCount >= 5) {
+                if(confirm("🔑 وضع المدير: هل تريد مسح جميع التقييمات المخزنة في هذا الجهاز بالكامل؟")) {
+                    // مسح المصفوفات
+                    for(let key in allRatingsData) {
+                        delete allRatingsData[key];
+                    }
+                    // مسح الـ localStorage (الذي يمنع التقييم المتكرر)
+                    waitersList.forEach(w => {
+                        localStorage.removeItem('rated_' + w);
+                    });
+                    // تحديث واجهات المستخدم
+                    waitersList.forEach(w => updateHistoryUI(w));
+                    alert("✅ تم مسح جميع التقييمات والبيانات بنجاح. يمكن للجوال استقبال تقييمات جديدة.");
+                }
+                resetClickCount = 0;
+            }
+        });
     </script>
 </body>
 </html>
