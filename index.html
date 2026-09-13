@@ -1,1172 +1,2527 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#08080a">
-<title>📋 الفواتير الذكية</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Invoice Elite</title>
+
 <style>
-:root{
-  --bg:#08080a; --bg2:#0f0f13; --card:#15151b; --card2:#1c1c24;
-  --line:#2a2a35; --gold:#d4af37; --gold2:#f2dfa0; --gold3:#8a7020;
-  --text:#f2f2f5; --muted:#8e8e9c; --green:#25d366; --red:#ff4d5e; --amber:#ffb020;
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0}
+
+html{
+    scroll-behavior:smooth;
+}
+
 body{
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,"Noto Kufi Arabic",Arial,sans-serif;
-  background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden;
-  background-image:
-    radial-gradient(900px 500px at 50% -180px, rgba(212,175,55,.13), transparent 70%),
-    radial-gradient(700px 400px at 100% 100%, rgba(212,175,55,.05), transparent 70%);
-  background-attachment:fixed;
+    font-family:
+        Tahoma,
+        Arial,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            #332817 0%,
+            #15120d 25%,
+            #080808 55%,
+            #050505 100%
+        );
+
+    color:#fff;
+    min-height:100vh;
 }
-.wrap{max-width:920px;margin:0 auto;padding:0 14px 110px}
-header{padding:26px 0 14px;text-align:center}
-.logo{font-size:30px;font-weight:800;letter-spacing:-.5px;
-  background:linear-gradient(180deg,#fff 0%,var(--gold2) 45%,var(--gold) 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;}
-.tagline{margin-top:8px;font-size:13px;color:var(--muted)}
-.tagline b{color:var(--gold);font-weight:600}
-.goldline{height:1px;width:120px;margin:16px auto 0;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.7}
-.card{background:linear-gradient(180deg,var(--card) 0%,var(--bg2) 100%);
-  border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px;
-  box-shadow:0 10px 30px -18px rgba(0,0,0,.9)}
-.card.gold{border-color:rgba(212,175,55,.35)}
-.sec-title{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;
-  color:var(--gold2);margin:0 0 12px}
-.sec-title .n{margin-inline-start:auto;font-size:12px;color:var(--muted);font-weight:500}
-.btn{display:flex;align-items:center;justify-content:center;gap:10px;
-  width:100%;padding:16px;border-radius:14px;border:1px solid var(--line);
-  background:var(--card2);color:var(--text);font-size:16px;font-weight:700;
-  cursor:pointer;font-family:inherit;transition:.15s;user-select:none}
-.btn:active{transform:scale(.97);opacity:.9}
-.btn-primary{background:linear-gradient(180deg,var(--gold2),var(--gold));
-  color:#151004;border-color:var(--gold3);box-shadow:0 8px 26px -12px rgba(212,175,55,.7)}
-.btn-green{background:linear-gradient(180deg,#3ee07c,#1da851);color:#04220f;
-  border-color:#128040;box-shadow:0 8px 26px -12px rgba(37,211,102,.6)}
-.btn-ghost{background:transparent;border-color:var(--line);color:var(--muted);font-size:14px;padding:12px}
-.btn-sm{padding:10px 12px;font-size:13px;border-radius:11px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;
-  padding:12px 6px;text-align:center}
-.stat .v{font-size:20px;font-weight:800;color:var(--gold2);line-height:1.1}
-.stat .k{font-size:10.5px;color:var(--muted);margin-top:5px}
-.emp-row{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;
-  background:var(--card2);border:1px solid var(--line);margin-bottom:9px;flex-wrap:wrap}
-.avatar{width:42px;height:42px;border-radius:50%;flex:0 0 42px;display:flex;
-  align-items:center;justify-content:center;font-size:19px;
-  background:linear-gradient(145deg,rgba(212,175,55,.25),rgba(212,175,55,.05));
-  border:1px solid rgba(212,175,55,.4)}
-.emp-info{flex:1;min-width:60%}
-.emp-name{font-weight:700;font-size:15px}
-.emp-phone{font-size:12.5px;color:var(--muted);direction:ltr;text-align:right;margin-top:2px}
-.pill{font-size:11px;padding:4px 9px;border-radius:20px;font-weight:700;white-space:nowrap}
-.pill.gold{background:rgba(212,175,55,.15);color:var(--gold2);border:1px solid rgba(212,175,55,.35)}
-.pill.green{background:rgba(37,211,102,.15);color:#4be08a;border:1px solid rgba(37,211,102,.35)}
-.pill.amber{background:rgba(255,176,32,.15);color:var(--amber);border:1px solid rgba(255,176,32,.35)}
-input[type=text],input[type=tel],textarea{
-  width:100%;padding:12px 14px;border-radius:12px;background:#0c0c11;color:var(--text);
-  border:1px solid var(--line);font-family:inherit;font-size:15px;outline:none}
-input:focus,textarea:focus{border-color:var(--gold)}
-textarea{resize:vertical;min-height:96px;line-height:1.7}
-.inv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:9px}
-.inv-card{position:relative;border-radius:12px;overflow:hidden;background:#000;
-  border:1px solid var(--line);aspect-ratio:3/4;cursor:pointer;transition:.15s}
-.inv-card.warn{border-color:var(--amber)}
-.inv-card img{width:100%;height:100%;object-fit:cover;display:block}
-.inv-card .code{position:absolute;top:0;inset-inline-start:0;background:rgba(0,0,0,.75);
-  color:var(--gold2);font-size:10.5px;font-weight:800;padding:3px 7px;
-  border-bottom-left-radius:8px;letter-spacing:.5px}
-.inv-card .warnico{position:absolute;top:3px;inset-inline-end:4px;font-size:13px}
-.inv-card .mv{position:absolute;bottom:0;inset-inline-end:0;background:rgba(0,0,0,.78);
-  color:var(--gold2);font-size:14px;padding:3px 8px;border-top-left-radius:8px}
-.empty{border:1.5px dashed var(--line);border-radius:12px;padding:18px;text-align:center;
-  color:var(--muted);font-size:13px}
-.send-bar{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.send-bar .btn{flex:1;padding:13px;font-size:14px}
-nav{position:fixed;bottom:0;left:0;right:0;z-index:60;
-  background:rgba(10,10,14,.93);backdrop-filter:blur(18px);
-  border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
-.navin{max-width:920px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.navbtn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;
-  border-radius:12px;background:transparent;border:none;color:var(--muted);
-  font-family:inherit;font-size:11px;font-weight:600;cursor:pointer}
-.navbtn .ic{font-size:19px;line-height:1}
-.navbtn.on{color:var(--gold2);background:rgba(212,175,55,.1)}
-.overlay{position:fixed;inset:0;z-index:200;background:rgba(4,4,6,.94);
-  backdrop-filter:blur(10px);display:flex;flex-direction:column;align-items:center;
-  justify-content:center;padding:30px;text-align:center}
-.spinner{width:64px;height:64px;border-radius:50%;border:3px solid rgba(212,175,55,.15);
-  border-top-color:var(--gold);animation:spin .9s linear infinite;margin-bottom:22px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.bar{width:min(340px,80vw);height:5px;background:#1b1b22;border-radius:5px;overflow:hidden;margin-top:16px}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold3),var(--gold2));
-  border-radius:5px;transition:width .3s;width:0}
-.lb{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.96);display:flex;
-  flex-direction:column;padding:14px;gap:12px}
-.lb img{flex:1;min-height:0;object-fit:contain;width:100%;border-radius:12px}
-.lb .lbbar{display:flex;gap:8px;flex-wrap:wrap}
-.lb .lbbar .btn{flex:1;min-width:120px}
-#toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(24px);
-  background:linear-gradient(180deg,var(--gold2),var(--gold));color:#171203;
-  padding:12px 22px;border-radius:40px;font-weight:800;font-size:13.5px;z-index:400;
-  opacity:0;transition:.3s;pointer-events:none;max-width:90vw;text-align:center}
-#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.hidden{display:none!important}
-.hint{font-size:12px;color:var(--muted);line-height:1.8;margin-top:10px}
-.warn-box{background:rgba(255,176,32,.1);border:1px solid rgba(255,176,32,.4);
-  border-radius:12px;padding:10px 12px;font-size:12.5px;color:#ffcc66;margin-top:10px;line-height:1.7}
-/* ✅ الحل: إخفاء مدخلات الملفات بطريقة آمنة (بدون display:none) */
-.sr-inputs{position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
+
+
+/* =====================================================
+   BACKGROUND EFFECT
+===================================================== */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            115deg,
+            transparent 0%,
+            rgba(214,177,82,.035) 35%,
+            transparent 65%
+        );
+
+    z-index:-1;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+
+    width:100%;
+
+    padding:22px 6%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    border-bottom:
+        1px solid
+        rgba(218,183,91,.16);
+
+    background:
+        rgba(7,7,7,.72);
+
+    backdrop-filter:blur(18px);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+}
+
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+}
+
+
+.brand-logo{
+
+    width:52px;
+    height:52px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:25px;
+
+    color:#17120a;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff1a6,
+            #d9b65b 45%,
+            #8d6823
+        );
+
+    box-shadow:
+        0 8px 35px
+        rgba(218,183,91,.22);
+}
+
+
+.brand h1{
+
+    font-size:20px;
+
+    letter-spacing:.5px;
+}
+
+
+.brand p{
+
+    color:#8e8e8e;
+
+    font-size:12px;
+
+    margin-top:4px;
+}
+
+
+.header-badge{
+
+    padding:9px 14px;
+
+    border:1px solid
+        rgba(218,183,91,.25);
+
+    border-radius:30px;
+
+    color:#dabb67;
+
+    font-size:12px;
+
+    background:
+        rgba(218,183,91,.05);
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.container{
+
+    width:min(1100px,92%);
+
+    margin:auto;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+
+    text-align:center;
+
+    padding:
+        75px 15px
+        55px;
+
+    position:relative;
+}
+
+
+.hero-small{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:9px 16px;
+
+    border-radius:30px;
+
+    border:
+        1px solid
+        rgba(218,183,91,.25);
+
+    background:
+        rgba(218,183,91,.055);
+
+    color:#dabb67;
+
+    font-size:12px;
+
+    margin-bottom:22px;
+}
+
+
+.hero h2{
+
+    font-size:
+        clamp(34px,7vw,62px);
+
+    line-height:1.15;
+
+    font-weight:800;
+
+    letter-spacing:-1px;
+
+    background:
+        linear-gradient(
+            120deg,
+            #fff7d0,
+            #dcb968,
+            #fff1a0,
+            #a87d2c
+        );
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+    color:transparent;
+
+    text-shadow:
+        0 10px 50px
+        rgba(218,183,91,.08);
+}
+
+
+.hero-description{
+
+    max-width:650px;
+
+    margin:20px auto 0;
+
+    color:#969696;
+
+    font-size:16px;
+
+    line-height:1.9;
+}
+
+
+/* =====================================================
+   CAMERA BUTTON
+===================================================== */
+
+.camera-button{
+
+    margin:
+        38px auto
+        14px;
+
+    width:
+        min(620px,100%);
+
+    min-height:105px;
+
+    border:none;
+
+    border-radius:25px;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:18px;
+
+    color:#17120a;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff0a4 0%,
+            #dcb85f 40%,
+            #b08430 100%
+        );
+
+    box-shadow:
+        0 20px 60px
+        rgba(218,183,91,.22),
+
+        inset 0 1px 0
+        rgba(255,255,255,.6);
+
+    transition:.25s;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+
+.camera-button::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+
+    height:300px;
+
+    background:
+        rgba(255,255,255,.22);
+
+    transform:
+        rotate(25deg)
+        translateX(-280px);
+
+    transition:.7s;
+}
+
+
+.camera-button:hover::before{
+
+    transform:
+        rotate(25deg)
+        translateX(600px);
+}
+
+
+.camera-button:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 28px 75px
+        rgba(218,183,91,.30);
+}
+
+
+.camera-icon{
+
+    width:60px;
+    height:60px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+        rgba(0,0,0,.12);
+
+    font-size:30px;
+}
+
+
+.camera-text{
+
+    text-align:right;
+}
+
+
+.camera-text strong{
+
+    display:block;
+
+    font-size:21px;
+
+    margin-bottom:5px;
+}
+
+
+.camera-text span{
+
+    font-size:12px;
+
+    opacity:.68;
+}
+
+
+/* =====================================================
+   GALLERY BUTTON
+===================================================== */
+
+.gallery-button{
+
+    width:
+        min(620px,100%);
+
+    min-height:58px;
+
+    border-radius:17px;
+
+    border:
+        1px solid
+        rgba(218,183,91,.25);
+
+    background:
+        rgba(255,255,255,.035);
+
+    color:#ddd;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    transition:.2s;
+}
+
+
+.gallery-button:hover{
+
+    background:
+        rgba(218,183,91,.08);
+
+    border-color:
+        rgba(218,183,91,.45);
+
+    color:#fff;
+}
+
+
+/* =====================================================
+   QUICK INFO
+===================================================== */
+
+.quick-info{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:12px;
+
+    margin:
+        15px auto 0;
+
+    max-width:620px;
+}
+
+
+.quick-card{
+
+    padding:16px 10px;
+
+    border-radius:17px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    background:
+        rgba(255,255,255,.025);
+
+    backdrop-filter:blur(10px);
+}
+
+
+.quick-card b{
+
+    display:block;
+
+    color:#dabb67;
+
+    font-size:18px;
+
+    margin-bottom:5px;
+}
+
+
+.quick-card span{
+
+    color:#777;
+
+    font-size:11px;
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:14px;
+
+    margin:
+        10px 0 25px;
+}
+
+
+.stat{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:22px;
+
+    border-radius:22px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.018)
+        );
+
+    backdrop-filter:blur(16px);
+}
+
+
+.stat::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:90px;
+
+    height:90px;
+
+    background:
+        rgba(218,183,91,.08);
+
+    border-radius:50%;
+
+    top:-35px;
+
+    left:-25px;
+}
+
+
+.stat-number{
+
+    color:#e0c274;
+
+    font-size:30px;
+
+    font-weight:bold;
+}
+
+
+.stat-label{
+
+    color:#858585;
+
+    font-size:12px;
+
+    margin-top:5px;
+}
+
+
+/* =====================================================
+   SECTION
+===================================================== */
+
+.section{
+
+    margin-bottom:25px;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    background:
+        rgba(13,13,13,.78);
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.25);
+
+    backdrop-filter:blur(15px);
+}
+
+
+.section-title{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:22px;
+}
+
+
+.section-title h3{
+
+    font-size:19px;
+}
+
+
+.section-title p{
+
+    color:#777;
+
+    font-size:12px;
+
+    margin-top:5px;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.gold-btn{
+
+    border:none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e4c66f,
+            #a87d2b
+        );
+
+    color:#16120a;
+
+    padding:12px 18px;
+
+    border-radius:13px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    transition:.2s;
+}
+
+
+.gold-btn:hover{
+
+    transform:translateY(-2px);
+}
+
+
+.dark-btn{
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    background:#181818;
+
+    color:#ddd;
+
+    padding:12px 18px;
+
+    border-radius:13px;
+
+    cursor:pointer;
+}
+
+
+/* =====================================================
+   INVOICE GRID
+===================================================== */
+
+.invoice-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fill,minmax(220px,1fr));
+
+    gap:18px;
+}
+
+
+.invoice-card{
+
+    overflow:hidden;
+
+    border-radius:20px;
+
+    background:#151515;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    transition:.25s;
+}
+
+
+.invoice-card:hover{
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(218,183,91,.35);
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.35);
+}
+
+
+.invoice-image-wrap{
+
+    position:relative;
+
+    background:#eaeaea;
+
+    min-height:260px;
+}
+
+
+.invoice-card img{
+
+    width:100%;
+
+    height:260px;
+
+    object-fit:contain;
+
+    display:block;
+}
+
+
+.scan-label{
+
+    position:absolute;
+
+    top:12px;
+
+    right:12px;
+
+    padding:7px 10px;
+
+    border-radius:20px;
+
+    background:
+        rgba(0,0,0,.72);
+
+    color:#e1c16b;
+
+    font-size:10px;
+
+    backdrop-filter:blur(8px);
+}
+
+
+.invoice-info{
+
+    padding:15px;
+}
+
+
+.invoice-number{
+
+    color:#dabb67;
+
+    font-weight:bold;
+
+    font-size:14px;
+}
+
+
+.invoice-actions{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:8px;
+
+    margin-top:12px;
+}
+
+
+.invoice-actions button{
+
+    border:none;
+
+    padding:10px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+}
+
+
+.scan-btn{
+
+    background:#dabb67;
+
+    color:#111;
+}
+
+
+.delete-btn{
+
+    background:#342023;
+
+    color:#ffaaaa;
+}
+
+
+/* =====================================================
+   EMPLOYEES
+===================================================== */
+
+.employee{
+
+    padding:20px;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #181818,
+            #111
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    margin-bottom:15px;
+}
+
+
+.employee-head{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:15px;
+}
+
+
+.employee-name{
+
+    font-size:17px;
+
+    font-weight:bold;
+}
+
+
+.employee-count{
+
+    color:#dabb67;
+
+    font-size:13px;
+}
+
+
+.employee-invoices{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fill,minmax(105px,1fr));
+
+    gap:10px;
+}
+
+
+.employee-invoice{
+
+    background:#0b0b0b;
+
+    border-radius:12px;
+
+    padding:6px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.05);
+}
+
+
+.employee-invoice img{
+
+    width:100%;
+
+    height:120px;
+
+    object-fit:contain;
+
+    background:#eee;
+
+    border-radius:8px;
+}
+
+
+.employee-invoice p{
+
+    text-align:center;
+
+    color:#777;
+
+    font-size:10px;
+
+    padding:7px 0 3px;
+}
+
+
+/* =====================================================
+   SEND
+===================================================== */
+
+.send-section{
+
+    text-align:center;
+
+    padding:35px 25px 45px;
+}
+
+
+.send-section h2{
+
+    font-size:25px;
+
+    margin-bottom:8px;
+}
+
+
+.send-section p{
+
+    color:#777;
+
+    font-size:13px;
+
+    margin-bottom:25px;
+}
+
+
+.send-all{
+
+    width:min(550px,100%);
+
+    min-height:65px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #25d366,
+            #159447
+        );
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 15px 45px
+        rgba(37,211,102,.14);
+
+    transition:.2s;
+}
+
+
+.send-all:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 20px 55px
+        rgba(37,211,102,.22);
+}
+
+
+.send-status{
+
+    margin-top:20px;
+
+    color:#aaa;
+
+    font-size:13px;
+}
+
+
+.send-status p{
+
+    margin:8px 0;
+
+    color:#aaa;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+
+    text-align:center;
+
+    padding:35px 15px 45px;
+
+    color:#4f4f4f;
+
+    font-size:11px;
+}
+
+
+footer span{
+
+    color:#a8893e;
+}
+
+
+/* =====================================================
+   HIDDEN
+===================================================== */
+
+.hidden{
+
+    display:none !important;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:650px){
+
+    .header{
+
+        padding:15px 4%;
+    }
+
+    .header-badge{
+
+        display:none;
+    }
+
+    .hero{
+
+        padding:
+            55px 5px
+            40px;
+    }
+
+    .hero h2{
+
+        font-size:37px;
+    }
+
+    .hero-description{
+
+        font-size:14px;
+    }
+
+    .camera-button{
+
+        min-height:95px;
+
+        border-radius:21px;
+    }
+
+    .camera-icon{
+
+        width:52px;
+        height:52px;
+
+        font-size:25px;
+    }
+
+    .camera-text strong{
+
+        font-size:18px;
+    }
+
+    .stats{
+
+        gap:8px;
+    }
+
+    .stat{
+
+        padding:15px 10px;
+    }
+
+    .stat-number{
+
+        font-size:23px;
+    }
+
+    .stat-label{
+
+        font-size:10px;
+    }
+
+    .section{
+
+        padding:17px;
+
+        border-radius:20px;
+    }
+
+    .section-title{
+
+        align-items:stretch;
+
+        flex-direction:column;
+    }
+
+    .section-title button{
+
+        width:100%;
+    }
+
+    .quick-info{
+
+        gap:7px;
+    }
+
+    .quick-card{
+
+        padding:13px 5px;
+    }
+
+}
+
 </style>
+
 </head>
+
+
 <body>
 
-<div class="wrap">
-  <header>
-    <div class="logo">📋 الفواتير الذكية</div>
-    <div class="tagline"><b>صوّر</b> ← <b>عالج</b> ← <b>قسّم</b> ← <b>راجع</b> ← <b>أرسل</b></div>
-    <div class="goldline"></div>
-  </header>
 
-  <section id="view-home">
-    <div class="card gold">
-      <div class="row">
-        <button type="button" class="btn btn-primary" id="btnCamera">📸 تصوير الفواتير</button>
-        <button type="button" class="btn" id="btnUpload">📁 رفع الصور</button>
-      </div>
-      <div id="fileWarn" class="warn-box hidden">
-        ⚠️ أنت تفتح الملف من ذاكرة الجهاز مباشرة.<br>
-        لتشغيل الكاميرا الحية، ارفع الملف على <b>GitHub Pages</b> أو أي موقع HTTPS.
-      </div>
-      <div class="hint">صوّر كل الفواتير في صورة واحدة أو عدة صور — النظام يكتشف كل فاتورة ويفصلها تلقائيًا.</div>
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="brand">
+
+        <div class="brand-logo">
+            ✦
+        </div>
+
+        <div>
+
+            <h1>
+                Invoice Elite
+            </h1>
+
+            <p>
+                نظام إدارة الفواتير
+            </p>
+
+        </div>
+
     </div>
 
-    <div class="stats">
-      <div class="stat"><div class="v" id="stInv">0</div><div class="k">إجمالي الفواتير</div></div>
-      <div class="stat"><div class="v" id="stEmp">0</div><div class="k">الموظفات</div></div>
-      <div class="stat"><div class="v" id="stReady">0</div><div class="k">جاهزة للإرسال</div></div>
-      <div class="stat"><div class="v" id="stSent">0</div><div class="k">تم الإرسال</div></div>
+
+    <div class="header-badge">
+
+        PREMIUM SYSTEM
+
     </div>
 
-    <div class="card">
-      <div class="sec-title">⚙️ نمط المسح الضوئي</div>
-      <div class="row">
-        <button type="button" class="btn btn-sm" id="modeColor" style="width:100%">🎨 محسّن ملوّن</button>
-        <button type="button" class="btn btn-sm" id="modeBW" style="width:100%">⬛ أبيض وأسود</button>
-      </div>
-      <div class="hint">لا يغيّر أي رقم أو سعر — فقط يحسّن الإضاءة والوضوح.</div>
+</header>
+
+
+
+<main class="container">
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div class="hero-small">
+
+        ✦ نظام الفواتير الذكي
+
     </div>
 
-    <div class="card" id="quickEmps"></div>
-  </section>
 
-  <section id="view-inv" class="hidden">
-    <div class="card gold">
-      <div class="sec-title">🧾 توزيع الفواتير <span class="n" id="invCount"></span></div>
-      <div class="row" style="grid-template-columns:1fr 1fr 1fr">
-        <button type="button" class="btn btn-sm" style="width:100%" id="btnDist">🔄 إعادة التوزيع</button>
-        <button type="button" class="btn btn-sm" style="width:100%" id="btnMode">🔀 تغيير النمط</button>
-        <button type="button" class="btn btn-sm" style="width:100%" id="btnClear">🗑️ مسح الكل</button>
-      </div>
-      <div class="hint" id="distHint"></div>
+    <h2>
+
+        فواتيرك،
+        <br>
+        بطريقة أكثر فخامة.
+
+    </h2>
+
+
+    <p class="hero-description">
+
+        صوّر فواتيرك مباشرة من الكاميرا،
+        حسّن جودتها، ثم وزّعها على الموظفات
+        وأرسلها عبر واتساب بسهولة.
+
+    </p>
+
+
+
+    <!-- CAMERA -->
+
+    <label class="camera-button">
+
+        <div class="camera-icon">
+            📷
+        </div>
+
+        <div class="camera-text">
+
+            <strong>
+                تصوير الفواتير
+            </strong>
+
+            <span>
+                افتح كاميرا الجوال والتقط الفاتورة
+            </span>
+
+        </div>
+
+
+        <input
+            id="cameraInput"
+            type="file"
+            accept="image/*"
+            capture="environment"
+            multiple
+            hidden
+        >
+
+    </label>
+
+
+
+    <!-- GALLERY -->
+
+    <label class="gallery-button">
+
+        🖼️ &nbsp;
+        اختيار الفواتير من المعرض
+
+        <input
+            id="galleryInput"
+            type="file"
+            accept="image/*"
+            multiple
+            hidden
+        >
+
+    </label>
+
+
+
+    <!-- QUICK INFO -->
+
+    <div class="quick-info">
+
+        <div class="quick-card">
+
+            <b>
+                📷
+            </b>
+
+            <span>
+                تصوير مباشر
+            </span>
+
+        </div>
+
+
+        <div class="quick-card">
+
+            <b>
+                ✨
+            </b>
+
+            <span>
+                Scan وتحسين
+            </span>
+
+        </div>
+
+
+        <div class="quick-card">
+
+            <b>
+                📱
+            </b>
+
+            <span>
+                واتساب
+            </span>
+
+        </div>
+
     </div>
 
-    <div id="board"></div>
+</section>
 
-    <div class="card">
-      <div class="sec-title">💬 رسالة واتساب</div>
-      <textarea id="msgBox" placeholder="اكتب الرسالة..."></textarea>
-      <button type="button" class="btn btn-ghost" style="margin-top:10px" id="btnResetMsg">↺ استعادة الافتراضية</button>
+
+
+<!-- =====================================================
+     STATS
+===================================================== -->
+
+<section class="stats">
+
+    <div class="stat">
+
+        <div
+            class="stat-number"
+            id="invoiceCount"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            إجمالي الفواتير
+        </div>
+
     </div>
 
-    <div class="card gold">
-      <button type="button" class="btn btn-green" id="btnSendAll">🟢 إرسال الكل عبر واتساب</button>
-      <div class="hint">يتم إرسال فواتير كل موظفة لها فقط.</div>
+
+    <div class="stat">
+
+        <div class="stat-number">
+            3
+        </div>
+
+        <div class="stat-label">
+            الموظفات
+        </div>
+
     </div>
-  </section>
 
-  <section id="view-emp" class="hidden">
-    <div class="card gold">
-      <div class="sec-title">👩‍💼 الموظفات <span class="n" id="empCount"></span></div>
-      <div id="empList"></div>
-      <button type="button" class="btn btn-ghost" id="btnAddEmp" style="margin-top:6px">＋ إضافة موظفة</button>
-      <div class="hint">تُحفظ الأسماء والأرقام تلقائيًا في المتصفح.</div>
+
+    <div class="stat">
+
+        <div
+            class="stat-number"
+            id="readyCount"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            فواتير جاهزة
+        </div>
+
     </div>
-  </section>
-</div>
 
-<nav>
-  <div class="navin">
-    <button class="navbtn on" data-view="home"><span class="ic">🏠</span>الرئيسية</button>
-    <button class="navbtn" data-view="inv"><span class="ic">🧾</span>الفواتير</button>
-    <button class="navbtn" data-view="emp"><span class="ic">👩‍💼</span>الموظفات</button>
-  </div>
-</nav>
+</section>
 
-<!-- ✅ مدخلات الملفات — بدون display:none، وبدون multiple على الكاميرا -->
-<div class="sr-inputs">
-  <input type="file" id="camInput" accept="image/*" capture="environment">
-  <input type="file" id="galInput" accept="image/*" multiple>
-  <input type="file" id="retakeInput" accept="image/*" capture="environment">
-</div>
 
-<div class="overlay hidden" id="progress">
-  <div class="spinner"></div>
-  <div style="font-size:17px;font-weight:700" id="progTitle">جارٍ المعالجة…</div>
-  <div style="font-size:13px;color:var(--muted);margin-top:8px" id="progSub"></div>
-  <div class="bar"><i id="progBar"></i></div>
-</div>
 
-<div class="lb hidden" id="lightbox">
-  <img id="lbImg" alt="">
-  <div class="lbbar">
-    <button type="button" class="btn btn-ghost" id="lbOriginal">🖼️ الصورة الأصلية</button>
-    <button type="button" class="btn btn-ghost" id="lbDownload">⬇️ تحميل</button>
-    <button type="button" class="btn btn-primary" id="lbClose">✕ إغلاق</button>
-  </div>
-</div>
+<!-- =====================================================
+     INVOICES
+===================================================== -->
 
-<div id="toast"></div>
+<section
+    id="invoiceSection"
+    class="section hidden"
+>
+
+    <div class="section-title">
+
+        <div>
+
+            <h3>
+                🧾 الفواتير
+            </h3>
+
+            <p>
+                راجع الفواتير وحسّنها قبل التوزيع
+            </p>
+
+        </div>
+
+
+        <button
+            id="scanAllBtn"
+            class="gold-btn"
+        >
+
+            ✨ تحسين الكل
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="invoiceGrid"
+        class="invoice-grid"
+    ></div>
+
+</section>
+
+
+
+<!-- =====================================================
+     EMPLOYEES
+===================================================== -->
+
+<section
+    id="employeesSection"
+    class="section hidden"
+>
+
+    <div class="section-title">
+
+        <div>
+
+            <h3>
+                👩‍💼 توزيع الفواتير
+            </h3>
+
+            <p>
+                يتم توزيع الفواتير بالتساوي
+            </p>
+
+        </div>
+
+
+        <button
+            id="redistributeBtn"
+            class="dark-btn"
+        >
+
+            🔄 إعادة التوزيع
+
+        </button>
+
+    </div>
+
+
+    <div id="employees"></div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SEND
+===================================================== -->
+
+<section
+    id="sendSection"
+    class="section send-section hidden"
+>
+
+    <h2>
+        📱 إرسال الفواتير
+    </h2>
+
+    <p>
+        افتح محادثة كل موظفة برسالة جاهزة
+    </p>
+
+
+    <button
+        id="sendAllBtn"
+        class="send-all"
+    >
+
+        🟢 إرسال الكل عبر واتساب
+
+    </button>
+
+
+    <div
+        id="sendStatus"
+        class="send-status"
+    ></div>
+
+</section>
+
+
+</main>
+
+
+
+<footer>
+
+    Invoice Elite
+    <br>
+
+    <span>
+        Smart Invoice Management
+    </span>
+
+</footer>
+
+
 
 <script>
-/* ═══════════════════════════════════════════════════════════════
-   ⚙️  الإعدادات — عدّل هنا
-   ═══════════════════════════════════════════════════════════════ */
-const CONFIG = {
-  // 966 سعودية | 971 إمارات | 965 كويت | 968 عمان | 973 بحرين | 974 قطر | 20 مصر
-  countryCode: '966',
 
-  // 👇 ضع أرقام الموظفات مكان 05XXXXXXXX
-  employees: [
-    { name: 'موزه الكعبي', phone: '05XXXXXXXX' },
-    { name: 'حصه الكعبي',  phone: '05XXXXXXXX' },
-    { name: 'مريم الكعبي', phone: '05XXXXXXXX' }
-  ],
+/* =====================================================
+   الموظفات
+===================================================== */
 
-  defaultMessage:
-`السلام عليكم،
-هذه فواتيرك الخاصة باليوم.
-تم تجهيزها وترتيبها بشكل واضح.
-شكرًا لك 🌷`
-};
-/* ═══════════════════════════════════════════════════════════════ */
+const employees = [
 
-const $  = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
-const uid = () => Math.random().toString(36).slice(2, 10);
-const pad3 = n => String(n).padStart(3, '0');
+    {
+        id:1,
+        name:"موزه الكعبي",
+        phone:"971XXXXXXXXX"
+    },
 
-function toast(msg, ms=2400){
-  const t = $('#toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(t._t);
-  t._t = setTimeout(()=>t.classList.remove('show'), ms);
-}
+    {
+        id:2,
+        name:"حصه الكعبي",
+        phone:"971XXXXXXXXX"
+    },
 
-function normalizePhone(p){
-  let s = String(p||'').replace(/\D/g,'');
-  if(!s) return '';
-  if(s.startsWith('00')) s = s.slice(2);
-  if(s.startsWith('0')) s = CONFIG.countryCode + s.slice(1);
-  else if(!s.startsWith(CONFIG.countryCode) && s.length <= 9) s = CONFIG.countryCode + s;
-  return s;
-}
+    {
+        id:3,
+        name:"مريم الكعبي",
+        phone:"971XXXXXXXXX"
+    }
 
-const LS_EMP = 'smartinv_employees_v3';
-const LS_MSG = 'smartinv_message_v3';
-const LS_MODE = 'smartinv_mode_v3';
+];
 
-const state = {
-  employees: [], invoices: [], sources: {},
-  message: CONFIG.defaultMessage, nextCode: 1, sent: {},
-  distMode: 'sequential', scanMode: 'color', view: 'home', retakeId: null
+
+
+/* =====================================================
+   البيانات
+===================================================== */
+
+let invoices = [];
+
+
+let assignments = {
+
+    1:[],
+    2:[],
+    3:[]
+
 };
 
-function loadSettings(){
-  try{
-    const e = JSON.parse(localStorage.getItem(LS_EMP) || 'null');
-    state.employees = Array.isArray(e) && e.length
-      ? e.map(x=>({ id:x.id||uid(), name:x.name||'', phone:x.phone||'' }))
-      : CONFIG.employees.map(x=>({ id:uid(), name:x.name, phone:x.phone }));
-  }catch(_){
-    state.employees = CONFIG.employees.map(x=>({ id:uid(), name:x.name, phone:x.phone }));
-  }
-  state.message = localStorage.getItem(LS_MSG) || CONFIG.defaultMessage;
-  const md = localStorage.getItem(LS_MODE);
-  if(md === 'bw' || md === 'color') state.scanMode = md;
-}
-function saveEmployees(){ try{ localStorage.setItem(LS_EMP, JSON.stringify(state.employees)); }catch(_){} }
-function saveMessage(){ try{ localStorage.setItem(LS_MSG, state.message); }catch(_){} }
-function saveMode(){ try{ localStorage.setItem(LS_MODE, state.scanMode); }catch(_){} }
 
-/* ═══════════ معالجة الصور ═══════════ */
-function imageToCanvas(img, maxDim){
-  const w0 = img.naturalWidth || img.width, h0 = img.naturalHeight || img.height;
-  if(!w0 || !h0) throw new Error('صورة بدون أبعاد');
-  const s = Math.min(1, maxDim / Math.max(w0, h0));
-  const c = document.createElement('canvas');
-  c.width  = Math.max(1, Math.round(w0 * s));
-  c.height = Math.max(1, Math.round(h0 * s));
-  c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-  return c;
-}
-function otsu(gray){
-  const hist = new Uint32Array(256);
-  for(let i=0;i<gray.length;i++) hist[gray[i]]++;
-  const total = gray.length; let sum = 0;
-  for(let i=0;i<256;i++) sum += i*hist[i];
-  let sumB = 0, wB = 0, best = -1, thr = 128;
-  for(let i=0;i<256;i++){
-    wB += hist[i]; if(!wB) continue;
-    const wF = total - wB; if(!wF) break;
-    sumB += i*hist[i];
-    const mB = sumB/wB, mF = (sum-sumB)/wF;
-    const between = wB*wF*(mB-mF)*(mB-mF);
-    if(between > best){ best = between; thr = i; }
-  }
-  return thr;
-}
-function morph(src, w, h, mode, iter){
-  let cur = src;
-  for(let it=0; it<iter; it++){
-    const out = new Uint8Array(w*h);
-    for(let y=0;y<h;y++){
-      for(let x=0;x<w;x++){
-        const idx = y*w+x;
-        let v = mode === 'erode' ? 1 : 0;
-        outer:
-        for(let dy=-1; dy<=1; dy++){
-          const ny = y+dy; if(ny<0||ny>=h) continue;
-          for(let dx=-1; dx<=1; dx++){
-            const nx = x+dx; if(nx<0||nx>=w) continue;
-            const s = cur[ny*w+nx];
-            if(mode === 'erode'){ if(!s){ v = 0; break outer; } }
-            else { if(s){ v = 1; break outer; } }
-          }
+
+/* =====================================================
+   عناصر الصفحة
+===================================================== */
+
+const cameraInput =
+    document.getElementById(
+        "cameraInput"
+    );
+
+
+const galleryInput =
+    document.getElementById(
+        "galleryInput"
+    );
+
+
+const invoiceGrid =
+    document.getElementById(
+        "invoiceGrid"
+    );
+
+
+
+/* =====================================================
+   استقبال الصور من الكاميرا
+===================================================== */
+
+cameraInput.addEventListener(
+    "change",
+    handleFiles
+);
+
+
+
+/* =====================================================
+   استقبال الصور من المعرض
+===================================================== */
+
+galleryInput.addEventListener(
+    "change",
+    handleFiles
+);
+
+
+
+/* =====================================================
+   معالجة الصور
+===================================================== */
+
+async function handleFiles(event){
+
+    const files =
+        Array.from(
+            event.target.files
+        );
+
+
+    for(
+        const file of files
+    ){
+
+        if(
+            !file.type.startsWith(
+                "image/"
+            )
+        ){
+
+            continue;
+
         }
-        out[idx] = v;
-      }
+
+
+        const image =
+            await fileToDataURL(
+                file
+            );
+
+
+        invoices.push({
+
+            id:
+                invoices.length + 1,
+
+            original:
+                image,
+
+            processed:
+                image,
+
+            scanned:
+                false
+
+        });
+
     }
-    cur = out;
-  }
-  return cur;
+
+
+    renderInvoices();
+
+    distributeInvoices();
+
+
+    event.target.value = "";
+
 }
-function connectedComponents(mask, w, h){
-  const labels = new Int32Array(w*h).fill(-1);
-  const comps = []; const stack = [];
-  for(let i=0;i<w*h;i++){
-    if(!mask[i] || labels[i] !== -1) continue;
-    const id = comps.length; const pts = [];
-    let area = 0, minX = w, maxX = 0, minY = h, maxY = 0;
-    stack.length = 0; stack.push(i); labels[i] = id;
-    while(stack.length){
-      const p = stack.pop(); area++;
-      const x = p % w, y = (p/w)|0;
-      if(x<minX)minX=x; if(x>maxX)maxX=x;
-      if(y<minY)minY=y; if(y>maxY)maxY=y;
-      const isEdge = (x===0||y===0||x===w-1||y===h-1) ||
-                     (x>0 && !mask[p-1]) || (x<w-1 && !mask[p+1]) ||
-                     (y>0 && !mask[p-w]) || (y<h-1 && !mask[p+w]);
-      if(isEdge && pts.length < 12000) pts.push(x, y);
-      for(let dy=-1; dy<=1; dy++){
-        const ny = y+dy; if(ny<0||ny>=h) continue;
-        for(let dx=-1; dx<=1; dx++){
-          if(!dx && !dy) continue;
-          const nx = x+dx; if(nx<0||nx>=w) continue;
-          const q = ny*w + nx;
-          if(mask[q] && labels[q] === -1){ labels[q] = id; stack.push(q); }
+
+
+
+/* =====================================================
+   تحويل الصورة
+===================================================== */
+
+function fileToDataURL(file){
+
+    return new Promise(
+        (resolve,reject)=>{
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                () => resolve(
+                    reader.result
+                );
+
+
+            reader.onerror =
+                reject;
+
+
+            reader.readAsDataURL(
+                file
+            );
+
         }
-      }
-    }
-    comps.push({ id, area, minX, maxX, minY, maxY, pts });
-  }
-  return comps;
-}
-function crossO(o,a,b){ return (a[0]-o[0])*(b[1]-o[1]) - (a[1]-o[1])*(b[0]-o[0]); }
-function convexHull(flat){
-  const n = flat.length >> 1; if(n < 3) return null;
-  const P = new Array(n);
-  for(let i=0;i<n;i++) P[i] = [flat[i*2], flat[i*2+1]];
-  P.sort((a,b)=> a[0]-b[0] || a[1]-b[1]);
-  const U = [], L = [];
-  for(const p of P){
-    while(U.length >= 2 && crossO(U[U.length-2], U[U.length-1], p) <= 0) U.pop();
-    U.push(p);
-  }
-  for(let i=P.length-1;i>=0;i--){
-    const p = P[i];
-    while(L.length >= 2 && crossO(L[L.length-2], L[L.length-1], p) <= 0) L.pop();
-    L.push(p);
-  }
-  U.pop(); L.pop();
-  const hull = U.concat(L);
-  return hull.length >= 3 ? hull : null;
-}
-function minAreaRect(hull){
-  const n = hull.length; if(n < 3) return null;
-  let best = null, bestArea = Infinity;
-  for(let i=0;i<n;i++){
-    const p1 = hull[i], p2 = hull[(i+1)%n];
-    let ex = p2[0]-p1[0], ey = p2[1]-p1[1];
-    const len = Math.hypot(ex, ey); if(len < 1e-6) continue;
-    ex /= len; ey /= len;
-    const px = -ey, py = ex;
-    let minU=Infinity, maxU=-Infinity, minV=Infinity, maxV=-Infinity;
-    for(let j=0;j<n;j++){
-      const dx = hull[j][0]-p1[0], dy = hull[j][1]-p1[1];
-      const u = dx*ex + dy*ey, v = dx*px + dy*py;
-      if(u<minU)minU=u; if(u>maxU)maxU=u;
-      if(v<minV)minV=v; if(v>maxV)maxV=v;
-    }
-    const area = (maxU-minU)*(maxV-minV);
-    if(area < bestArea){
-      bestArea = area;
-      best = [
-        [p1[0]+minU*ex+minV*px, p1[1]+minU*ey+minV*py],
-        [p1[0]+maxU*ex+minV*px, p1[1]+maxU*ey+minV*py],
-        [p1[0]+maxU*ex+maxV*px, p1[1]+maxU*ey+maxV*py],
-        [p1[0]+minU*ex+maxV*px, p1[1]+minU*ey+maxV*py]
-      ];
-    }
-  }
-  return best;
-}
-function orderCorners(pts){
-  let tl = pts[0], tr = pts[0], br = pts[0], bl = pts[0];
-  let minS = Infinity, maxS = -Infinity, minD = Infinity, maxD = -Infinity;
-  for(const q of pts){
-    const s = q[0]+q[1], d = q[1]-q[0];
-    if(s<minS){ minS=s; tl=q; }
-    if(s>maxS){ maxS=s; br=q; }
-    if(d<minD){ minD=d; tr=q; }
-    if(d>maxD){ maxD=d; bl=q; }
-  }
-  return [tl, tr, br, bl];
-}
-function wholeQuad(w,h){ return [[0,0],[w-1,0],[w-1,h-1],[0,h-1]]; }
-function rectsOverlap(a,b){
-  const ax = a.map(p=>p[0]), ay = a.map(p=>p[1]);
-  const bx = b.map(p=>p[0]), by = b.map(p=>p[1]);
-  const ix = Math.max(0, Math.min(Math.max(...ax),Math.max(...bx)) - Math.max(Math.min(...ax),Math.min(...bx)));
-  const iy = Math.max(0, Math.min(Math.max(...ay),Math.max(...by)) - Math.max(Math.min(...ay),Math.min(...by)));
-  const inter = ix*iy;
-  const areaA = (Math.max(...ax)-Math.min(...ax))*(Math.max(...ay)-Math.min(...ay));
-  const areaB = (Math.max(...bx)-Math.min(...bx))*(Math.max(...by)-Math.min(...by));
-  return inter > Math.min(areaA, areaB) * 0.25;
-}
-function unionRect(a,b){
-  const all = a.concat(b);
-  const minX = Math.min(...all.map(p=>p[0])), maxX = Math.max(...all.map(p=>p[0]));
-  const minY = Math.min(...all.map(p=>p[1])), maxY = Math.max(...all.map(p=>p[1]));
-  return [[minX,minY],[maxX,minY],[maxX,maxY],[minX,maxY]];
-}
-function detectQuads(workCanvas){
-  const w = workCanvas.width, h = workCanvas.height, n = w*h;
-  const data = workCanvas.getContext('2d').getImageData(0,0,w,h).data;
-  const gray  = new Uint8Array(n);
-  const mask0 = new Uint8Array(n);
-  for(let i=0;i<n;i++){
-    const r = data[i*4], g = data[i*4+1], b = data[i*4+2];
-    const gr = (r*77 + g*150 + b*29) >> 8;
-    gray[i] = gr;
-    const mx = Math.max(r,g,b), mn = Math.min(r,g,b);
-    const sat = mx === 0 ? 0 : (mx-mn)/mx;
-    mask0[i] = (gr > 60 && sat < 0.5) ? 1 : 0;
-  }
-  const thr = Math.max(70, otsu(gray));
-  for(let i=0;i<n;i++) if(gray[i] < thr) mask0[i] = 0;
+    );
 
-  let m = morph(mask0, w, h, 'erode', 2);
-  m = morph(m, w, h, 'dilate', 2);
-
-  const comps = connectedComponents(m, w, h);
-  const totalArea = n;
-  const quads = [];
-
-  for(const c of comps){
-    if(c.area < totalArea * 0.008) continue;
-    const bw = c.maxX-c.minX+1, bh = c.maxY-c.minY+1;
-    if(bw < 40 || bh < 40) continue;
-    if(bw/bh > 8 || bh/bw > 8) continue;
-    const hull = convexHull(c.pts); if(!hull) continue;
-    const rect = minAreaRect(hull); if(!rect) continue;
-    const ww = Math.hypot(rect[1][0]-rect[0][0], rect[1][1]-rect[0][1]);
-    const hh = Math.hypot(rect[3][0]-rect[0][0], rect[3][1]-rect[0][1]);
-    if(ww*hh < totalArea * 0.008) continue;
-    quads.push(rect);
-  }
-
-  const merged = [];
-  const used = new Array(quads.length).fill(false);
-  for(let i=0;i<quads.length;i++){
-    if(used[i]) continue;
-    let cur = quads[i].map(p=>[p[0],p[1]]);
-    used[i] = true;
-    for(let j=i+1;j<quads.length;j++){
-      if(used[j]) continue;
-      if(rectsOverlap(cur, quads[j])){
-        cur = unionRect(cur, quads[j]);
-        used[j] = true;
-      }
-    }
-    merged.push(cur);
-  }
-  if(!merged.length) return [ wholeQuad(w,h) ];
-  merged.sort((a,b)=> a[0][0]-b[0][0] || a[0][1]-b[0][1] );
-  if(merged.length === 1){
-    const r = merged[0];
-    const ww = Math.hypot(r[1][0]-r[0][0], r[1][1]-r[0][1]);
-    const hh = Math.hypot(r[3][0]-r[0][0], r[3][1]-r[0][1]);
-    if(ww*hh > w*h*0.85) return [ wholeQuad(w,h) ];
-  }
-  return merged;
-}
-function gaussSolve(A, b){
-  const n = b.length;
-  for(let i=0;i<n;i++) A[i].push(b[i]);
-  for(let c=0;c<n;c++){
-    let piv = c;
-    for(let r=c+1;r<n;r++) if(Math.abs(A[r][c]) > Math.abs(A[piv][c])) piv = r;
-    const tmp = A[c]; A[c] = A[piv]; A[piv] = tmp;
-    const pv = A[c][c]; if(Math.abs(pv) < 1e-12) continue;
-    for(let r=0;r<n;r++){
-      if(r === c) continue;
-      const f = A[r][c] / pv; if(!f) continue;
-      for(let k=c;k<=n;k++) A[r][k] -= f * A[c][k];
-    }
-  }
-  const x = new Array(n).fill(0);
-  for(let i=0;i<n;i++) x[i] = Math.abs(A[i][i]) > 1e-12 ? A[i][n]/A[i][i] : 0;
-  return x;
-}
-function perspectiveTransform(src, dst){
-  const A = [], b = [];
-  for(let i=0;i<4;i++){
-    const x = src[i][0], y = src[i][1], u = dst[i][0], v = dst[i][1];
-    A.push([x,y,1,0,0,0,-x*u,-y*u]); b.push(u);
-    A.push([0,0,0,x,y,1,-x*v,-y*v]); b.push(v);
-  }
-  const h = gaussSolve(A, b);
-  return [h[0],h[1],h[2], h[3],h[4],h[5], h[6],h[7],1];
-}
-function inv3(m){
-  const a=m[0],b=m[1],c=m[2],d=m[3],e=m[4],f=m[5],g=m[6],h=m[7],i=m[8];
-  const A = e*i-f*h, B = -(d*i-f*g), C = d*h-e*g;
-  const det = a*A + b*B + c*C;
-  if(Math.abs(det) < 1e-12) return null;
-  const id = 1/det;
-  return [A*id, -(b*i-c*h)*id, (b*f-c*e)*id,
-          B*id,  (a*i-c*g)*id, -(a*f-c*d)*id,
-          C*id, -(a*h-b*g)*id,  (a*e-b*d)*id];
-}
-function warpQuad(srcCanvas, quad, outW, outH){
-  const out = document.createElement('canvas');
-  out.width = outW; out.height = outH;
-  const octx = out.getContext('2d');
-  const sctx = srcCanvas.getContext('2d');
-  const sw = srcCanvas.width, sh = srcCanvas.height;
-  const sd = sctx.getImageData(0,0,sw,sh).data;
-  const dst = [[0,0],[outW-1,0],[outW-1,outH-1],[0,outH-1]];
-  const M  = perspectiveTransform(quad, dst);
-  const Mi = inv3(M); if(!Mi) return srcCanvas;
-  const img = octx.createImageData(outW, outH);
-  const od = img.data;
-  const rowBytes = sw*4;
-  for(let y=0;y<outH;y++){
-    for(let x=0;x<outW;x++){
-      const wq = Mi[6]*x + Mi[7]*y + Mi[8];
-      const sx = (Mi[0]*x + Mi[1]*y + Mi[2]) / wq;
-      const sy = (Mi[3]*x + Mi[4]*y + Mi[5]) / wq;
-      const idx = (y*outW + x) * 4;
-      if(sx < 0 || sy < 0 || sx >= sw-1 || sy >= sh-1){ od[idx+3] = 255; continue; }
-      const x0 = sx|0, y0 = sy|0;
-      const fx = sx-x0, fy = sy-y0;
-      const i00 = (y0*sw+x0)*4, i10 = i00+4, i01 = i00+rowBytes, i11 = i01+4;
-      for(let k=0;k<3;k++){
-        od[idx+k] = sd[i00+k]*(1-fx)*(1-fy) + sd[i10+k]*fx*(1-fy) +
-                    sd[i01+k]*(1-fx)*fy + sd[i11+k]*fx*fy;
-      }
-      od[idx+3] = 255;
-    }
-  }
-  octx.putImageData(img, 0, 0);
-  return out;
-}
-function sharpen(ctx, W, H, k){
-  const id = ctx.getImageData(0,0,W,H);
-  const src = new Uint8ClampedArray(id.data);
-  const d = id.data; const row = W*4;
-  for(let y=1;y<H-1;y++){
-    for(let x=1;x<W-1;x++){
-      const i = (y*W+x)*4;
-      for(let c=0;c<3;c++){
-        d[i+c] = src[i+c]*(1+4*k) - k*(src[i-4+c] + src[i+4+c] + src[i-row+c] + src[i+row+c]);
-      }
-    }
-  }
-  ctx.putImageData(id, 0, 0);
-}
-function enhance(canvas, mode){
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height, n = W*H;
-  const id = ctx.getImageData(0,0,W,H);
-  const d = id.data;
-  const hist = new Uint32Array(256);
-  const lum = new Uint8Array(n);
-  for(let i=0;i<n;i++){
-    const l = (d[i*4]*77 + d[i*4+1]*150 + d[i*4+2]*29) >> 8;
-    lum[i] = l; hist[l]++;
-  }
-  const t = n*0.01;
-  let lo = 0, acc = 0;
-  for(let i=0;i<256;i++){ acc += hist[i]; if(acc >= t){ lo = i; break; } }
-  let hi = 255; acc = 0;
-  for(let i=255;i>=0;i--){ acc += hist[i]; if(acc >= t){ hi = i; break; } }
-  if(hi - lo < 45) hi = Math.min(255, lo+45);
-  const scale = 255 / (hi - lo);
-  const lut = new Uint8Array(256);
-  for(let i=0;i<256;i++){
-    let v = (i - lo) * scale;
-    lut[i] = v < 0 ? 0 : (v > 255 ? 255 : v);
-  }
-  if(mode === 'bw'){
-    for(let i=0;i<n;i++){
-      let v = lut[lum[i]];
-      if(v > 205) v = 255 - (255-v)*0.45;
-      v = 255 * Math.pow(v/255, 1.14);
-      d[i*4] = d[i*4+1] = d[i*4+2] = v;
-    }
-  } else {
-    for(let i=0;i<n;i++){
-      const l = lum[i];
-      if(l < 6){ d[i*4]=d[i*4+1]=d[i*4+2] = lut[l]; continue; }
-      const f = lut[l] / l;
-      let r = d[i*4]*f, g = d[i*4+1]*f, b = d[i*4+2]*f;
-      const avg = (r+g+b)/3, sat = 1.16;
-      r = avg + (r-avg)*sat; g = avg + (g-avg)*sat; b = avg + (b-avg)*sat;
-      d[i*4]   = r > 255 ? 255 : r < 0 ? 0 : r;
-      d[i*4+1] = g > 255 ? 255 : g < 0 ? 0 : g;
-      d[i*4+2] = b > 255 ? 255 : b < 0 ? 0 : b;
-    }
-  }
-  ctx.putImageData(id, 0, 0);
-  sharpen(ctx, W, H, mode === 'bw' ? 0.42 : 0.3);
-}
-function blurScore(canvas){
-  const s = Math.min(1, 260/Math.max(canvas.width, canvas.height));
-  const c = document.createElement('canvas');
-  c.width  = Math.max(4, Math.round(canvas.width*s));
-  c.height = Math.max(4, Math.round(canvas.height*s));
-  const ctx = c.getContext('2d');
-  ctx.drawImage(canvas, 0, 0, c.width, c.height);
-  const d = ctx.getImageData(0,0,c.width,c.height).data;
-  const w = c.width, h = c.height;
-  const g = new Float32Array(w*h);
-  for(let i=0;i<w*h;i++) g[i] = d[i*4]*0.299 + d[i*4+1]*0.587 + d[i*4+2]*0.114;
-  let sum = 0, sum2 = 0, cnt = 0;
-  for(let y=1;y<h-1;y++){
-    for(let x=1;x<w-1;x++){
-      const i = y*w+x;
-      const l = 4*g[i] - g[i-1] - g[i+1] - g[i-w] - g[i+w];
-      sum += l; sum2 += l*l; cnt++;
-    }
-  }
-  if(!cnt) return 999;
-  const mean = sum/cnt;
-  return sum2/cnt - mean*mean;
-}
-function makeThumb(canvas, size){
-  const s = Math.min(1, size/Math.max(canvas.width, canvas.height));
-  const c = document.createElement('canvas');
-  c.width  = Math.max(1, Math.round(canvas.width*s));
-  c.height = Math.max(1, Math.round(canvas.height*s));
-  c.getContext('2d').drawImage(canvas, 0, 0, c.width, c.height);
-  return c.toDataURL('image/jpeg', 0.72);
-}
-function fileToImage(file){
-  return new Promise((res, rej)=>{
-    const url = URL.createObjectURL(file);
-    const img = new Image();
-    const timeout = setTimeout(()=>{
-      URL.revokeObjectURL(url);
-      rej(new Error('انتهت مهلة تحميل الصورة'));
-    }, 20000);
-    img.onload = () => { clearTimeout(timeout); res({ img, url }); };
-    img.onerror = () => { clearTimeout(timeout); URL.revokeObjectURL(url); rej(new Error('صيغة صورة غير مدعومة')); };
-    img.src = url;
-  });
 }
 
-async function processOneImage(file){
-  const { img, url } = await fileToImage(file);
-  const work = imageToCanvas(img, 800);
-  const full = imageToCanvas(img, 1600);
-  const srcId = uid();
-  state.sources[srcId] = full.toDataURL('image/jpeg', 0.85);
-  const scale = full.width / work.width;
-  const quads = detectQuads(work);
-  let added = 0;
-  for(let qi=0; qi<quads.length; qi++){
-    try {
-      const qf = quads[qi].map(p => [p[0]*scale, p[1]*scale]);
-      const [tl,tr,br,bl] = orderCorners(qf);
-      const wTop = Math.hypot(tr[0]-tl[0], tr[1]-tl[1]);
-      const wBot = Math.hypot(br[0]-bl[0], br[1]-bl[1]);
-      const hLft = Math.hypot(bl[0]-tl[0], bl[1]-tl[1]);
-      const hRgt = Math.hypot(br[0]-tr[0], br[1]-tr[1]);
-      let outW = Math.round(Math.max(wTop, wBot));
-      let outH = Math.round(Math.max(hLft, hRgt));
-      if(outW < 60 || outH < 60) continue;
-      outW = Math.min(outW, 1400); outH = Math.min(outH, 1400);
-      const cx = (tl[0]+tr[0]+br[0]+bl[0])/4;
-      const cy = (tl[1]+tr[1]+br[1]+bl[1])/4;
-      const E = 1.022;
-      const quad = [tl,tr,br,bl].map(p => [cx + (p[0]-cx)*E, cy + (p[1]-cy)*E]);
-      const warped = warpQuad(full, quad, outW, outH);
-      enhance(warped, state.scanMode);
-      const bs = blurScore(warped);
-      state.invoices.push({
-        id: uid(), code: pad3(state.nextCode++),
-        dataUrl: warped.toDataURL('image/jpeg', 0.9),
-        thumb: makeThumb(warped, 320),
-        blur: bs, employeeId: null, srcId
-      });
-      added++;
-    } catch(e){ console.warn('خطأ فاتورة:', e); }
-  }
-  if(added === 0){
-    try {
-      const warped = full;
-      enhance(warped, state.scanMode);
-      state.invoices.push({
-        id: uid(), code: pad3(state.nextCode++),
-        dataUrl: warped.toDataURL('image/jpeg', 0.9),
-        thumb: makeThumb(warped, 320),
-        blur: blurScore(warped), employeeId: null, srcId
-      });
-      added++;
-    } catch(e){ console.warn('فشل الاحتياطي:', e); }
-  }
-  URL.revokeObjectURL(url);
-  return added;
-}
 
-async function processFiles(files){
-  const list = Array.from(files || []).filter(f => f && f.type && f.type.startsWith('image/'));
-  if(!list.length){ toast('⚠️ لم يتم اختيار صور'); return; }
-  showProgress(true, 'جارٍ المعالجة…', `0 من ${list.length}`, 0);
-  try {
-    for(let i=0; i<list.length; i++){
-      setProgress('جارٍ المعالجة…', `الصورة ${i+1} من ${list.length}`, (i/list.length)*100);
-      try { await processOneImage(list[i]); }
-      catch(err){ console.error('فشل معالجة صورة:', err); }
-      await new Promise(r => setTimeout(r, 30));
+
+/* =====================================================
+   عرض الفواتير
+===================================================== */
+
+function renderInvoices(){
+
+    invoiceGrid.innerHTML = "";
+
+
+    invoices.forEach(
+        invoice => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "invoice-card";
+
+
+            card.innerHTML = `
+
+                <div class="invoice-image-wrap">
+
+                    <img
+                        src="${invoice.processed}"
+                    >
+
+                    ${
+                        invoice.scanned
+                        ?
+                        `<div class="scan-label">
+                            ✓ Scan محسّن
+                        </div>`
+                        :
+                        ""
+                    }
+
+                </div>
+
+
+                <div class="invoice-info">
+
+                    <div class="invoice-number">
+
+                        فاتورة
+                        ${String(invoice.id)
+                            .padStart(3,"0")}
+
+                    </div>
+
+
+                    <div class="invoice-actions">
+
+                        <button
+                            class="scan-btn"
+                            onclick="
+                                scanInvoice(
+                                    ${invoice.id}
+                                )
+                            "
+                        >
+
+                            ✨ Scan
+
+                        </button>
+
+
+                        <button
+                            class="delete-btn"
+                            onclick="
+                                deleteInvoice(
+                                    ${invoice.id}
+                                )
+                            "
+                        >
+
+                            حذف
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            invoiceGrid.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    updateStats();
+
+
+    if(
+        invoices.length > 0
+    ){
+
+        document
+            .getElementById(
+                "invoiceSection"
+            )
+            .classList.remove(
+                "hidden"
+            );
+
+
+        document
+            .getElementById(
+                "employeesSection"
+            )
+            .classList.remove(
+                "hidden"
+            );
+
+
+        document
+            .getElementById(
+                "sendSection"
+            )
+            .classList.remove(
+                "hidden"
+            );
+
     }
-    if(!state.invoices.length){
-      toast('⚠️ لم يتم استخراج فواتير — جرّب صورة أوضح');
-      return;
+
+}
+
+
+
+/* =====================================================
+   Scan فاتورة
+===================================================== */
+
+function scanInvoice(id){
+
+    const invoice =
+        invoices.find(
+            item =>
+                item.id === id
+        );
+
+
+    if(!invoice){
+        return;
     }
-    autoDistribute();
-    go('inv');
-    toast(`✅ تم تجهيز ${state.invoices.length} فاتورة`);
-  } catch(err){
-    console.error('خطأ فادح:', err);
-    alert('⚠️ حدث خطأ:\n' + err.message);
-  } finally {
-    showProgress(false);
-  }
+
+
+    processScan(
+        invoice
+    );
+
 }
 
-function showProgress(on, title, sub, pct){
-  $('#progress').classList.toggle('hidden', !on);
-  if(on){
-    $('#progTitle').textContent = title||'';
-    $('#progSub').textContent = sub||'';
-    $('#progBar').style.width = (pct||0)+'%';
-  }
-}
-function setProgress(title, sub, pct){
-  $('#progTitle').textContent = title || '';
-  $('#progSub').textContent = sub || '';
-  $('#progBar').style.width = (pct||0) + '%';
+
+
+/* =====================================================
+   تحسين Scan
+===================================================== */
+
+function processScan(invoice){
+
+    const img =
+        new Image();
+
+
+    img.onload =
+        function(){
+
+            const canvas =
+                document.createElement(
+                    "canvas"
+                );
+
+
+            const ctx =
+                canvas.getContext(
+                    "2d"
+                );
+
+
+            canvas.width =
+                img.width;
+
+
+            canvas.height =
+                img.height;
+
+
+            /*
+               تحسين مظهر الصورة
+            */
+
+            ctx.filter =
+                "contrast(1.18) " +
+                "brightness(1.05) " +
+                "saturate(0.72)";
+
+
+            ctx.drawImage(
+                img,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+            invoice.processed =
+                canvas.toDataURL(
+                    "image/jpeg",
+                    .93
+                );
+
+
+            invoice.scanned =
+                true;
+
+
+            renderInvoices();
+
+            distributeInvoices();
+
+        };
+
+
+    img.src =
+        invoice.original;
+
 }
 
-/* ═══════════ الواجهة ═══════════ */
-function go(view){
-  state.view = view;
-  $('#view-home').classList.toggle('hidden', view !== 'home');
-  $('#view-inv').classList.toggle('hidden', view !== 'inv');
-  $('#view-emp').classList.toggle('hidden', view !== 'emp');
-  $$('.navbtn').forEach(b => b.classList.toggle('on', b.dataset.view === view));
-  window.scrollTo({ top:0, behavior:'smooth' });
-  render();
-}
-function autoDistribute(){
-  const emps = state.employees;
-  if(!emps.length){ state.invoices.forEach(i => i.employeeId = null); return; }
-  const n = emps.length, invs = state.invoices, total = invs.length;
-  if(state.distMode === 'round'){
-    invs.forEach((inv,i) => inv.employeeId = emps[i % n].id);
-  } else {
-    const base = Math.floor(total/n), rem = total % n;
-    let idx = 0;
-    for(let e=0;e<n;e++){
-      const cnt = base + (e < rem ? 1 : 0);
-      for(let k=0;k<cnt;k++) if(idx < total) invs[idx++].employeeId = emps[e].id;
+
+
+/* =====================================================
+   Scan الكل
+===================================================== */
+
+document
+    .getElementById(
+        "scanAllBtn"
+    )
+    .addEventListener(
+        "click",
+        function(){
+
+            invoices.forEach(
+                invoice => {
+
+                    processScan(
+                        invoice
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+
+/* =====================================================
+   حذف
+===================================================== */
+
+function deleteInvoice(id){
+
+    invoices =
+        invoices.filter(
+            invoice =>
+                invoice.id !== id
+        );
+
+
+    invoices.forEach(
+        (invoice,index) => {
+
+            invoice.id =
+                index + 1;
+
+        }
+    );
+
+
+    renderInvoices();
+
+    distributeInvoices();
+
+
+    if(
+        invoices.length === 0
+    ){
+
+        document
+            .getElementById(
+                "invoiceSection"
+            )
+            .classList.add(
+                "hidden"
+            );
+
+
+        document
+            .getElementById(
+                "employeesSection"
+            )
+            .classList.add(
+                "hidden"
+            );
+
+
+        document
+            .getElementById(
+                "sendSection"
+            )
+            .classList.add(
+                "hidden"
+            );
+
     }
-  }
-  state.sent = {};
-}
-function statusOf(empId){
-  const invs = state.invoices.filter(i => i.employeeId === empId);
-  if(!invs.length) return { key:'none', txt:'— لا فواتير —', cls:'pill' };
-  if(state.sent[empId]) return { key:'sent', txt:'🟢 تم الإرسال', cls:'pill green' };
-  return { key:'ready', txt:'🟡 جاهز للإرسال', cls:'pill amber' };
-}
-function esc(s){ return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-function render(){
-  const total = state.invoices.length;
-  const sentCount = state.employees.reduce((a,e) => a + (state.sent[e.id] ? state.invoices.filter(i=>i.employeeId===e.id).length : 0), 0);
-  $('#stInv').textContent   = total;
-  $('#stEmp').textContent   = state.employees.length;
-  $('#stReady').textContent = total - sentCount;
-  $('#stSent').textContent  = sentCount;
+}
 
-  $('#quickEmps').innerHTML =
-    `<div class="sec-title">👩‍💼 الموظفات <span class="n">${state.employees.length}</span></div>` +
-    (state.employees.length
-      ? state.employees.map((e,i) => `
-        <div class="emp-row">
-          <div class="avatar">${['👩','👩‍🦰','👩‍🦱','👩‍🦳'][i%4]}</div>
-          <div class="emp-info">
-            <div class="emp-name">${esc(e.name)}</div>
-            <div class="emp-phone">${esc(e.phone || 'لم يُضف رقم')}</div>
-          </div>
-          <span class="pill gold">${state.invoices.filter(v=>v.employeeId===e.id).length} فاتورة</span>
-        </div>`).join('')
-      : '<div class="empty">لا توجد موظفات</div>');
 
-  renderBoard();
-  renderEmployees();
-  $('#msgBox').value = state.message;
-  $('#distHint').textContent = state.distMode === 'sequential'
-    ? 'النمط الحالي: توزيع متتابع (001، 002 للموظفة الأولى… إلخ)'
-    : 'النمط الحالي: توزيع بالتناوب (واحدة لكل موظفة)';
-  $('#invCount').textContent = total ? `${total} فاتورة` : '';
+
+/* =====================================================
+   توزيع الفواتير
+===================================================== */
+
+function distributeInvoices(){
+
+    assignments = {
+
+        1:[],
+        2:[],
+        3:[]
+
+    };
+
+
+    invoices.forEach(
+        (invoice,index) => {
+
+            const employee =
+                employees[
+                    index %
+                    employees.length
+                ];
+
+
+            assignments[
+                employee.id
+            ].push(
+                invoice
+            );
+
+        }
+    );
+
+
+    renderEmployees();
+
 }
-function invCard(inv){
-  const unclear = inv.blur < 55;
-  return `<div class="inv-card ${unclear?'warn':''}" draggable="true" data-inv="${inv.id}">
-    <img src="${inv.thumb}" alt="">
-    <span class="code">${inv.code}</span>
-    ${unclear ? '<span class="warnico">⚠️</span>' : ''}
-    <span class="mv">↔</span>
-  </div>`;
-}
-function renderBoard(){
-  const board = $('#board');
-  if(!state.invoices.length){
-    board.innerHTML = `<div class="card"><div class="empty">لا توجد فواتير بعد.<br>اذهب للرئيسية وصوّر الفواتير 📸</div></div>`;
-    return;
-  }
-  const unassigned = state.invoices.filter(i => !i.employeeId || !state.employees.some(e=>e.id===i.employeeId));
-  let html = '';
-  if(unassigned.length){
-    html += `<div class="card" style="border-color:var(--amber)">
-      <div class="sec-title">⚠️ غير موزعة <span class="n">${unassigned.length}</span></div>
-      <div class="inv-grid">${unassigned.map(invCard).join('')}</div>
-    </div>`;
-  }
-  state.employees.forEach(emp => {
-    const invs = state.invoices.filter(i => i.employeeId === emp.id);
-    const st = statusOf(emp.id);
-    html += `
-      <div class="card">
-        <div class="sec-title">
-          <span class="avatar" style="width:30px;height:30px;flex:0 0 30px;font-size:15px">👩</span>
-          ${esc(emp.name)}
-          <span class="pill gold" style="margin-inline-start:auto">${invs.length} فاتورة</span>
-        </div>
-        <div class="inv-grid" data-drop="${emp.id}">
-          ${invs.length ? invs.map(invCard).join('') : '<div class="empty" style="grid-column:1/-1">لا فواتير</div>'}
-        </div>
-        <div class="send-bar">
-          <button type="button" class="btn ${st.key==='sent'?'btn-ghost':'btn-green'}" data-send="${emp.id}">
-            ${st.key === 'sent' ? '🟢 إعادة الإرسال' : '🟢 إرسال إلى ' + esc(emp.name.split(' ')[0])}
-          </button>
-          <span class="${st.cls}" style="display:flex;align-items:center;padding:0 12px">${st.txt}</span>
-        </div>
-      </div>`;
-  });
-  board.innerHTML = html;
-}
+
+
+
+/* =====================================================
+   عرض الموظفات
+===================================================== */
+
 function renderEmployees(){
-  const list = $('#empList');
-  $('#empCount').textContent = state.employees.length;
-  if(!state.employees.length){ list.innerHTML = '<div class="empty">لا توجد موظفات</div>'; return; }
-  list.innerHTML = state.employees.map((e,i) => `
-    <div class="emp-row">
-      <div class="avatar">${['👩','👩‍🦰','👩‍🦱','👩‍🦳'][i%4]}</div>
-      <div class="emp-info">
-        <input type="text" value="${esc(e.name)}" data-ename="${e.id}" placeholder="الاسم">
-        <input type="tel" value="${esc(e.phone)}" data-ephone="${e.id}" placeholder="05XXXXXXXX" style="margin-top:6px;direction:ltr;text-align:left">
-      </div>
-      <button type="button" class="btn btn-ghost btn-sm" data-edel="${e.id}" style="width:100%;margin-top:8px;color:var(--red)">حذف</button>
-    </div>`).join('');
+
+    const container =
+        document.getElementById(
+            "employees"
+        );
+
+
+    container.innerHTML = "";
+
+
+    employees.forEach(
+        employee => {
+
+            const list =
+                assignments[
+                    employee.id
+                ] || [];
+
+
+            const box =
+                document.createElement(
+                    "div"
+                );
+
+
+            box.className =
+                "employee";
+
+
+            box.innerHTML = `
+
+                <div class="employee-head">
+
+                    <div class="employee-name">
+
+                        👩‍💼
+                        ${employee.name}
+
+                    </div>
+
+
+                    <div class="employee-count">
+
+                        ${list.length}
+                        فاتورة
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="employee-invoices"
+                >
+
+                    ${
+                        list.length === 0
+                        ?
+
+                        `<div
+                            style="
+                                color:#555;
+                                padding:15px;
+                                font-size:12px;
+                            "
+                        >
+                            لا توجد فواتير
+                        </div>`
+
+                        :
+
+                        list.map(
+                            invoice => `
+
+                                <div
+                                    class="employee-invoice"
+                                >
+
+                                    <img
+                                        src="${invoice.processed}"
+                                    >
+
+                                    <p>
+                                        فاتورة
+                                        ${String(
+                                            invoice.id
+                                        ).padStart(
+                                            3,
+                                            "0"
+                                        )}
+                                    </p>
+
+                                </div>
+
+                            `
+                        ).join("")
+
+                    }
+
+                </div>
+
+
+                <button
+
+                    class="gold-btn"
+
+                    style="
+                        width:100%;
+                        margin-top:15px;
+                    "
+
+                    onclick="
+                        sendEmployee(
+                            ${employee.id}
+                        )
+                    "
+                >
+
+                    📱 إرسال للموظفة
+
+                </button>
+
+            `;
+
+
+            container.appendChild(
+                box
+            );
+
+        }
+    );
+
 }
 
-/* ═══════════ واتساب ═══════════ */
-function dataUrlToFile(dataUrl, filename){
-  const [head, body] = dataUrl.split(',');
-  const mime = (head.match(/:(.*?);/) || [,'image/jpeg'])[1];
-  const bin = atob(body);
-  const arr = new Uint8Array(bin.length);
-  for(let i=0;i<bin.length;i++) arr[i] = bin.charCodeAt(i);
-  return new File([arr], filename, { type: mime });
+
+
+/* =====================================================
+   إعادة التوزيع
+===================================================== */
+
+document
+    .getElementById(
+        "redistributeBtn"
+    )
+    .addEventListener(
+        "click",
+        distributeInvoices
+    );
+
+
+
+/* =====================================================
+   إرسال موظفة واحدة
+===================================================== */
+
+function sendEmployee(
+    employeeId
+){
+
+    const employee =
+        employees.find(
+            item =>
+                item.id === employeeId
+        );
+
+
+    const list =
+        assignments[
+            employeeId
+        ] || [];
+
+
+    if(
+        list.length === 0
+    ){
+
+        alert(
+            "لا توجد فواتير لهذه الموظفة."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        employee.phone.includes(
+            "X"
+        )
+    ){
+
+        alert(
+            "أضف رقم واتساب للموظفة أولاً."
+        );
+
+        return;
+
+    }
+
+
+    const message =
+
+        `السلام عليكم ${employee.name}،\n` +
+
+        `هذه فواتيرك الخاصة باليوم.\n` +
+
+        `عدد الفواتير: ${list.length}`;
+
+
+    const url =
+
+        `https://wa.me/` +
+
+        `${employee.phone}` +
+
+        `?text=` +
+
+        encodeURIComponent(
+            message
+        );
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+
 }
-function downloadFile(file){
-  const url = URL.createObjectURL(file);
-  const a = document.createElement('a');
-  a.href = url; a.download = file.name;
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 4000);
-}
-async function sendToEmployee(empId){
-  const emp = state.employees.find(e => e.id === empId);
-  if(!emp) return false;
-  const invs = state.invoices.filter(i => i.employeeId === empId);
-  if(!invs.length){ toast('لا توجد فواتير لهذه الموظفة'); return false; }
-  const phone = normalizePhone(emp.phone);
-  const msg = state.message;
-  const files = invs.map(inv => dataUrlToFile(inv.dataUrl, `فاتورة-${inv.code}.jpg`));
-  if(navigator.canShare && navigator.canShare({ files })){
-    try{
-      await navigator.share({ files, text: msg });
-      state.sent[empId] = true; render();
-      toast(`🟢 تم تجهيز فواتير ${emp.name}`);
-      return true;
-    }catch(err){ if(err && err.name === 'AbortError') return false; }
-  }
-  files.forEach(f => downloadFile(f));
-  const text = encodeURIComponent(msg + '\n\n' + invs.map(i=>`🧾 فاتورة ${i.code}`).join('\n'));
-  const url = phone ? `https://wa.me/${phone}?text=${text}` : `https://wa.me/?text=${text}`;
-  await new Promise(r => setTimeout(r, 700));
-  window.open(url, '_blank');
-  state.sent[empId] = true; render();
-  toast('⬇️ تم تحميل الصور — أرفقها في واتساب');
-  return true;
-}
+
+
+
+/* =====================================================
+   إرسال الكل
+===================================================== */
+
 async function sendAll(){
-  const emps = state.employees.filter(e => state.invoices.some(i => i.employeeId === e.id));
-  if(!emps.length){ toast('لا توجد فواتير موزعة'); return; }
-  for(const e of emps){
-    await sendToEmployee(e.id);
-    await new Promise(r => setTimeout(r, 900));
-  }
+
+    const status =
+        document.getElementById(
+            "sendStatus"
+        );
+
+
+    status.innerHTML = "";
+
+
+    for(
+        const employee
+        of employees
+    ){
+
+        const list =
+            assignments[
+                employee.id
+            ] || [];
+
+
+        if(
+            list.length === 0
+        ){
+
+            continue;
+
+        }
+
+
+        if(
+            employee.phone.includes(
+                "X"
+            )
+        ){
+
+            status.innerHTML += `
+
+                <p>
+                    ⚠️ ${employee.name}:
+                    أضف رقم واتساب
+                </p>
+
+            `;
+
+            continue;
+
+        }
+
+
+        status.innerHTML += `
+
+            <p>
+                🟢 ${employee.name}
+                — ${list.length} فاتورة
+            </p>
+
+        `;
+
+
+        const message =
+
+            `السلام عليكم ${employee.name}،\n` +
+
+            `هذه فواتيرك الخاصة باليوم.\n` +
+
+            `عدد الفواتير: ${list.length}`;
+
+
+        const url =
+
+            `https://wa.me/` +
+
+            `${employee.phone}` +
+
+            `?text=` +
+
+            encodeURIComponent(
+                message
+            );
+
+
+        window.open(
+            url,
+            "_blank"
+        );
+
+
+        await wait(
+            1500
+        );
+
+    }
+
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   ✅ الأحداث — الجزء المُصلَّح
-   ═══════════════════════════════════════════════════════════════ */
-$$('.navbtn').forEach(b => b.addEventListener('click', () => go(b.dataset.view)));
 
-/* 🔧 ربط الأزرار بالمدخلات بشكل صريح عبر onclick */
-const camInput = document.getElementById('camInput');
-const galInput = document.getElementById('galInput');
 
-document.getElementById('btnCamera').addEventListener('click', function(e){
-  e.preventDefault();
-  e.stopPropagation();
-  camInput.value = '';
-  camInput.click();
-});
-document.getElementById('btnUpload').addEventListener('click', function(e){
-  e.preventDefault();
-  e.stopPropagation();
-  galInput.value = '';
-  galInput.click();
-});
+/* =====================================================
+   زر إرسال الكل
+===================================================== */
 
-camInput.addEventListener('change', function(){
-  const files = this.files;
-  if(files && files.length) processFiles(files);
-});
-galInput.addEventListener('change', function(){
-  const files = this.files;
-  if(files && files.length) processFiles(files);
-});
+document
+    .getElementById(
+        "sendAllBtn"
+    )
+    .addEventListener(
+        "click",
+        sendAll
+    );
 
-$('#retakeInput').addEventListener('change', async function(){
-  const file = this.files && this.files[0];
-  this.value = '';
-  if(!file || !state.retakeId) return;
-  const inv = state.invoices.find(i => i.id === state.retakeId);
-  if(!inv) return;
-  showProgress(true, 'إعادة تصوير…', 'معالجة الصورة الجديدة', 20);
-  try{
-    const { img, url } = await fileToImage(file);
-    const work = imageToCanvas(img, 800);
-    const full = imageToCanvas(img, 1600);
-    const scale = full.width / work.width;
-    const quads = detectQuads(work);
-    const q = quads[0];
-    const qf = q.map(p => [p[0]*scale, p[1]*scale]);
-    const [tl,tr,br,bl] = orderCorners(qf);
-    const outW = Math.min(1400, Math.round(Math.max(Math.hypot(tr[0]-tl[0],tr[1]-tl[1]), Math.hypot(br[0]-bl[0],br[1]-bl[1]))));
-    const outH = Math.min(1400, Math.round(Math.max(Math.hypot(bl[0]-tl[0],bl[1]-tl[1]), Math.hypot(br[0]-tr[0],br[1]-tr[1]))));
-    const warped = warpQuad(full, [tl,tr,br,bl], outW, outH);
-    enhance(warped, state.scanMode);
-    inv.dataUrl = warped.toDataURL('image/jpeg', 0.9);
-    inv.thumb   = makeThumb(warped, 320);
-    inv.blur    = blurScore(warped);
-    URL.revokeObjectURL(url);
-    toast('✅ تم تحديث الفاتورة ' + inv.code);
-  }catch(e){ toast('تعذّرت المعالجة'); }
-  showProgress(false);
-  state.retakeId = null;
-  render();
-});
 
-$('#btnDist').addEventListener('click', () => { autoDistribute(); render(); toast('🔄 تم إعادة التوزيع'); });
-$('#btnMode').addEventListener('click', () => {
-  state.distMode = state.distMode === 'sequential' ? 'round' : 'sequential';
-  autoDistribute(); render();
-  toast(state.distMode === 'sequential' ? 'توزيع متتابع' : 'توزيع بالتناوب');
-});
-$('#btnClear').addEventListener('click', () => {
-  if(!confirm('سيتم مسح جميع الفواتير. متابعة؟')) return;
-  state.invoices = []; state.sources = {}; state.sent = {}; state.nextCode = 1;
-  render(); toast('🗑️ تم المسح');
-});
 
-function updateModeButtons(){
-  $('#modeColor').classList.toggle('btn-primary', state.scanMode === 'color');
-  $('#modeBW').classList.toggle('btn-primary', state.scanMode === 'bw');
+/* =====================================================
+   انتظار
+===================================================== */
+
+function wait(ms){
+
+    return new Promise(
+        resolve =>
+            setTimeout(
+                resolve,
+                ms
+            )
+    );
+
 }
-$('#modeColor').addEventListener('click', () => { state.scanMode='color'; saveMode(); updateModeButtons(); toast('🎨 نمط محسّن ملوّن'); });
-$('#modeBW').addEventListener('click',    () => { state.scanMode='bw';    saveMode(); updateModeButtons(); toast('⬛ نمط أبيض وأسود'); });
 
-$('#btnAddEmp').addEventListener('click', () => {
-  state.employees.push({ id: uid(), name: 'موظفة جديدة', phone: '' });
-  saveEmployees(); render();
-});
-$('#empList').addEventListener('input', e => {
-  const t = e.target;
-  if(t.dataset.ename){
-    const emp = state.employees.find(x => x.id === t.dataset.ename);
-    if(emp){ emp.name = t.value; saveEmployees(); }
-  }
-  if(t.dataset.ephone){
-    const emp = state.employees.find(x => x.id === t.dataset.ephone);
-    if(emp){ emp.phone = t.value; saveEmployees(); }
-  }
-});
-$('#empList').addEventListener('click', e => {
-  const btn = e.target.closest('[data-edel]');
-  if(!btn) return;
-  if(!confirm('حذف هذه الموظفة؟')) return;
-  const id = btn.dataset.edel;
-  state.employees = state.employees.filter(x => x.id !== id);
-  state.invoices.forEach(i => { if(i.employeeId === id) i.employeeId = null; });
-  saveEmployees(); render();
-});
-$('#msgBox').addEventListener('input', e => { state.message = e.target.value; saveMessage(); });
-$('#btnResetMsg').addEventListener('click', () => {
-  state.message = CONFIG.defaultMessage; saveMessage(); render(); toast('↺ تمت الاستعادة');
-});
-$('#btnSendAll').addEventListener('click', sendAll);
 
-document.addEventListener('click', e => {
-  const sendBtn = e.target.closest('[data-send]');
-  if(sendBtn){ sendToEmployee(sendBtn.dataset.send); return; }
-  const mv = e.target.closest('.mv');
-  if(mv){
-    e.stopPropagation();
-    const card = mv.closest('[data-inv]');
-    if(!card) return;
-    const inv = state.invoices.find(i => i.id === card.dataset.inv);
-    if(!inv || !state.employees.length) return;
-    const ids = state.employees.map(e => e.id);
-    const cur = ids.indexOf(inv.employeeId);
-    inv.employeeId = ids[(cur + 1) % ids.length];
-    state.sent[inv.employeeId] = false;
-    const emp = state.employees.find(e => e.id === inv.employeeId);
-    render();
-    toast(`↔️ الفاتورة ${inv.code} → ${emp ? emp.name : '—'}`);
-    return;
-  }
-  const card = e.target.closest('[data-inv]');
-  if(card){
-    const inv = state.invoices.find(i => i.id === card.dataset.inv);
-    if(inv) openLightbox(inv);
-  }
-});
 
-let dragId = null;
-document.addEventListener('dragstart', e => {
-  const card = e.target.closest('[data-inv]');
-  if(!card) return;
-  dragId = card.dataset.inv;
-  e.dataTransfer.effectAllowed = 'move';
-  try{ e.dataTransfer.setData('text/plain', dragId); }catch(_){}
-});
-document.addEventListener('dragover', e => {
-  const zone = e.target.closest('[data-drop]');
-  if(!zone) return;
-  e.preventDefault();
-});
-document.addEventListener('drop', e => {
-  const zone = e.target.closest('[data-drop]');
-  if(!zone) return;
-  e.preventDefault();
-  const id = dragId || e.dataTransfer.getData('text/plain');
-  const inv = state.invoices.find(i => i.id === id);
-  if(!inv) return;
-  inv.employeeId = zone.dataset.drop;
-  state.sent[inv.employeeId] = false;
-  render();
-  toast('↔️ تم النقل');
-});
+/* =====================================================
+   الإحصائيات
+===================================================== */
 
-let lbInv = null, lbShowOrig = false;
-function openLightbox(inv){
-  lbInv = inv; lbShowOrig = false;
-  $('#lbImg').src = inv.dataUrl;
-  $('#lightbox').classList.remove('hidden');
-  $('#lbOriginal').textContent = '🖼️ الصورة الأصلية';
+function updateStats(){
+
+    document
+        .getElementById(
+            "invoiceCount"
+        )
+        .textContent =
+        invoices.length;
+
+
+    document
+        .getElementById(
+            "readyCount"
+        )
+        .textContent =
+
+        invoices.filter(
+            invoice =>
+                invoice.scanned
+        ).length;
+
 }
-function closeLightbox(){
-  $('#lightbox').classList.add('hidden');
-  lbInv = null;
-}
-$('#lbClose').addEventListener('click', closeLightbox);
-$('#lbOriginal').addEventListener('click', () => {
-  if(!lbInv) return;
-  lbShowOrig = !lbShowOrig;
-  $('#lbImg').src = lbShowOrig ? (state.sources[lbInv.srcId] || lbInv.dataUrl) : lbInv.dataUrl;
-  $('#lbOriginal').textContent = lbShowOrig ? '✨ الصورة المحسّنة' : '🖼️ الصورة الأصلية';
-});
-$('#lbDownload').addEventListener('click', () => {
-  if(!lbInv) return;
-  downloadFile(dataUrlToFile(lbInv.dataUrl, `فاتورة-${lbInv.code}.jpg`));
-  toast('⬇️ تم التحميل');
-});
 
-/* ═══════════ تشغيل ═══════════ */
-loadSettings();
-updateModeButtons();
-render();
-
-/* تحذير عند فتح الملف محلياً */
-if(location.protocol === 'file:'){
-  document.getElementById('fileWarn').classList.remove('hidden');
-}
 </script>
+
 </body>
 </html>
