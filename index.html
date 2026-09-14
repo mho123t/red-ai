@@ -1,945 +1,1209 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Invoice Elite | الفواتير الذكية</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Invoice Elite | الفواتير الذكية
+</title>
 
 <style>
 
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+box-sizing:border-box;
+margin:0;
+padding:0;
 }
 
 :root{
-    --gold:#d9b65b;
-    --gold2:#f4df91;
-    --gold3:#8e6927;
-    --black:#050505;
-    --card:#111111;
-    --card2:#171717;
-    --text:#ffffff;
-    --muted:#858585;
-    --green:#25d366;
+
+--gold:#d9b65b;
+--gold2:#f4df91;
+--gold3:#8e6927;
+
+--black:#050505;
+--card:#111111;
+--card2:#171717;
+
+--text:#ffffff;
+--muted:#858585;
+
+--green:#25d366;
+
 }
 
 body{
-    min-height:100vh;
-    background:
-        radial-gradient(
-            circle at 50% -15%,
-            #3a2b12 0,
-            #171209 20%,
-            #090909 48%,
-            #030303 100%
-        );
-    color:var(--text);
-    font-family:
-        Tahoma,
-        Arial,
-        sans-serif;
+
+min-height:100vh;
+
+background:
+radial-gradient(
+circle at 50% -15%,
+#3a2b12 0,
+#171209 20%,
+#090909 48%,
+#030303 100%
+);
+
+color:var(--text);
+
+font-family:
+Tahoma,
+Arial,
+sans-serif;
+
 }
 
 button,
 label{
-    -webkit-tap-highlight-color:transparent;
+
+-webkit-tap-highlight-color:
+transparent;
+
 }
 
 button{
-    font-family:inherit;
+
+font-family:inherit;
+
 }
 
 .hidden{
-    display:none !important;
+
+display:none!important;
+
 }
-
-
-/* =========================================
-   الخلفية الذهبية
-========================================= */
 
 body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    background:
-        linear-gradient(
-            125deg,
-            transparent 25%,
-            rgba(217,182,91,.025),
-            transparent 70%
-        );
+
+content:"";
+
+position:fixed;
+
+inset:0;
+
+pointer-events:none;
+
+background:
+linear-gradient(
+125deg,
+transparent 25%,
+rgba(217,182,91,.025),
+transparent 70%
+);
+
 }
 
 
-/* =========================================
-   HEADER
-========================================= */
+/* =========================
+HEADER
+========================= */
 
 .header{
-    position:sticky;
-    top:0;
-    z-index:1000;
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+position:sticky;
 
-    padding:16px 5%;
+top:0;
 
-    background:
-        rgba(5,5,5,.82);
+z-index:1000;
 
-    border-bottom:
-        1px solid
-        rgba(217,182,91,.15);
+display:flex;
 
-    backdrop-filter:blur(20px);
+justify-content:space-between;
+
+align-items:center;
+
+padding:16px 5%;
+
+background:
+rgba(5,5,5,.82);
+
+border-bottom:
+1px solid
+rgba(217,182,91,.15);
+
+backdrop-filter:
+blur(20px);
+
 }
 
 .brand{
-    display:flex;
-    align-items:center;
-    gap:13px;
+
+display:flex;
+
+align-items:center;
+
+gap:13px;
+
 }
 
 .brand-logo{
-    width:50px;
-    height:50px;
 
-    border-radius:16px;
+width:50px;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+height:50px;
 
-    color:#17120a;
+border-radius:16px;
 
-    font-size:25px;
-    font-weight:bold;
+display:flex;
 
-    background:
-        linear-gradient(
-            145deg,
-            #fff1a4,
-            #d9b65b 45%,
-            #88631e
-        );
+justify-content:center;
 
-    box-shadow:
-        0 8px 35px
-        rgba(217,182,91,.22);
+align-items:center;
+
+color:#17120a;
+
+font-size:25px;
+
+font-weight:bold;
+
+background:
+linear-gradient(
+145deg,
+#fff1a4,
+#d9b65b 45%,
+#88631e
+);
+
+box-shadow:
+0 8px 35px
+rgba(217,182,91,.22);
+
 }
 
 .brand-title{
-    font-size:19px;
-    font-weight:bold;
+
+font-size:19px;
+
+font-weight:bold;
+
 }
 
 .brand-subtitle{
-    color:#777;
-    font-size:11px;
-    margin-top:4px;
+
+color:#777;
+
+font-size:11px;
+
+margin-top:4px;
+
 }
 
 .premium{
-    padding:8px 13px;
-    border-radius:30px;
 
-    color:var(--gold);
+padding:8px 13px;
 
-    border:
-        1px solid
-        rgba(217,182,91,.25);
+border-radius:30px;
 
-    background:
-        rgba(217,182,91,.05);
+color:var(--gold);
 
-    font-size:10px;
+border:
+1px solid
+rgba(217,182,91,.25);
+
+background:
+rgba(217,182,91,.05);
+
+font-size:10px;
+
 }
 
 
-/* =========================================
-   MAIN
-========================================= */
+/* =========================
+CONTAINER
+========================= */
 
 .container{
-    width:min(1100px,92%);
-    margin:auto;
+
+width:min(1100px,92%);
+
+margin:auto;
+
 }
 
 
-/* =========================================
-   HERO
-========================================= */
+/* =========================
+HERO
+========================= */
 
 .hero{
-    text-align:center;
-    padding:70px 10px 45px;
+
+text-align:center;
+
+padding:
+70px 10px 45px;
+
 }
 
 .hero-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
 
-    padding:9px 16px;
+display:inline-flex;
 
-    border-radius:30px;
+align-items:center;
 
-    color:var(--gold2);
+gap:8px;
 
-    border:
-        1px solid
-        rgba(217,182,91,.25);
+padding:
+9px 16px;
 
-    background:
-        rgba(217,182,91,.05);
+border-radius:30px;
 
-    font-size:11px;
+color:var(--gold2);
 
-    margin-bottom:22px;
+border:
+1px solid
+rgba(217,182,91,.25);
+
+background:
+rgba(217,182,91,.05);
+
+font-size:11px;
+
+margin-bottom:22px;
+
 }
 
 .hero h1{
-    font-size:
-        clamp(38px,8vw,70px);
 
-    line-height:1.08;
+font-size:
+clamp(38px,8vw,70px);
 
-    font-weight:900;
+line-height:1.08;
 
-    background:
-        linear-gradient(
-            120deg,
-            #fff7cf,
-            #d9b65b,
-            #fff0a0,
-            #9b752b
-        );
+font-weight:900;
 
-    -webkit-background-clip:text;
-    background-clip:text;
+background:
+linear-gradient(
+120deg,
+#fff7cf,
+#d9b65b,
+#fff0a0,
+#9b752b
+);
 
-    color:transparent;
+-webkit-background-clip:text;
 
-    letter-spacing:-2px;
+background-clip:text;
+
+color:transparent;
+
+letter-spacing:-2px;
+
 }
 
 .hero-description{
-    max-width:650px;
-    margin:20px auto;
 
-    color:#8c8c8c;
+max-width:650px;
 
-    font-size:15px;
+margin:
+20px auto;
 
-    line-height:1.9;
+color:#8c8c8c;
+
+font-size:15px;
+
+line-height:1.9;
+
 }
 
 
-/* =========================================
-   CAMERA BUTTON
-========================================= */
+/* =========================
+CAMERA
+========================= */
 
 .camera-label{
-    position:relative;
 
-    width:min(650px,100%);
-    min-height:115px;
+position:relative;
 
-    margin:32px auto 12px;
+width:min(650px,100%);
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+min-height:115px;
 
-    gap:18px;
+margin:
+32px auto 12px;
 
-    cursor:pointer;
+display:flex;
 
-    color:#17120a;
+justify-content:center;
 
-    border-radius:27px;
+align-items:center;
 
-    background:
-        linear-gradient(
-            135deg,
-            #fff0a1,
-            #d9b65b 45%,
-            #a17628
-        );
+gap:18px;
 
-    box-shadow:
-        0 20px 70px
-        rgba(217,182,91,.22),
+cursor:pointer;
 
-        inset 0 1px 0
-        rgba(255,255,255,.7);
+color:#17120a;
 
-    overflow:hidden;
+border-radius:27px;
 
-    transition:.25s;
+background:
+linear-gradient(
+135deg,
+#fff0a1,
+#d9b65b 45%,
+#a17628
+);
+
+box-shadow:
+0 20px 70px
+rgba(217,182,91,.22),
+
+inset 0 1px 0
+rgba(255,255,255,.7);
+
+overflow:hidden;
+
+transition:.25s;
+
 }
 
 .camera-label:hover{
-    transform:translateY(-4px);
 
-    box-shadow:
-        0 27px 80px
-        rgba(217,182,91,.30);
+transform:
+translateY(-4px);
+
+box-shadow:
+0 27px 80px
+rgba(217,182,91,.30);
+
 }
 
 .camera-icon{
-    width:65px;
-    height:65px;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+width:65px;
 
-    border-radius:20px;
+height:65px;
 
-    background:
-        rgba(0,0,0,.12);
+display:flex;
 
-    font-size:31px;
+justify-content:center;
+
+align-items:center;
+
+border-radius:20px;
+
+background:
+rgba(0,0,0,.12);
+
+font-size:31px;
+
 }
 
 .camera-title{
-    text-align:right;
+
+text-align:right;
+
 }
 
 .camera-title strong{
-    display:block;
-    font-size:22px;
-    margin-bottom:6px;
+
+display:block;
+
+font-size:22px;
+
+margin-bottom:6px;
+
 }
 
 .camera-title span{
-    font-size:11px;
-    opacity:.68;
+
+font-size:11px;
+
+opacity:.68;
+
 }
 
 
-/* =========================================
-   GALLERY
-========================================= */
+/* =========================
+GALLERY
+========================= */
 
 .gallery-label{
-    display:block;
 
-    width:min(650px,100%);
+display:block;
 
-    margin:auto;
+width:min(650px,100%);
 
-    padding:17px;
+margin:auto;
 
-    border-radius:17px;
+padding:17px;
 
-    border:
-        1px solid
-        rgba(217,182,91,.25);
+border-radius:17px;
 
-    background:
-        rgba(255,255,255,.035);
+border:
+1px solid
+rgba(217,182,91,.25);
 
-    color:#ccc;
+background:
+rgba(255,255,255,.035);
 
-    cursor:pointer;
+color:#ccc;
 
-    font-size:14px;
+cursor:pointer;
 
-    transition:.2s;
+font-size:14px;
+
+transition:.2s;
+
 }
 
 .gallery-label:hover{
-    background:
-        rgba(217,182,91,.08);
 
-    color:#fff;
+background:
+rgba(217,182,91,.08);
+
+color:#fff;
+
 }
 
 
-/* =========================================
-   QUICK FEATURES
-========================================= */
+/* =========================
+QUICK
+========================= */
 
 .quick{
-    display:grid;
 
-    grid-template-columns:
-        repeat(3,1fr);
+display:grid;
 
-    gap:10px;
+grid-template-columns:
+repeat(3,1fr);
 
-    max-width:650px;
+gap:10px;
 
-    margin:18px auto 0;
+max-width:650px;
+
+margin:
+18px auto 0;
+
 }
 
 .quick-item{
-    padding:15px 8px;
 
-    border-radius:17px;
+padding:15px 8px;
 
-    background:
-        rgba(255,255,255,.025);
+border-radius:17px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.06);
+background:
+rgba(255,255,255,.025);
+
+border:
+1px solid
+rgba(255,255,255,.06);
+
 }
 
 .quick-icon{
-    color:var(--gold);
-    font-size:19px;
-    margin-bottom:5px;
+
+color:var(--gold);
+
+font-size:19px;
+
+margin-bottom:5px;
+
 }
 
 .quick-item span{
-    display:block;
-    color:#777;
-    font-size:10px;
+
+display:block;
+
+color:#777;
+
+font-size:10px;
+
 }
 
 
-/* =========================================
-   STATS
-========================================= */
+/* =========================
+STATS
+========================= */
 
 .stats{
-    display:grid;
 
-    grid-template-columns:
-        repeat(3,1fr);
+display:grid;
 
-    gap:13px;
+grid-template-columns:
+repeat(3,1fr);
 
-    margin-bottom:25px;
+gap:13px;
+
+margin-bottom:25px;
+
 }
 
 .stat{
-    position:relative;
-    overflow:hidden;
 
-    padding:22px;
+position:relative;
 
-    border-radius:21px;
+overflow:hidden;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.055),
-            rgba(255,255,255,.015)
-        );
+padding:22px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.07);
+border-radius:21px;
 
-    backdrop-filter:blur(15px);
+background:
+linear-gradient(
+145deg,
+rgba(255,255,255,.055),
+rgba(255,255,255,.015)
+);
+
+border:
+1px solid
+rgba(255,255,255,.07);
+
+backdrop-filter:
+blur(15px);
+
 }
 
 .stat-number{
-    color:var(--gold2);
-    font-size:29px;
-    font-weight:bold;
+
+color:var(--gold2);
+
+font-size:29px;
+
+font-weight:bold;
+
 }
 
 .stat-label{
-    color:#777;
-    font-size:11px;
-    margin-top:5px;
+
+color:#777;
+
+font-size:11px;
+
+margin-top:5px;
+
 }
 
 
-/* =========================================
-   SECTION
-========================================= */
+/* =========================
+SECTIONS
+========================= */
 
 .section{
-    padding:24px;
 
-    margin-bottom:24px;
+padding:24px;
 
-    border-radius:24px;
+margin-bottom:24px;
 
-    background:
-        rgba(12,12,12,.82);
+border-radius:24px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.07);
+background:
+rgba(12,12,12,.82);
 
-    box-shadow:
-        0 20px 70px
-        rgba(0,0,0,.25);
+border:
+1px solid
+rgba(255,255,255,.07);
 
-    backdrop-filter:blur(16px);
+box-shadow:
+0 20px 70px
+rgba(0,0,0,.25);
+
+backdrop-filter:
+blur(16px);
+
 }
 
 .section-head{
-    display:flex;
 
-    justify-content:space-between;
-    align-items:center;
+display:flex;
 
-    gap:15px;
+justify-content:space-between;
 
-    margin-bottom:22px;
+align-items:center;
+
+gap:15px;
+
+margin-bottom:22px;
+
 }
 
 .section-title{
-    font-size:19px;
+
+font-size:19px;
+
 }
 
 .section-description{
-    color:#666;
-    font-size:11px;
-    margin-top:5px;
+
+color:#666;
+
+font-size:11px;
+
+margin-top:5px;
+
 }
 
-
-/* =========================================
-   BUTTONS
-========================================= */
-
 .gold-button{
-    border:none;
 
-    padding:12px 18px;
+border:none;
 
-    border-radius:12px;
+padding:12px 18px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #e5c875,
-            #a77c29
-        );
+border-radius:12px;
 
-    color:#151109;
+background:
+linear-gradient(
+135deg,
+#e5c875,
+#a77c29
+);
 
-    font-weight:bold;
+color:#151109;
 
-    cursor:pointer;
+font-weight:bold;
+
+cursor:pointer;
+
 }
 
 .dark-button{
-    border:
-        1px solid
-        rgba(255,255,255,.1);
 
-    background:#181818;
+border:
+1px solid
+rgba(255,255,255,.1);
 
-    color:#ddd;
+background:#181818;
 
-    padding:12px 18px;
+color:#ddd;
 
-    border-radius:12px;
+padding:12px 18px;
 
-    cursor:pointer;
+border-radius:12px;
+
+cursor:pointer;
+
 }
 
 
-/* =========================================
-   INVOICE GRID
-========================================= */
+/* =========================
+INVOICES
+========================= */
 
 .invoice-grid{
-    display:grid;
 
-    grid-template-columns:
-        repeat(auto-fill,minmax(220px,1fr));
+display:grid;
 
-    gap:18px;
+grid-template-columns:
+repeat(
+auto-fill,
+minmax(220px,1fr)
+);
+
+gap:18px;
+
 }
 
 .invoice-card{
-    overflow:hidden;
 
-    background:#151515;
+overflow:hidden;
 
-    border:
-        1px solid
-        rgba(255,255,255,.07);
+background:#151515;
 
-    border-radius:20px;
+border:
+1px solid
+rgba(255,255,255,.07);
 
-    transition:.25s;
+border-radius:20px;
+
+transition:.25s;
+
 }
 
 .invoice-card:hover{
-    transform:translateY(-4px);
 
-    border-color:
-        rgba(217,182,91,.3);
+transform:
+translateY(-4px);
+
+border-color:
+rgba(217,182,91,.3);
+
 }
 
 .invoice-image{
-    position:relative;
 
-    background:#eee;
+position:relative;
+
+background:#eee;
+
 }
 
 .invoice-image img{
-    width:100%;
-    height:270px;
 
-    display:block;
+width:100%;
 
-    object-fit:contain;
+height:270px;
+
+display:block;
+
+object-fit:contain;
+
 }
 
 .scanned{
-    position:absolute;
 
-    top:10px;
-    right:10px;
+position:absolute;
 
-    padding:6px 9px;
+top:10px;
 
-    border-radius:20px;
+right:10px;
 
-    background:
-        rgba(0,0,0,.75);
+padding:6px 9px;
 
-    color:#e5c875;
+border-radius:20px;
 
-    font-size:10px;
+background:
+rgba(0,0,0,.75);
+
+color:#e5c875;
+
+font-size:10px;
+
 }
 
 .invoice-content{
-    padding:15px;
+
+padding:15px;
+
 }
 
 .invoice-number{
-    color:var(--gold);
-    font-weight:bold;
-    font-size:13px;
+
+color:var(--gold);
+
+font-weight:bold;
+
+font-size:13px;
+
 }
 
 .invoice-actions{
-    display:grid;
 
-    grid-template-columns:
-        1fr 1fr;
+display:grid;
 
-    gap:8px;
+grid-template-columns:
+1fr 1fr;
 
-    margin-top:12px;
+gap:8px;
+
+margin-top:12px;
+
 }
 
 .invoice-actions button{
-    border:none;
 
-    padding:10px;
+border:none;
 
-    border-radius:10px;
+padding:10px;
 
-    cursor:pointer;
+border-radius:10px;
 
-    font-weight:bold;
+cursor:pointer;
+
+font-weight:bold;
+
 }
 
 .scan{
-    background:var(--gold);
-    color:#111;
+
+background:var(--gold);
+
+color:#111;
+
 }
 
 .delete{
-    background:#321f21;
-    color:#ffaaaa;
+
+background:#321f21;
+
+color:#ffaaaa;
+
 }
 
 
-/* =========================================
-   EMPLOYEE
-========================================= */
+/* =========================
+EMPLOYEES
+========================= */
 
 .employee{
-    padding:20px;
 
-    margin-bottom:14px;
+padding:20px;
 
-    border-radius:20px;
+margin-bottom:14px;
 
-    background:
-        linear-gradient(
-            145deg,
-            #191919,
-            #101010
-        );
+border-radius:20px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.07);
+background:
+linear-gradient(
+145deg,
+#191919,
+#101010
+);
+
+border:
+1px solid
+rgba(255,255,255,.07);
+
 }
 
 .employee-head{
-    display:flex;
 
-    justify-content:space-between;
+display:flex;
 
-    align-items:center;
+justify-content:space-between;
 
-    margin-bottom:15px;
+align-items:center;
+
+margin-bottom:15px;
+
 }
 
 .employee-name{
-    font-size:16px;
-    font-weight:bold;
+
+font-size:16px;
+
+font-weight:bold;
+
 }
 
 .employee-count{
-    color:var(--gold);
-    font-size:12px;
+
+color:var(--gold);
+
+font-size:12px;
+
+}
+
+.employee-phone{
+
+color:#666;
+
+font-size:10px;
+
+margin-top:5px;
+
 }
 
 .employee-grid{
-    display:grid;
 
-    grid-template-columns:
-        repeat(auto-fill,minmax(105px,1fr));
+display:grid;
 
-    gap:9px;
+grid-template-columns:
+repeat(
+auto-fill,
+minmax(105px,1fr)
+);
+
+gap:9px;
+
 }
 
 .employee-invoice{
-    background:#080808;
 
-    border-radius:11px;
+background:#080808;
 
-    padding:6px;
+border-radius:11px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.05);
+padding:6px;
+
+border:
+1px solid
+rgba(255,255,255,.05);
+
 }
 
 .employee-invoice img{
-    width:100%;
-    height:115px;
 
-    object-fit:contain;
+width:100%;
 
-    background:#eee;
+height:115px;
 
-    border-radius:7px;
+object-fit:contain;
+
+background:#eee;
+
+border-radius:7px;
+
 }
 
 .employee-invoice p{
-    text-align:center;
 
-    color:#666;
+text-align:center;
 
-    font-size:9px;
+color:#666;
 
-    padding:7px 0 3px;
+font-size:9px;
+
+padding:
+7px 0 3px;
+
 }
 
 .employee-send{
-    width:100%;
 
-    margin-top:14px;
+width:100%;
 
-    padding:13px;
+margin-top:14px;
 
-    border:none;
+padding:13px;
 
-    border-radius:12px;
+border:none;
 
-    background:
-        linear-gradient(
-            135deg,
-            #e4c66f,
-            #a57928
-        );
+border-radius:12px;
 
-    color:#151109;
+background:
+linear-gradient(
+135deg,
+#e4c66f,
+#a57928
+);
 
-    font-weight:bold;
+color:#151109;
 
-    cursor:pointer;
+font-weight:bold;
+
+cursor:pointer;
+
 }
 
 
-/* =========================================
-   SEND AREA
-========================================= */
+/* =========================
+SEND
+========================= */
 
 .send-area{
-    text-align:center;
 
-    padding:35px 20px 40px;
+text-align:center;
+
+padding:
+35px 20px 40px;
+
 }
 
 .send-area h2{
-    margin-bottom:8px;
+
+margin-bottom:8px;
+
 }
 
 .send-area p{
-    color:#777;
 
-    font-size:12px;
+color:#777;
 
-    margin-bottom:22px;
+font-size:12px;
+
+margin-bottom:22px;
+
 }
 
 .send-all{
-    width:min(550px,100%);
 
-    min-height:65px;
+width:min(550px,100%);
 
-    border:none;
+min-height:65px;
 
-    border-radius:18px;
+border:none;
 
-    background:
-        linear-gradient(
-            135deg,
-            #25d366,
-            #148a42
-        );
+border-radius:18px;
 
-    color:white;
+background:
+linear-gradient(
+135deg,
+#25d366,
+#148a42
+);
 
-    font-size:17px;
+color:white;
 
-    font-weight:bold;
+font-size:17px;
 
-    cursor:pointer;
+font-weight:bold;
 
-    box-shadow:
-        0 18px 50px
-        rgba(37,211,102,.13);
+cursor:pointer;
+
+box-shadow:
+0 18px 50px
+rgba(37,211,102,.13);
+
 }
 
 .send-status{
-    margin-top:18px;
+
+margin-top:18px;
+
 }
 
 .send-status div{
-    padding:10px;
 
-    margin:6px 0;
+padding:10px;
 
-    border-radius:10px;
+margin:6px 0;
 
-    background:#151515;
+border-radius:10px;
 
-    color:#aaa;
+background:#151515;
 
-    font-size:12px;
+color:#aaa;
+
+font-size:12px;
+
 }
 
 
-/* =========================================
-   FOOTER
-========================================= */
+/* =========================
+FOOTER
+========================= */
 
 footer{
-    text-align:center;
 
-    padding:30px;
+text-align:center;
 
-    color:#444;
+padding:30px;
 
-    font-size:10px;
+color:#444;
+
+font-size:10px;
+
 }
 
 footer b{
-    color:#8c6b2d;
+
+color:#8c6b2d;
+
 }
 
 
-/* =========================================
-   MOBILE
-========================================= */
+/* =========================
+MOBILE
+========================= */
 
 @media(max-width:650px){
 
-    .header{
-        padding:13px 4%;
-    }
+.header{
 
-    .premium{
-        display:none;
-    }
+padding:
+13px 4%;
 
-    .hero{
-        padding:55px 5px 38px;
-    }
+}
 
-    .hero h1{
-        font-size:42px;
-    }
+.premium{
 
-    .hero-description{
-        font-size:13px;
-    }
+display:none;
 
-    .camera-label{
-        min-height:100px;
-        border-radius:22px;
-    }
+}
 
-    .camera-icon{
-        width:55px;
-        height:55px;
-        font-size:26px;
-    }
+.hero{
 
-    .camera-title strong{
-        font-size:18px;
-    }
+padding:
+55px 5px 38px;
 
-    .camera-title span{
-        font-size:9px;
-    }
+}
 
-    .stats{
-        gap:7px;
-    }
+.hero h1{
 
-    .stat{
-        padding:15px 8px;
-    }
+font-size:42px;
 
-    .stat-number{
-        font-size:23px;
-    }
+}
 
-    .stat-label{
-        font-size:9px;
-    }
+.hero-description{
 
-    .section{
-        padding:16px;
-    }
+font-size:13px;
 
-    .section-head{
-        flex-direction:column;
-        align-items:stretch;
-    }
+}
 
-    .section-head button{
-        width:100%;
-    }
+.camera-label{
 
-    .quick{
-        gap:6px;
-    }
+min-height:100px;
 
-    .quick-item{
-        padding:12px 4px;
-    }
+border-radius:22px;
+
+}
+
+.camera-icon{
+
+width:55px;
+
+height:55px;
+
+font-size:26px;
+
+}
+
+.camera-title strong{
+
+font-size:18px;
+
+}
+
+.camera-title span{
+
+font-size:9px;
+
+}
+
+.stats{
+
+gap:7px;
+
+}
+
+.stat{
+
+padding:
+15px 8px;
+
+}
+
+.stat-number{
+
+font-size:23px;
+
+}
+
+.stat-label{
+
+font-size:9px;
+
+}
+
+.section{
+
+padding:16px;
+
+}
+
+.section-head{
+
+flex-direction:column;
+
+align-items:stretch;
+
+}
+
+.section-head button{
+
+width:100%;
+
+}
+
+.quick{
+
+gap:6px;
+
+}
+
+.quick-item{
+
+padding:
+12px 4px;
+
+}
 
 }
 
@@ -951,344 +1215,345 @@ footer b{
 <body>
 
 
-<!-- =========================================
-     HEADER
-========================================= -->
-
 <header class="header">
 
-    <div class="brand">
+<div class="brand">
 
-        <div class="brand-logo">
-            ✦
-        </div>
+<div class="brand-logo">
+✦
+</div>
 
-        <div>
+<div>
 
-            <div class="brand-title">
-                Invoice Elite
-            </div>
+<div class="brand-title">
+Invoice Elite
+</div>
 
-            <div class="brand-subtitle">
-                نظام إدارة الفواتير الذكي
-            </div>
+<div class="brand-subtitle">
+نظام إدارة الفواتير الذكي
+</div>
 
-        </div>
+</div>
 
-    </div>
+</div>
 
 
-    <div class="premium">
-        PREMIUM
-    </div>
+<div class="premium">
+PREMIUM
+</div>
 
 </header>
-
 
 
 <main class="container">
 
 
-<!-- =========================================
-     الصفحة الرئيسية
-========================================= -->
-
 <section class="hero">
 
-    <div class="hero-badge">
-        ✦ نظام الفواتير الذكي
-    </div>
+
+<div class="hero-badge">
+
+✦ نظام الفواتير الذكي
+
+</div>
 
 
-    <h1>
-        فواتيرك<br>
-        بشكل أذكى.
-    </h1>
+<h1>
+
+فواتيرك
+<br>
+بشكل أذكى.
+
+</h1>
 
 
-    <p class="hero-description">
+<p class="hero-description">
 
-        صوّر الفواتير مباشرة من كاميرا الجوال،
-        حسّنها، وزّعها على الموظفات،
-        ثم شارك الصور عبر واتساب.
+صوّر الفواتير مباشرة من كاميرا الجوال،
+حسّنها، وزّعها على الموظفات،
+ثم شارك الصور عبر واتساب.
 
-    </p>
-
-
-
-    <!-- زر الكاميرا -->
-
-    <label class="camera-label">
-
-        <div class="camera-icon">
-            📷
-        </div>
+</p>
 
 
-        <div class="camera-title">
-
-            <strong>
-                تصوير الفواتير
-            </strong>
-
-            <span>
-                اضغط هنا لفتح كاميرا الجوال
-            </span>
-
-        </div>
+<label class="camera-label">
 
 
-        <input
-            id="cameraInput"
-            type="file"
-            accept="image/*"
-            capture="environment"
-            multiple
-            hidden
-        >
+<div class="camera-icon">
 
-    </label>
+📷
+
+</div>
 
 
+<div class="camera-title">
 
-    <!-- المعرض -->
+<strong>
 
-    <label class="gallery-label">
+تصوير الفواتير
 
-        🖼️
-        اختيار الفواتير من المعرض
-
-        <input
-            id="galleryInput"
-            type="file"
-            accept="image/*"
-            multiple
-            hidden
-        >
-
-    </label>
+</strong>
 
 
+<span>
 
-    <div class="quick">
+اضغط هنا لفتح كاميرا الجوال
 
-        <div class="quick-item">
+</span>
 
-            <div class="quick-icon">
-                📷
-            </div>
-
-            <span>
-                تصوير مباشر
-            </span>
-
-        </div>
+</div>
 
 
-        <div class="quick-item">
+<input
+id="cameraInput"
+type="file"
+accept="image/*"
+capture="environment"
+multiple
+hidden
+>
 
-            <div class="quick-icon">
-                ✨
-            </div>
-
-            <span>
-                تحسين Scan
-            </span>
-
-        </div>
+</label>
 
 
-        <div class="quick-item">
+<label class="gallery-label">
 
-            <div class="quick-icon">
-                📱
-            </div>
+🖼️ اختيار الفواتير من المعرض
 
-            <span>
-                مشاركة الصور
-            </span>
 
-        </div>
+<input
+id="galleryInput"
+type="file"
+accept="image/*"
+multiple
+hidden
+>
 
-    </div>
+</label>
+
+
+<div class="quick">
+
+
+<div class="quick-item">
+
+<div class="quick-icon">
+📷
+</div>
+
+<span>
+تصوير مباشر
+</span>
+
+</div>
+
+
+<div class="quick-item">
+
+<div class="quick-icon">
+✨
+</div>
+
+<span>
+تحسين Scan
+</span>
+
+</div>
+
+
+<div class="quick-item">
+
+<div class="quick-icon">
+📱
+</div>
+
+<span>
+مشاركة الصور
+</span>
+
+</div>
+
+
+</div>
+
 
 </section>
 
-
-
-<!-- =========================================
-     STATS
-========================================= -->
 
 <section class="stats">
 
-    <div class="stat">
 
-        <div
-            id="invoiceCount"
-            class="stat-number"
-        >
-            0
-        </div>
+<div class="stat">
 
-        <div class="stat-label">
-            إجمالي الفواتير
-        </div>
+<div
+id="invoiceCount"
+class="stat-number"
+>
+0
+</div>
 
-    </div>
+<div class="stat-label">
+إجمالي الفواتير
+</div>
 
-
-    <div class="stat">
-
-        <div class="stat-number">
-            3
-        </div>
-
-        <div class="stat-label">
-            الموظفات
-        </div>
-
-    </div>
+</div>
 
 
-    <div class="stat">
+<div class="stat">
 
-        <div
-            id="readyCount"
-            class="stat-number"
-        >
-            0
-        </div>
+<div class="stat-number">
+3
+</div>
 
-        <div class="stat-label">
-            جاهزة
-        </div>
+<div class="stat-label">
+الموظفات
+</div>
 
-    </div>
+</div>
+
+
+<div class="stat">
+
+<div
+id="readyCount"
+class="stat-number"
+>
+0
+</div>
+
+<div class="stat-label">
+جاهزة
+</div>
+
+</div>
+
 
 </section>
 
 
-
-<!-- =========================================
-     الفواتير
-========================================= -->
-
 <section
-    id="invoiceSection"
-    class="section hidden"
+id="invoiceSection"
+class="section hidden"
 >
 
-    <div class="section-head">
 
-        <div>
-
-            <div class="section-title">
-                🧾 الفواتير
-            </div>
-
-            <div class="section-description">
-                راجع الصور وحسّنها قبل الإرسال
-            </div>
-
-        </div>
+<div class="section-head">
 
 
-        <button
-            id="scanAllBtn"
-            class="gold-button"
-        >
+<div>
 
-            ✨ تحسين الكل
+<div class="section-title">
+🧾 الفواتير
+</div>
 
-        </button>
+<div class="section-description">
+راجع الصور وحسّنها قبل الإرسال
+</div>
 
-    </div>
+</div>
 
 
-    <div
-        id="invoiceGrid"
-        class="invoice-grid"
-    ></div>
+<button
+id="scanAllBtn"
+class="gold-button"
+>
+
+✨ تحسين الكل
+
+</button>
+
+
+</div>
+
+
+<div
+id="invoiceGrid"
+class="invoice-grid"
+>
+</div>
+
 
 </section>
 
 
-
-<!-- =========================================
-     الموظفات
-========================================= -->
-
 <section
-    id="employeesSection"
-    class="section hidden"
+id="employeesSection"
+class="section hidden"
 >
 
-    <div class="section-head">
 
-        <div>
-
-            <div class="section-title">
-                👩‍💼 توزيع الموظفات
-            </div>
-
-            <div class="section-description">
-                يتم توزيع الفواتير بالتساوي
-            </div>
-
-        </div>
+<div class="section-head">
 
 
-        <button
-            id="redistributeBtn"
-            class="dark-button"
-        >
+<div>
 
-            🔄 إعادة التوزيع
+<div class="section-title">
+👩‍💼 توزيع الموظفات
+</div>
 
-        </button>
+<div class="section-description">
+يتم توزيع الفواتير بالتساوي
+</div>
 
-    </div>
+</div>
 
 
-    <div id="employees"></div>
+<button
+id="redistributeBtn"
+class="dark-button"
+>
+
+🔄 إعادة التوزيع
+
+</button>
+
+
+</div>
+
+
+<div id="employees">
+</div>
+
 
 </section>
 
 
-
-<!-- =========================================
-     الإرسال
-========================================= -->
-
 <section
-    id="sendSection"
-    class="section send-area hidden"
+id="sendSection"
+class="section send-area hidden"
 >
 
-    <h2>
-        📱 إرسال الفواتير
-    </h2>
 
-    <p>
-        سيتم تجهيز صور الفواتير للمشاركة مع الموظفة.
-    </p>
+<h2>
 
+📱 إرسال الفواتير
 
-    <button
-        id="sendAllBtn"
-        class="send-all"
-    >
-
-        📤 مشاركة جميع الفواتير
-
-    </button>
+</h2>
 
 
-    <div
-        id="sendStatus"
-        class="send-status"
-    ></div>
+<p>
+
+سيتم تجهيز صور الفواتير للمشاركة مع الموظفة.
+
+</p>
+
+
+<button
+id="sendAllBtn"
+class="send-all"
+>
+
+📤 مشاركة جميع الفواتير
+
+</button>
+
+
+<div
+id="sendStatus"
+class="send-status"
+>
+</div>
+
 
 </section>
 
@@ -1296,21 +1561,21 @@ footer b{
 </main>
 
 
-
 <footer>
 
-    Invoice Elite
-    <br>
+Invoice Elite
 
-    <b>
-        Smart Invoice Management
-    </b>
+<br>
+
+<b>
+Smart Invoice Management
+</b>
 
 </footer>
 
 
-
 <script>
+
 
 /* =====================================================
    الموظفات
@@ -1318,149 +1583,131 @@ footer b{
 
 const employees = [
 
-    {
-        id:1,
-        name:"موزه الكعبي",
-        phone:"971XXXXXXXXX"
-    },
+{
+id:1,
+name:"موزه الكعبي",
+phone:"971567631138"
+},
 
-    {
-        id:2,
-        name:"حصه الكعبي",
-        phone:"971XXXXXXXXX"
-    },
+{
+id:2,
+name:"مريم الكعبي",
+phone:"971508582683"
+},
 
-    {
-        id:3,
-        name:"مريم الكعبي",
-        phone:"971XXXXXXXXX"
-    }
+{
+id:3,
+name:"بشائر الكعبي",
+phone:"971505342999"
+}
 
 ];
 
 
-
-/* =====================================================
-   البيانات
-===================================================== */
-
 let invoices = [];
 
+
 let assignments = {
-    1:[],
-    2:[],
-    3:[]
+
+1:[],
+2:[],
+3:[]
+
 };
 
 
-
-/* =====================================================
-   العناصر
-===================================================== */
-
 const cameraInput =
-    document.getElementById(
-        "cameraInput"
-    );
+document.getElementById(
+"cameraInput"
+);
+
 
 const galleryInput =
-    document.getElementById(
-        "galleryInput"
-    );
+document.getElementById(
+"galleryInput"
+);
+
 
 const invoiceGrid =
-    document.getElementById(
-        "invoiceGrid"
-    );
+document.getElementById(
+"invoiceGrid"
+);
 
-
-
-/* =====================================================
-   الكاميرا
-===================================================== */
 
 cameraInput.addEventListener(
-    "change",
-    handleFiles
+"change",
+handleFiles
 );
 
-
-
-/* =====================================================
-   المعرض
-===================================================== */
 
 galleryInput.addEventListener(
-    "change",
-    handleFiles
+"change",
+handleFiles
 );
 
 
-
 /* =====================================================
-   استقبال الصور
+   قراءة الصور
 ===================================================== */
 
 async function handleFiles(event){
 
-    const files =
-        Array.from(
-            event.target.files
-        );
+const files =
+Array.from(
+event.target.files
+);
 
 
-    if(!files.length){
-        return;
-    }
+if(!files.length)
+return;
 
 
-    for(
-        const file of files
-    ){
+for(
+const file of files
+){
 
-        if(
-            !file.type.startsWith(
-                "image/"
-            )
-        ){
-            continue;
-        }
+if(
+!file.type.startsWith("image/")
+){
 
-
-        const image =
-            await fileToDataURL(
-                file
-            );
-
-
-        invoices.push({
-
-            id:
-                invoices.length + 1,
-
-            original:
-                image,
-
-            processed:
-                image,
-
-            scanned:
-                false
-
-        });
-
-    }
-
-
-    renderInvoices();
-
-    distributeInvoices();
-
-
-    event.target.value = "";
+continue;
 
 }
 
+
+const image =
+await fileToDataURL(
+file
+);
+
+
+invoices.push({
+
+id:
+invoices.length + 1,
+
+original:
+image,
+
+processed:
+image,
+
+scanned:
+false
+
+});
+
+}
+
+
+renderInvoices();
+
+distributeInvoices();
+
+
+event.target.value="";
+
+}
 
 
 /* =====================================================
@@ -1469,36 +1716,34 @@ async function handleFiles(event){
 
 function fileToDataURL(file){
 
-    return new Promise(
-        (resolve,reject)=>{
+return new Promise(
+(resolve,reject)=>{
 
-            const reader =
-                new FileReader();
-
-
-            reader.onload =
-                function(){
-
-                    resolve(
-                        reader.result
-                    );
-
-                };
+const reader =
+new FileReader();
 
 
-            reader.onerror =
-                reject;
+reader.onload =
+function(){
+
+resolve(
+reader.result
+);
+
+};
 
 
-            reader.readAsDataURL(
-                file
-            );
+reader.onerror =
+reject;
 
-        }
-    );
+
+reader.readAsDataURL(
+file
+);
+
+});
 
 }
-
 
 
 /* =====================================================
@@ -1507,135 +1752,133 @@ function fileToDataURL(file){
 
 function renderInvoices(){
 
-    invoiceGrid.innerHTML = "";
+invoiceGrid.innerHTML="";
 
 
-    invoices.forEach(
-        invoice => {
+invoices.forEach(
+invoice=>{
 
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "invoice-card";
+const card =
+document.createElement(
+"div"
+);
 
 
-            card.innerHTML = `
-
-                <div class="invoice-image">
-
-                    <img
-                        src="${invoice.processed}"
-                    >
-
-                    ${
-                        invoice.scanned
-                        ?
-                        `<div class="scanned">
-                            ✓ Scan محسّن
-                        </div>`
-                        :
-                        ""
-                    }
-
-                </div>
+card.className =
+"invoice-card";
 
 
-                <div class="invoice-content">
+card.innerHTML = `
 
-                    <div class="invoice-number">
+<div class="invoice-image">
 
-                        فاتورة
-                        ${String(
-                            invoice.id
-                        ).padStart(
-                            3,
-                            "0"
-                        )}
+<img src="${invoice.processed}">
 
-                    </div>
+${
+invoice.scanned
 
+?
 
-                    <div class="invoice-actions">
+`
 
-                        <button
-                            class="scan"
-                            onclick="
-                                scanInvoice(
-                                    ${invoice.id}
-                                )
-                            "
-                        >
+<div class="scanned">
+✓ Scan محسّن
+</div>
 
-                            ✨ Scan
+`
 
-                        </button>
+:
 
-
-                        <button
-                            class="delete"
-                            onclick="
-                                deleteInvoice(
-                                    ${invoice.id}
-                                )
-                            "
-                        >
-
-                            حذف
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `;
-
-
-            invoiceGrid.appendChild(
-                card
-            );
-
-        }
-    );
-
-
-    updateStats();
-
-
-    if(invoices.length){
-
-        document
-            .getElementById(
-                "invoiceSection"
-            )
-            .classList.remove(
-                "hidden"
-            );
-
-        document
-            .getElementById(
-                "employeesSection"
-            )
-            .classList.remove(
-                "hidden"
-            );
-
-        document
-            .getElementById(
-                "sendSection"
-            )
-            .classList.remove(
-                "hidden"
-            );
-
-    }
+""
 
 }
 
+</div>
+
+
+<div class="invoice-content">
+
+
+<div class="invoice-number">
+
+فاتورة
+${String(invoice.id).padStart(3,"0")}
+
+</div>
+
+
+<div class="invoice-actions">
+
+
+<button
+class="scan"
+onclick="scanInvoice(${invoice.id})"
+>
+
+✨ Scan
+
+</button>
+
+
+<button
+class="delete"
+onclick="deleteInvoice(${invoice.id})"
+>
+
+حذف
+
+</button>
+
+
+</div>
+
+
+</div>
+
+`;
+
+
+invoiceGrid.appendChild(
+card
+);
+
+});
+
+
+updateStats();
+
+
+if(invoices.length){
+
+document
+.getElementById(
+"invoiceSection"
+)
+.classList.remove(
+"hidden"
+);
+
+
+document
+.getElementById(
+"employeesSection"
+)
+.classList.remove(
+"hidden"
+);
+
+
+document
+.getElementById(
+"sendSection"
+)
+.classList.remove(
+"hidden"
+);
+
+}
+
+}
 
 
 /* =====================================================
@@ -1644,24 +1887,22 @@ function renderInvoices(){
 
 function scanInvoice(id){
 
-    const invoice =
-        invoices.find(
-            item =>
-                item.id === id
-        );
+const invoice =
+invoices.find(
+item =>
+item.id === id
+);
 
 
-    if(!invoice){
-        return;
-    }
+if(!invoice)
+return;
 
 
-    processScan(
-        invoice
-    );
+processScan(
+invoice
+);
 
 }
-
 
 
 /* =====================================================
@@ -1670,98 +1911,89 @@ function scanInvoice(id){
 
 function processScan(invoice){
 
-    const img =
-        new Image();
+const img =
+new Image();
 
 
-    img.onload =
-        function(){
-
-            const canvas =
-                document.createElement(
-                    "canvas"
-                );
+img.onload =
+function(){
 
 
-            const ctx =
-                canvas.getContext(
-                    "2d"
-                );
+const canvas =
+document.createElement(
+"canvas"
+);
 
 
-            canvas.width =
-                img.width;
+const ctx =
+canvas.getContext(
+"2d"
+);
 
 
-            canvas.height =
-                img.height;
+canvas.width =
+img.width;
+
+canvas.height =
+img.height;
 
 
-            ctx.filter =
-                "contrast(1.18) " +
-                "brightness(1.05) " +
-                "saturate(.72)";
+ctx.filter =
+"contrast(1.18) brightness(1.05) saturate(.72)";
 
 
-            ctx.drawImage(
-                img,
-                0,
-                0,
-                canvas.width,
-                canvas.height
-            );
+ctx.drawImage(
+img,
+0,
+0,
+canvas.width,
+canvas.height
+);
 
 
-            invoice.processed =
-                canvas.toDataURL(
-                    "image/jpeg",
-                    .94
-                );
+invoice.processed =
+canvas.toDataURL(
+"image/jpeg",
+.94
+);
 
 
-            invoice.scanned =
-                true;
+invoice.scanned =
+true;
 
 
-            renderInvoices();
+renderInvoices();
 
-            distributeInvoices();
+distributeInvoices();
 
-        };
+};
 
 
-    img.src =
-        invoice.original;
+img.src =
+invoice.original;
 
 }
 
 
-
 /* =====================================================
-   Scan الكل
+   تحسين جميع الفواتير
 ===================================================== */
 
 document
-    .getElementById(
-        "scanAllBtn"
-    )
-    .addEventListener(
-        "click",
-        function(){
+.getElementById(
+"scanAllBtn"
+)
+.addEventListener(
+"click",
+function(){
 
-            invoices.forEach(
-                invoice => {
+invoices.forEach(
+invoice =>
+processScan(invoice)
+);
 
-                    processScan(
-                        invoice
-                    );
-
-                }
-            );
-
-        }
-    );
-
+}
+);
 
 
 /* =====================================================
@@ -1770,58 +2002,59 @@ document
 
 function deleteInvoice(id){
 
-    invoices =
-        invoices.filter(
-            invoice =>
-                invoice.id !== id
-        );
+invoices =
+invoices.filter(
+invoice =>
+invoice.id !== id
+);
 
 
-    invoices.forEach(
-        (invoice,index) => {
+invoices.forEach(
+(invoice,index)=>{
 
-            invoice.id =
-                index + 1;
+invoice.id =
+index + 1;
 
-        }
-    );
-
-
-    renderInvoices();
-
-    distributeInvoices();
+}
+);
 
 
-    if(!invoices.length){
+renderInvoices();
 
-        document
-            .getElementById(
-                "invoiceSection"
-            )
-            .classList.add(
-                "hidden"
-            );
+distributeInvoices();
 
-        document
-            .getElementById(
-                "employeesSection"
-            )
-            .classList.add(
-                "hidden"
-            );
 
-        document
-            .getElementById(
-                "sendSection"
-            )
-            .classList.add(
-                "hidden"
-            );
+if(!invoices.length){
 
-    }
+document
+.getElementById(
+"invoiceSection"
+)
+.classList.add(
+"hidden"
+);
+
+
+document
+.getElementById(
+"employeesSection"
+)
+.classList.add(
+"hidden"
+);
+
+
+document
+.getElementById(
+"sendSection"
+)
+.classList.add(
+"hidden"
+);
 
 }
 
+}
 
 
 /* =====================================================
@@ -1830,37 +2063,39 @@ function deleteInvoice(id){
 
 function distributeInvoices(){
 
-    assignments = {
-        1:[],
-        2:[],
-        3:[]
-    };
+assignments = {
+
+1:[],
+2:[],
+3:[]
+
+};
 
 
-    invoices.forEach(
-        (invoice,index) => {
-
-            const employee =
-                employees[
-                    index %
-                    employees.length
-                ];
+invoices.forEach(
+(invoice,index)=>{
 
 
-            assignments[
-                employee.id
-            ].push(
-                invoice
-            );
-
-        }
-    );
+const employee =
+employees[
+index %
+employees.length
+];
 
 
-    renderEmployees();
+assignments[
+employee.id
+].push(
+invoice
+);
+
+
+});
+
+
+renderEmployees();
 
 }
-
 
 
 /* =====================================================
@@ -1869,134 +2104,151 @@ function distributeInvoices(){
 
 function renderEmployees(){
 
-    const container =
-        document.getElementById(
-            "employees"
-        );
+const container =
+document.getElementById(
+"employees"
+);
 
 
-    container.innerHTML = "";
+container.innerHTML="";
 
 
-    employees.forEach(
-        employee => {
-
-            const list =
-                assignments[
-                    employee.id
-                ] || [];
+employees.forEach(
+employee=>{
 
 
-            const box =
-                document.createElement(
-                    "div"
-                );
+const list =
+assignments[
+employee.id
+] || [];
 
 
-            box.className =
-                "employee";
+const box =
+document.createElement(
+"div"
+);
 
 
-            box.innerHTML = `
-
-                <div class="employee-head">
-
-                    <div class="employee-name">
-
-                        👩‍💼
-                        ${employee.name}
-
-                    </div>
+box.className =
+"employee";
 
 
-                    <div class="employee-count">
-
-                        ${list.length}
-                        فاتورة
-
-                    </div>
-
-                </div>
+box.innerHTML = `
 
 
-                <div class="employee-grid">
-
-                    ${
-                        list.length
-                        ?
-
-                        list.map(
-                            invoice => `
-
-                                <div
-                                    class="employee-invoice"
-                                >
-
-                                    <img
-                                        src="${invoice.processed}"
-                                    >
-
-                                    <p>
-
-                                        فاتورة
-                                        ${String(
-                                            invoice.id
-                                        ).padStart(
-                                            3,
-                                            "0"
-                                        )}
-
-                                    </p>
-
-                                </div>
-
-                            `
-                        ).join("")
-
-                        :
-
-                        `
-                        <div
-                            style="
-                                color:#555;
-                                font-size:11px;
-                                padding:15px;
-                            "
-                        >
-                            لا توجد فواتير
-                        </div>
-                        `
-
-                    }
-
-                </div>
+<div class="employee-head">
 
 
-                <button
-                    class="employee-send"
-                    onclick="
-                        shareEmployee(
-                            ${employee.id}
-                        )
-                    "
-                >
-
-                    📤 مشاركة صور فواتير ${employee.name}
-
-                </button>
-
-            `;
+<div>
 
 
-            container.appendChild(
-                box
-            );
+<div class="employee-name">
 
-        }
-    );
+👩‍💼
+${employee.name}
+
+</div>
+
+
+<div class="employee-phone">
+
+📱
++${employee.phone}
+
+</div>
+
+
+</div>
+
+
+<div class="employee-count">
+
+${list.length}
+فاتورة
+
+</div>
+
+
+</div>
+
+
+<div class="employee-grid">
+
+
+${
+list.length
+
+?
+
+list.map(
+invoice => `
+
+<div class="employee-invoice">
+
+
+<img
+src="${invoice.processed}"
+>
+
+
+<p>
+
+فاتورة
+${String(invoice.id).padStart(3,"0")}
+
+</p>
+
+
+</div>
+
+`
+).join("")
+
+:
+
+`
+
+<div
+style="
+color:#555;
+font-size:11px;
+padding:15px;
+"
+>
+
+لا توجد فواتير
+
+</div>
+
+`
 
 }
 
+
+</div>
+
+
+<button
+class="employee-send"
+onclick="shareEmployee(${employee.id})"
+>
+
+📤 مشاركة صور فواتير
+${employee.name}
+
+</button>
+
+
+`;
+
+
+container.appendChild(
+box
+);
+
+});
+
+}
 
 
 /* =====================================================
@@ -2004,14 +2256,13 @@ function renderEmployees(){
 ===================================================== */
 
 document
-    .getElementById(
-        "redistributeBtn"
-    )
-    .addEventListener(
-        "click",
-        distributeInvoices
-    );
-
+.getElementById(
+"redistributeBtn"
+)
+.addEventListener(
+"click",
+distributeInvoices
+);
 
 
 /* =====================================================
@@ -2019,255 +2270,262 @@ document
 ===================================================== */
 
 function dataURLToFile(
-    dataURL,
-    filename
+dataURL,
+filename
 ){
 
-    const parts =
-        dataURL.split(",");
+const parts =
+dataURL.split(",");
 
 
-    const mime =
-        parts[0]
-        .match(
-            /:(.*?);/
-        )[1];
+const mime =
+parts[0].match(
+/:(.*?);/
+)[1];
 
 
-    const binary =
-        atob(
-            parts[1]
-        );
+const binary =
+atob(
+parts[1]
+);
 
 
-    const array =
-        new Uint8Array(
-            binary.length
-        );
+const array =
+new Uint8Array(
+binary.length
+);
 
 
-    for(
-        let i=0;
-        i<binary.length;
-        i++
-    ){
+for(
+let i=0;
+i<binary.length;
+i++
+){
 
-        array[i] =
-            binary.charCodeAt(i);
-
-    }
-
-
-    return new File(
-        [array],
-        filename,
-        {
-            type:mime
-        }
-    );
+array[i] =
+binary.charCodeAt(i);
 
 }
 
 
+return new File(
+[array],
+filename,
+{
+type:mime
+}
+);
+
+}
+
 
 /* =====================================================
-   مشاركة صور موظفة
+   مشاركة فواتير موظفة
 ===================================================== */
 
 async function shareEmployee(
-    employeeId
+employeeId
 ){
 
-    const employee =
-        employees.find(
-            item =>
-                item.id === employeeId
-        );
+const employee =
+employees.find(
+item =>
+item.id === employeeId
+);
 
 
-    const list =
-        assignments[
-            employeeId
-        ] || [];
+const list =
+assignments[
+employeeId
+] || [];
 
 
-    if(!list.length){
+if(!list.length){
 
-        alert(
-            "لا توجد فواتير لهذه الموظفة."
-        );
+alert(
+"لا توجد فواتير لهذه الموظفة."
+);
 
-        return;
-
-    }
-
-
-    const files = [];
-
-
-    list.forEach(
-        (invoice,index) => {
-
-            const file =
-                dataURLToFile(
-                    invoice.processed,
-
-                    `فاتورة-${String(
-                        invoice.id
-                    ).padStart(
-                        3,
-                        "0"
-                    )}.jpg`
-                );
-
-
-            files.push(
-                file
-            );
-
-        }
-    );
-
-
-    const shareData = {
-
-        title:
-            `فواتير ${employee.name}`,
-
-        text:
-            `فواتير اليوم الخاصة بـ ${employee.name}`,
-
-        files:
-            files
-
-    };
-
-
-    try{
-
-        if(
-            navigator.share &&
-            navigator.canShare &&
-            navigator.canShare({
-                files:files
-            })
-        ){
-
-            await navigator.share(
-                shareData
-            );
-
-        }
-
-        else{
-
-            alert(
-                "جهازك أو المتصفح لا يدعم مشاركة الصور مباشرة. جرّب فتح الموقع من Chrome على الجوال."
-            );
-
-        }
-
-    }
-
-    catch(error){
-
-        if(
-            error.name !==
-            "AbortError"
-        ){
-
-            alert(
-                "تعذر فتح مشاركة الصور."
-            );
-
-        }
-
-    }
+return;
 
 }
 
 
+const files=[];
+
+
+list.forEach(
+(invoice,index)=>{
+
+
+const file =
+dataURLToFile(
+
+invoice.processed,
+
+`فاتورة-${String(invoice.id).padStart(3,"0")}.jpg`
+
+);
+
+
+files.push(
+file
+);
+
+});
+
+
+const shareData = {
+
+title:
+`فواتير ${employee.name}`,
+
+text:
+`فواتير اليوم الخاصة بـ ${employee.name}`,
+
+files:
+files
+
+};
+
+
+try{
+
+
+if(
+
+navigator.share &&
+
+navigator.canShare &&
+
+navigator.canShare({
+files:files
+})
+
+){
+
+await navigator.share(
+shareData
+);
+
+}
+
+
+else{
+
+
+/*
+المتصفح لا يدعم مشاركة
+الصور كملفات مباشرة.
+
+سيتم فتح واتساب مع اسم
+الموظفة ورقمها.
+*/
+
+const message =
+encodeURIComponent(
+
+`فواتير اليوم الخاصة بـ ${employee.name}`
+
+);
+
+
+window.open(
+
+`https://wa.me/${employee.phone}?text=${message}`,
+
+"_blank"
+
+);
+
+}
+
+
+}
+
+catch(error){
+
+
+if(
+error.name !==
+"AbortError"
+){
+
+alert(
+"تعذر فتح مشاركة الصور."
+);
+
+}
+
+}
+
+}
+
 
 /* =====================================================
-   مشاركة جميع الموظفات
+   مشاركة الجميع
 ===================================================== */
 
 async function sendAll(){
 
-    const status =
-        document.getElementById(
-            "sendStatus"
-        );
+const status =
+document.getElementById(
+"sendStatus"
+);
 
 
-    status.innerHTML = "";
+status.innerHTML = `
+
+<div>
+
+📤 تجهيز صور الفواتير...
+
+</div>
 
 
-    /*
-       نعرض التعليمات للمستخدم
-    */
+<div>
 
-    status.innerHTML = `
+سيتم فتح قائمة المشاركة لكل موظفة.
+اختر واتساب ثم المحادثة المطلوبة.
 
-        <div>
-            📤 سيتم فتح مشاركة صور كل مجموعة.
-        </div>
+</div>
 
-        <div>
-            اختر واتساب ثم اختر الموظفة المطلوبة.
-        </div>
-
-    `;
+`;
 
 
-    /*
-       نبدأ بالموظفات واحدة واحدة
-    */
-
-    for(
-        const employee
-        of employees
-    ){
-
-        const list =
-            assignments[
-                employee.id
-            ] || [];
+for(
+const employee
+of employees
+){
 
 
-        if(!list.length){
-            continue;
-        }
+const list =
+assignments[
+employee.id
+] || [];
 
 
-        /*
-           في الإرسال الجماعي
-           نشارك مجموعة الصور
-        */
+if(!list.length)
+continue;
 
-        await shareEmployee(
-            employee.id
-        );
 
-    }
+await shareEmployee(
+employee.id
+);
+
+}
 
 }
 
 
-
-/* =====================================================
-   زر إرسال الكل
-===================================================== */
-
 document
-    .getElementById(
-        "sendAllBtn"
-    )
-    .addEventListener(
-        "click",
-        sendAll
-    );
-
+.getElementById(
+"sendAllBtn"
+)
+.addEventListener(
+"click",
+sendAll
+);
 
 
 /* =====================================================
@@ -2276,28 +2534,29 @@ document
 
 function updateStats(){
 
-    document
-        .getElementById(
-            "invoiceCount"
-        )
-        .textContent =
-        invoices.length;
+document
+.getElementById(
+"invoiceCount"
+)
+.textContent =
+invoices.length;
 
 
-    document
-        .getElementById(
-            "readyCount"
-        )
-        .textContent =
+document
+.getElementById(
+"readyCount"
+)
+.textContent =
 
-        invoices.filter(
-            invoice =>
-                invoice.scanned
-        ).length;
+invoices.filter(
+invoice =>
+invoice.scanned
+).length;
 
 }
 
 </script>
 
 </body>
+
 </html>
